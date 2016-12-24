@@ -4,7 +4,7 @@
     <!-- Title -->
     
     <title>
-        Hello World | FelixZhang&#39;s Blog
+        jpeg编码学习笔记 | FelixZhang&#39;s Blog
     </title>
     
     <!-- Favicons -->
@@ -40,7 +40,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://felixzhang00.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Hello World | FelixZhang&#39;s Blog">
+    <meta property="og:title" content="jpeg编码学习笔记 | FelixZhang&#39;s Blog">
     <meta property="og:description" content="null">
     
      <!--[if lte IE 9]>
@@ -217,7 +217,7 @@
 	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
 		for="post-toc-trigger-btn">
 			
-			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Quick-Start"><span class="post-toc-number">1.</span> <span class="post-toc-text">Quick Start</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Create-a-new-post"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Create a new post</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Run-server"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Run server</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Generate-static-files"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Generate static files</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Deploy-to-remote-sites"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JPEG简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">JPEG简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JPEG的编码过程"><span class="post-toc-number">2.</span> <span class="post-toc-text">JPEG的编码过程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-色彩空间转换"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">1.色彩空间转换</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-离散余弦变换DCT"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2.离散余弦变换DCT</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-量化"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">3.量化</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-zig-zag游程编码"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">4.zig-zag游程编码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-范式Huffman编码"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">5.范式Huffman编码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#基本原理"><span class="post-toc-number">2.5.1.</span> <span class="post-toc-text">基本原理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Huffman编码在JPEG中"><span class="post-toc-number">2.5.2.</span> <span class="post-toc-text">Huffman编码在JPEG中</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考</span></a></li></ol>
 		
 <!--			<li class="mdl-menu__item">Some Action</li>-->
 	</ul>
@@ -251,7 +251,7 @@
 		
 	
         <p class="article-headline-p">
-            Hello World
+            jpeg编码学习笔记
         </p>
     </div>
 
@@ -304,28 +304,28 @@
     
 
     <!-- Share Twitter -->
-    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Hello World&url=http://felixzhang00.github.io//2016/12/24/hello-world/index.html&via=Felix" target="_blank">
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=jpeg编码学习笔记&url=http://felixzhang00.github.io//2016/12/24/2016-12-24-jpeg编码学习笔记/index.html&via=Felix" target="_blank">
         <li class="mdl-menu__item">
             分享到 Twitter
         </li>
     </a>
 
     <!-- Share Google+ -->
-    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2016/12/24/hello-world/index.html" target="_blank">
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2016/12/24/2016-12-24-jpeg编码学习笔记/index.html" target="_blank">
         <li class="mdl-menu__item">
             分享到 Google+
         </li>
     </a>
 
     <!-- Share Weibo -->
-    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Hello World&url=http://felixzhang00.github.io//2016/12/24/hello-world/index.html&pic=&searchPic=false&style=simple" target="_blank">
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=jpeg编码学习笔记&url=http://felixzhang00.github.io//2016/12/24/2016-12-24-jpeg编码学习笔记/index.html&pic=&searchPic=false&style=simple" target="_blank">
         <li class="mdl-menu__item">
             分享到微博
         </li>
     </a>
 
     <!-- Share LinkedIn -->
-    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2016/12/24/hello-world/index.html&title=Hello World" target="_blank">
+    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2016/12/24/2016-12-24-jpeg编码学习笔记/index.html&title=jpeg编码学习笔记" target="_blank">
         <li class="mdl-menu__item">
             分享到 LinkedIn
         </li>
@@ -338,15 +338,125 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
 	
-		<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+		<p>各种图片格式目的是在网络传输和存储的时候使用更少的字节，即起到压缩的作用。在图片格式解码后，无论图片的格式，图片数据都是像素数组。<br>本文将尝试通过JPEG这种图片编码格式的学习，了解图片编码的秘密。</p>
+<p><br><br><br><br><br></p>
+<h2 id="JPEG简介"><a href="#JPEG简介" class="headerlink" title="JPEG简介"></a>JPEG简介</h2><p>一张100X100大小的普通图片，如果未经压缩，大概在100<em>100</em>4*8bits=0.3MB左右,这也是图片在内存中占用的内存大小。<br>通常JPEG文件相对于原始图像,能够得到1/8的压缩比，如此高的压缩率是如何做到的呢？</p>
+<p>JPEG能够获得如此高的压缩比是因为使用了有损压缩技术，所谓有损压缩，就是把原始数据中不重要的部分去掉，以便可以用更小的体积保存。</p>
+<p>JPEG编码是基于两个idea，第一个是基于相邻的像素信息是相近的，即空间冗余性，尽量少记录重复的数据来达到压缩的效果。第二个是基于图像信号的频谱特性，图像包含各种频率，大部分为低频频谱，少部分为高频频谱。可以保留包含图像信息较多的低频频谱，舍去包含图像信息较少的高频频谱。而达到图片质量没有可察觉的损伤，又能达到压缩的效果。这也说明了JPEG是有损编码。</p>
+<p><br><br><br><br><br></p>
+<h2 id="JPEG的编码过程"><a href="#JPEG的编码过程" class="headerlink" title="JPEG的编码过程"></a>JPEG的编码过程</h2><p>编码流程如下图：<br><img src="http://ww4.sinaimg.cn/large/8b331ee1gw1fb24h3nvr7j21kw0a0myl.jpg" alt="编码流程示意图"></p>
+<p><br><br><br><br><br></p>
+<h3 id="1-色彩空间转换"><a href="#1-色彩空间转换" class="headerlink" title="1.色彩空间转换"></a>1.色彩空间转换</h3><p>将RGB色彩空间转换到其他色彩空间，比如<a href="https://en.wikipedia.org/wiki/YUV" target="_blank" rel="external">YUV</a>色彩空间。<br>出现YUV,主要有两个原因，一个是为了让彩色信号兼容黑白电视机，另外一个原因是为了减少传输的带宽。<br>下图为老电视后面的色差接口。<br><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fb24juusowj206u046q3w.jpg" alt="电视色差接口"><br>YUV中，Y表示亮度，U和V表示色度，总之它是将RGB信号进行了一种处理，根据人对亮度更敏感些，增加亮度的信号，减少颜色的信号，以这样“欺骗”人的眼睛的手段来节省空间。YUV的格式也很多，不过常见的就是422和420格式。</p>
+<p>下图为420格式，每四个Y共用一组UV分量，每个YUV分量和RGB一样都用8位来表示，YUV色彩空间就比RGB色彩空间所需的存储空间少一半，数据就被压缩到了一半。<br><img src="http://ww4.sinaimg.cn/large/8b331ee1gw1fb24kvqketj20aa04n3zt.jpg" alt="Y420"></p>
+<p><br><br><br><br><br></p>
+<h3 id="2-离散余弦变换DCT"><a href="#2-离散余弦变换DCT" class="headerlink" title="2.离散余弦变换DCT"></a>2.离散余弦变换DCT</h3><p>简单地说，DCT是傅里叶变换的一种，变换后会得到一个系数。<br>有关DCT的详细介绍可以看这个<a href="https://www.youtube.com/watch?v=Q2aEzeMDHMA" target="_blank" rel="external">视频</a>。</p>
+<p>在JPEG压缩过程中，经过颜色空间的转换，每一个色值表示成8X8的图像块，下图为一个色彩域取样块，转化为频率域的DCT系数块：<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gw1fb24n45lgbj20gv03qq3u.jpg" alt="转化为频率域的DCT系数块"></p>
+<p>图片经过此步骤会输出一个频率系数矩阵，左上的系数幅度值最大，越往右下，系数的幅度值越小，频率越高。大部分图片信息都在频率域矩阵左上区域，右下几乎不含有图片信息，甚至只含杂波。<br>注意：转换后的DCT系数块矩阵(x,y)处的值并不和转换前的颜色空间矩阵（x,y）处的像素值直接对应。</p>
+<p>这一步骤没有压缩作用，它目的是为下一步骤找低频和高频区域，也就是找出留下的区域和舍去的区域。</p>
+<p><br><br><br><br><br></p>
+<h3 id="3-量化"><a href="#3-量化" class="headerlink" title="3.量化"></a>3.量化</h3><p>此步是将上步求得的DCT系数的简化的过程，利用人眼对高频部分不敏感的特性来舍去高频部分。<br>这里有两张表分别对亮度和色度做量化处理。</p>
+<p>标准亮度量化表：<br><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fb24qq7yq0j20sw0b8t9r.jpg" alt="标准亮度量化表"></p>
+<p>标准色度量化表：<br><img src="http://ww2.sinaimg.cn/large/8b331ee1gw1fb24rftccuj20sy0b8gmn.jpg" alt="标准色度量化表"></p>
+<p>量化表是控制 JPEG 压缩比的关键。<br>DCT系数矩阵中的不同位置的值代表了图像数据中不同频率的分量，这两张表中的数据是根据人眼对不同频率的敏感程度的差别所积累下的经验制定的。这个步骤除掉了一些高频量, 损失了很多细节. 但事实上人眼对高空间频率远没有低频敏感.所以处理后的视觉损失很小。<br>另一个重要原因是所有的图片的点与点之间会有一个色彩过渡的过程. 大量的图象信息被包含在低空间频率中。 经过量化处理后, 在高空间频率段, 将出现大量连续的零。</p>
+<p>把上面的DCT系数块通过量化后的结果如下图，其中第一个数-26是直流DC部分，它是一块图象样本的平均值，包含了原始8x8图像块中的很多能量，其余的是交流AC部分。<br>计算方法为：频率系数矩阵的数值除以对应量化表位置上的数值，并四舍五入到最近的整数。<br><img src="http://ww4.sinaimg.cn/large/8b331ee1gw1fb24usawejg20ie034t8o.gif" alt="量化过程"></p>
+<p>解码的时候，反量化步骤会乘回量化表相应值，但是四舍五入导致低频有所损失，高频0字段被舍弃。此步为有损运算，会导致图像质量变低。所以说JPEG是有损编码。</p>
+<p><br><br><br><br><br></p>
+<h3 id="4-zig-zag游程编码"><a href="#4-zig-zag游程编码" class="headerlink" title="4.zig-zag游程编码"></a>4.zig-zag游程编码</h3><p>量化后的数据还可以进行简化，更大程度的去压缩。<br><img src="http://ww4.sinaimg.cn/large/8b331ee1gw1fb251cuevrj20fe0bq0tg.jpg" alt="zig-zag表"></p>
+<p>根据上面的zig-zag表重排数据的过程：<br><img src="http://ww4.sinaimg.cn/large/8b331ee1gw1fb255f7vvsj208s05mq38.jpg" alt="zig-zag过程"><br>根据ZigZag表的规则对量化后的数据进行重排后的结果中可以看到出现连续的多个0，这样有利于进行游程编码。</p>
+<p><br><br><br><br><br></p>
+<h3 id="5-范式Huffman编码"><a href="#5-范式Huffman编码" class="headerlink" title="5.范式Huffman编码"></a>5.范式Huffman编码</h3><h4 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h4><p>huffman编码的基本原理是根据数据中元素的使用频率，调整元素的编码长度，以得到更高的压缩比。<br>举个例子，比如下面这段数据</p>
+<p><code>AABCBABBCDBBDDBAABDBBDABBBBDDEDBD</code></p>
+<p>这段数据里面包含了33个字符，每种字符出现的次数统计如下</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>次数</td>
+<td>6</td>
+<td>15</td>
+<td>2</td>
+<td>9</td>
+<td>1</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>如果我们用我们常见的定长编码，因为有5个文字，可以用3个bit表示，那么这段文字共需要3*33 = 99个bit来保存</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>编码</td>
+<td>001</td>
+<td>010</td>
+<td>011</td>
+<td>100</td>
+<td>101</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>如果根据字符出现的概率，使用如下的编码</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>编码</td>
+<td>100</td>
+<td>0</td>
+<td>1110</td>
+<td>10</td>
+<td>1111</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>那么这段文字共需要3<em>6 + 1</em>15 + 4<em>2 + 2</em>9 + 4*1 = 63bit，压缩比为63%。 是较短的编码不能够是较长编码的前缀，比如上面这个编码，就是由下面的这颗二叉树生成的。<br>哈弗曼编码一般都是使用二叉树来生成的，频率会高的数据对应的树节点的位置越高。这样得到的编码符合前缀规则，也就是较短的编码不能够是较长编码的前缀。</p>
+<p><img src="http://ww4.sinaimg.cn/large/8b331ee1gw1fb25jyerm4j207h0760sr.jpg" alt="哈夫曼树"></p>
+<p><br></p>
+<h4 id="Huffman编码在JPEG中"><a href="#Huffman编码在JPEG中" class="headerlink" title="Huffman编码在JPEG中"></a>Huffman编码在JPEG中</h4><p>假设在JPEG量化处理后的数据为：<br><code>35,7,0,0,0,-6,-2,0,0,-9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,0,0,…,0</code></p>
+<p>根据<a href="https://en.wikipedia.org/wiki/Run-length_encoding" target="_blank" rel="external">RLE</a>编码(游程编码)规则<br>1、用固定的4位来存储重复的数量，所以最多重复内容可以记录数量为15，超过15次要进行分段处理；<br>2、只将0作为重复的内容，每个数值记录前面有多少重复的0，末尾如果都是0用EOB作为代表；<br>3、此步不包含第一个数值，第一个数为直流系数，此步只处理交流系数。<br>得到处理结果：</p>
+<p><img src="http://ww1.sinaimg.cn/large/8b331ee1gw1fb262lkvzaj21kw048ab4.jpg" alt="RLE编码"><br><br><br><br> </p>
+<p>为了提高储存效率, JPEG 里并不直接保存数值, 而是将数值按位数分成 16 组,JPEG提供了一张标准的码表用于对这些数字编码<br><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fb263fusn6j210w0he768.jpg" alt="标准码表"></p>
+<p>举例来说，第3个单元中的“-6”这个数字，在表中的位置是长度为3的那组，所对应的bit码是“001”，由于这种编码附带长度信息，所以我们的数据变成了如下的格式。<br><img src="http://ww4.sinaimg.cn/large/8b331ee1gw1fb265nsj1aj21kw065jt8.jpg" alt="BIT编码"><br><br><br><br> </p>
+<p>对于括号前面的数字的编码，分成DC编码和AC编码。<br>下表是针对直流(DC)部分即第一个数字的哈弗曼表，由于直流部分没有前置的0，所以取值范围在0~15之间。</p>
+<p><img src="http://ww2.sinaimg.cn/mw690/8b331ee1gw1fb26bixac2j20pc0nugmw.jpg" alt=""></p>
+<p>对于其余的交流（AC）部分，取值范围在0~255，哈夫曼表如下：</p>
+<p><img src="http://ww4.sinaimg.cn/mw690/8b331ee1gw1fb26bvyx0oj20q211e410.jpg" alt=""></p>
+<p><br><br><br><br>完整个编码过程如下表，最终的数据使用10个字节保存了原本长度为64字节的数据，JPEG的压缩算法完成。<br><img src="http://ww2.sinaimg.cn/large/8b331ee1gw1fb268ej9k9j21kw09yn0a.jpg" alt=""></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://blog.mrriddler.com/2016/07/20/%E5%9B%BE%E7%89%87%E4%B9%8B%E6%97%85/" target="_blank" rel="external">http://blog.mrriddler.com/2016/07/20/%E5%9B%BE%E7%89%87%E4%B9%8B%E6%97%85/</a></li>
+<li><a href="http://thecodeway.com/blog/?p=69" target="_blank" rel="external">http://thecodeway.com/blog/?p=69</a></li>
+<li><a href="http://www.impulseadventure.com/photo/jpeg-huffman-coding.html" target="_blank" rel="external">http://www.impulseadventure.com/photo/jpeg-huffman-coding.html</a></li>
+<li>《数字图像处理编程入门》</li>
+</ul>
 
 	
 	
@@ -412,7 +522,7 @@
 
     <!-- Sidebar Email -->
     <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        youremail@email.com
+        836828946@qq.com
         <b class="caret"></b>
     </a>
 </div>
@@ -592,6 +702,9 @@ It will not impact the appearance and can give developers a lot of support :)
 
     <!-- Github -->
     
+    <a href="https://github.com/FelixZhang00" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
+        <span class="visuallyhidden">Github</span>
+    </button></a>
     
 
     <!-- LinkedIn -->
