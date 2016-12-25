@@ -157,7 +157,7 @@
 
 	<script src="/js/jquery.min.js"></script>
 	
-	<link rel="stylesheet" href="/css/highlight/solarized-white.css">
+	<link rel="stylesheet" href="/css/highlight/solarized-dark.css">
 	
 	<!-- UC Browser Compatible-->
 	<script>
@@ -344,7 +344,7 @@
 <p>JPEG能够获得如此高的压缩比是因为使用了有损压缩技术，所谓有损压缩，就是把原始数据中不重要的部分去掉，以便可以用更小的体积保存。</p>
 <p>JPEG编码是基于两个idea，第一个是基于相邻的像素信息是相近的，即空间冗余性，尽量少记录重复的数据来达到压缩的效果。第二个是基于图像信号的频谱特性，图像包含各种频率，大部分为低频频谱，少部分为高频频谱。可以保留包含图像信息较多的低频频谱，舍去包含图像信息较少的高频频谱。而达到图片质量没有可察觉的损伤，又能达到压缩的效果。这也说明了JPEG是有损编码。</p>
 <p><br><br><br><br><br></p>
-<h2 id="JPEG的编码过程"><a href="#JPEG的编码过程" class="headerlink" title="JPEG的编码过程"></a>JPEG的编码过程</h2><p>编码流程如下图：<br><img src="http://ww4.sinaimg.cn/large/8b331ee1gw1fb24h3nvr7j21kw0a0myl.jpg" alt="编码流程示意图"></p>
+<h2 id="JPEG的编码过程"><a href="#JPEG的编码过程" class="headerlink" title="JPEG的编码过程"></a>JPEG的编码过程</h2><p>编码流程如下图：<br><img src="http://ww4.sinaimg.cn/large/8b331ee1gw1fb2c7jxxyaj20eg08d74o.jpg" alt="编码流程示意图"></p>
 <p><br><br><br><br><br></p>
 <h3 id="1-色彩空间转换"><a href="#1-色彩空间转换" class="headerlink" title="1.色彩空间转换"></a>1.色彩空间转换</h3><p>将RGB色彩空间转换到其他色彩空间，比如<a href="https://en.wikipedia.org/wiki/YUV" target="_blank" rel="external">YUV</a>色彩空间。<br>出现YUV,主要有两个原因，一个是为了让彩色信号兼容黑白电视机，另外一个原因是为了减少传输的带宽。<br>下图为老电视后面的色差接口。<br><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fb24juusowj206u046q3w.jpg" alt="电视色差接口"><br>YUV中，Y表示亮度，U和V表示色度，总之它是将RGB信号进行了一种处理，根据人对亮度更敏感些，增加亮度的信号，减少颜色的信号，以这样“欺骗”人的眼睛的手段来节省空间。YUV的格式也很多，不过常见的就是422和420格式。</p>
 <p>下图为420格式，每四个Y共用一组UV分量，每个YUV分量和RGB一样都用8位来表示，YUV色彩空间就比RGB色彩空间所需的存储空间少一半，数据就被压缩到了一半。<br><img src="http://ww4.sinaimg.cn/large/8b331ee1gw1fb24kvqketj20aa04n3zt.jpg" alt="Y420"></p>
@@ -469,6 +469,28 @@
                 <!-- Post Comments -->
                 
                     
+    <!-- 使用多说评论 -->
+    <link rel="stylesheet" href="/css/duoshuo.min.css">
+<style>
+    #ds-thread #ds-reset .ds-post-button{
+        background-color: #0097A7 !important;
+    }
+    #ds-wrapper #ds-reset .ds-icons-32{
+        background-color: #0097A7 !important;
+    }
+    #ds-reset .ds-highlight {
+        color: #0097A7 !important;
+    }
+</style>
+<div id="comments">
+    <!-- 多说评论框 start -->
+        <div class="ds-thread" 
+            data-thread-key="2016/12/24/2016-12-24-jpeg编码学习笔记/" 
+            data-url="http://felixzhang00.github.io/2016/12/24/2016-12-24-jpeg编码学习笔记/"
+            data-title="jpeg编码学习笔记"></div>
+    <!-- 多说评论框 end -->
+</div>
+
 
 
                 
@@ -778,6 +800,20 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
 
+
+    <!-- 多说公共 js 代码 start -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"felixzhang00.duoshuo.com## duoshuo short name."};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'https://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共 js 代码 end -->
 
 
 
