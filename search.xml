@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title><![CDATA[代码浏览工具OpenGrok]]></title>
+      <url>http://felixzhang00.github.io/2016/12/25/2016-12-25-%E4%BB%A3%E7%A0%81%E6%B5%8F%E8%A7%88%E5%B7%A5%E5%85%B7OpenGrok/</url>
+      <content type="html"><![CDATA[<p><a href="https://opengrok.github.io/OpenGrok/" target="_blank" rel="external">OpenGrok</a>是一款强大的跨平台代码阅读工具，许多在线源码查看网站都是使用它来搭建的，比如著名的Android在线源码查看网站<a href="http://androidxref.com/" target="_blank" rel="external">androidxref</a>.</p>
+<p><br><br><br><br><br></p>
+<h2 id="OpenGrok特性"><a href="#OpenGrok特性" class="headerlink" title="OpenGrok特性"></a>OpenGrok特性</h2><p>OpenGrok 提供如下特性：</p>
+<ul>
+<li><p>1.快速搜索代码的引擎</p>
+<p>  搜索全文、定义、符号、文件路径和修改历史</p>
+<p>  搜索任意指定子目录（分层搜索）</p>
+<p>  增量更新索引文件</p>
+</li>
+<li><p>2.支持类似 Google 的查询语法，比如 path:Makefile defs:target</p>
+<p>  搜索日期范围内修改的文件</p>
+<p>  支持使用通配符搜索，如 * 表示多个字符，? 表示单个字符</p>
+<p>  在搜索结果中展示匹配行</p>
+</li>
+<li><p>3.一个 Web 只读版的版本历史查看界面</p>
+<p>  文件的修改日志</p>
+<p>  文件在两个版本间的 diff</p>
+<p>  文件夹的历史记录</p>
+</li>
+<li><p>4.带语法高亮的交叉引用显示，可以使用 CSS 自定义样式</p>
+<p>  可以开发插件支持新的语言和版本控制系统</p>
+<p>  已经支持的语言： <a href="https://link.zhihu.com/?target=https%3A//github.com/OpenGrok/OpenGrok/wiki/Supported-Languages-and-Formats" target="_blank" rel="external">Supported Languages and Formats</a></p>
+<p>  已经支持的版本控制系统：<a href="https://link.zhihu.com/?target=https%3A//github.com/OpenGrok/OpenGrok/wiki/Supported-Revision-Control-Systems" target="_blank" rel="external">Supported Revision Control Systems</a></p>
+</li>
+</ul>
+<p><br><br><br><br><br></p>
+<h2 id="在macOS平台搭建OpenGrok"><a href="#在macOS平台搭建OpenGrok" class="headerlink" title="在macOS平台搭建OpenGrok"></a>在macOS平台搭建OpenGrok</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>1.安装tomcat</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install tomcat</div></pre></td></tr></table></figure>
+<p>2.安装ctags</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install ctags</div></pre></td></tr></table></figure>
+<p>3.安装OpenGrok</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wget -O - http://java.net/projects/opengrok/downloads/download/opengrok-0.12.1.tar.gz | tar xvz</div></pre></td></tr></table></figure>
+<h3 id="开启tomcat"><a href="#开启tomcat" class="headerlink" title="开启tomcat"></a>开启tomcat</h3><p>方法1：cd到tomcat所在目录，然后执行命令，<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ catalina start </div><div class="line">$ open http://localhost:8080/<span class="built_in">source</span></div></pre></td></tr></table></figure></p>
+<p>方法2：下载macOS下的GUI程序<a href="https://www.macupdate.com/app/mac/18706/tomcat-controller" target="_blank" rel="external">TomcatController</a><br>配置tomcat所在目录。<br><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fb2vmdecmpj217c0i6gpb.jpg" alt=""></p>
+<h3 id="开启openGrok项目"><a href="#开启openGrok项目" class="headerlink" title="开启openGrok项目"></a>开启openGrok项目</h3><p>openGrok其实就是一个webapp<br><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fb2vobc954j21kw09saf1.jpg" alt=""></p>
+<h3 id="导入项目"><a href="#导入项目" class="headerlink" title="导入项目"></a>导入项目</h3><p>比如导入ffmpeg，在opengrok目录下创建一个local_src文件夹，把ffmpeg文件夹通过软引用的方式链到local_src下的src目录，这样就能让opengrok找到ffmpeg的代码了。<br><img src="http://ww2.sinaimg.cn/large/8b331ee1gw1fb2vt7txidj21kw0cx42c.jpg" alt=""></p>
+<h3 id="建立索引"><a href="#建立索引" class="headerlink" title="建立索引"></a>建立索引</h3><p><img src="http://ww2.sinaimg.cn/large/8b331ee1gw1fb2vtrtcuwj216g03476a.jpg" alt=""></p>
+<h3 id="打开浏览器"><a href="#打开浏览器" class="headerlink" title="打开浏览器"></a>打开浏览器</h3><p>访问 <a href="http://localhost:8080/source" target="_blank" rel="external">http://localhost:8080/source</a> 就能看到代码了。<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gw1fb2vuwcxfej21gc0aw3zw.jpg" alt=""></p>
+<p><img src="http://ww2.sinaimg.cn/large/8b331ee1gw1fb2vv6s7voj21kw1d3aoa.jpg" alt=""></p>
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://blog.simplypatrick.com/2015/01/16/opengrok-on-mac-osx/" target="_blank" rel="external">http://blog.simplypatrick.com/2015/01/16/opengrok-on-mac-osx/</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/24369747" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/24369747</a></p>
+<p><a href="https://github.com/OpenGrok/OpenGrok/wiki/Features" target="_blank" rel="external">https://github.com/OpenGrok/OpenGrok/wiki/Features</a></p>
+<p><a href="http://bytesthink.com/blog/?p=184" target="_blank" rel="external">http://bytesthink.com/blog/?p=184</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[ELF文件装载链接过程及hook原理]]></title>
       <url>http://felixzhang00.github.io/2016/12/24/2016-12-24-ELF%E6%96%87%E4%BB%B6%E8%A3%85%E8%BD%BD%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B%E5%8F%8Ahook%E5%8E%9F%E7%90%86/</url>
       <content type="html"><![CDATA[<h2 id="ELF文件格式解析"><a href="#ELF文件格式解析" class="headerlink" title="ELF文件格式解析"></a>ELF文件格式解析</h2><p>可执行和可链接格式(Executable and Linkable Format，缩写为ELF)，常被称为ELF格式，在计算机科学中，是一种用于执行档、目的档、共享库和核心转储的标准文件格式。</p>
