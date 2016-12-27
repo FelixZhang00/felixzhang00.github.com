@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://felixzhang00.github.io/"/>
-  <updated>2016-12-25T03:48:50.000Z</updated>
+  <updated>2016-12-27T12:37:49.000Z</updated>
   <id>http://felixzhang00.github.io/</id>
   
   <author>
@@ -16,11 +16,48 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>使用TraceView工具定位耗时操作</title>
+    <link href="http://felixzhang00.github.io/2016/12/27/2016-12-27-%E9%80%9A%E8%BF%87trace%E6%96%87%E4%BB%B6%E5%AE%9A%E4%BD%8D%E8%80%97%E6%97%B6%E6%93%8D%E4%BD%9C/"/>
+    <id>http://felixzhang00.github.io/2016/12/27/2016-12-27-通过trace文件定位耗时操作/</id>
+    <published>2016-12-27T12:29:25.000Z</published>
+    <updated>2016-12-27T12:37:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://developer.android.com/studio/profile/traceview.html" target="_blank" rel="external">TraceView</a>是DDMS中的工具，可以用来定位Android app中java方法的耗时操作。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="1-生成trace文件"><a href="#1-生成trace文件" class="headerlink" title="1.生成trace文件"></a>1.生成trace文件</h3><p>Eclipse中生成trace文件的方法：<br><img src="http://ww4.sinaimg.cn/mw690/8b331ee1gw1fb5lfcb484j20zg0pmtf7.jpg" alt=""></p>
+<p><br><br>Android Studio生成trace文件的方法:</p>
+<p><img src="http://ww2.sinaimg.cn/large/8b331ee1gw1fb5lgu5dsmj21kw0fmgpk.jpg" alt=""></p>
+<p>生成的trace文件将显示在Captures窗口</p>
+<p><img src="http://ww2.sinaimg.cn/large/8b331ee1gw1fb5lx8hffej20a707jmxe.jpg" alt=""><br>直接把trace文件拖到安装了ADT插件的Eclipse就能打开。</p>
+<h3 id="2-Timeline-Panel"><a href="#2-Timeline-Panel" class="headerlink" title="2.Timeline Panel"></a>2.Timeline Panel</h3><p>Timeline展示各个线程占用CPU的情况。<br>横轴为从开始到结束trace的CPU时间，右边纵轴表示各个线程，每一横排表示线程占用CPU的情况。这里主要看主线程main</p>
+<p><img src="http://ww1.sinaimg.cn/large/8b331ee1gw1fb5lrgshrqj21kw07jtbu.jpg" alt=""></p>
+<p>放大后的效果如图，每个method用不同的颜色表示，展示CPU调用该方法到结束调用的时间。</p>
+<p><img src="http://ww1.sinaimg.cn/large/8b331ee1gw1fb5m32u3j6j21am0bcn0k.jpg" alt=""></p>
+<h3 id="3-Profile-Panel"><a href="#3-Profile-Panel" class="headerlink" title="3.Profile Panel"></a>3.Profile Panel</h3><p>Profile Panel展示了方法全名，方法耗时，调用次数，及方法的调用链关系。<br>在这里调用方法称为”parent”,被调方法称为”children”.</p>
+<p><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fb5mewco9uj21kw0ngtsb.jpg" alt=""></p>
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>《High Performance Android Apps》</p>
+<p><a href="https://developer.android.com/studio/profile/traceview.html" target="_blank" rel="external">https://developer.android.com/studio/profile/traceview.html</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://developer.android.com/studio/profile/traceview.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;TraceView&lt;/a&gt;是DDMS中的工具，可以用来定位Android
+    
+    </summary>
+    
+      <category term="工具 Android" scheme="http://felixzhang00.github.io/categories/%E5%B7%A5%E5%85%B7-Android/"/>
+    
+    
+      <category term="工具 Android" scheme="http://felixzhang00.github.io/tags/%E5%B7%A5%E5%85%B7-Android/"/>
+    
+  </entry>
+  
+  <entry>
     <title>代码浏览工具OpenGrok</title>
     <link href="http://felixzhang00.github.io/2016/12/25/2016-12-25-%E4%BB%A3%E7%A0%81%E6%B5%8F%E8%A7%88%E5%B7%A5%E5%85%B7OpenGrok/"/>
     <id>http://felixzhang00.github.io/2016/12/25/2016-12-25-代码浏览工具OpenGrok/</id>
     <published>2016-12-25T03:38:22.000Z</published>
-    <updated>2016-12-25T03:48:50.000Z</updated>
+    <updated>2016-12-27T12:38:02.000Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://opengrok.github.io/OpenGrok/" target="_blank" rel="external">OpenGrok</a>是一款强大的跨平台代码阅读工具，许多在线源码查看网站都是使用它来搭建的，比如著名的Android在线源码查看网站<a href="http://androidxref.com/" target="_blank" rel="external">androidxref</a>.</p>
 <p><br><br><br><br><br></p>
@@ -76,6 +113,8 @@
     
       <category term="工具" scheme="http://felixzhang00.github.io/categories/%E5%B7%A5%E5%85%B7/"/>
     
+    
+      <category term="工具" scheme="http://felixzhang00.github.io/tags/%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
@@ -996,25 +1035,6 @@ Rx、Gx、Bx分别为为pixel(x+1,y)与pixel(x-1,y)对应RGB的差值。
     
     
       <category term="算法" scheme="http://felixzhang00.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>blog迁移</title>
-    <link href="http://felixzhang00.github.io/2015/04/03/2015-04-03-blog%E8%BF%81%E7%A7%BB/"/>
-    <id>http://felixzhang00.github.io/2015/04/03/2015-04-03-blog迁移/</id>
-    <published>2015-04-03T10:09:53.000Z</published>
-    <updated>2015-04-03T10:28:04.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>曾经花了一天时间才吭哧吭哧在github上搭建并写出第一篇blog，后来就再也没写过。<br>虽然用github写blog很酷，但我觉得自己应该拿最易上手的工具来写blog，以此养成写东西分享的习惯，达到此目的后再来追求跟酷炫的效果和更个性化的功能。通过对比各家博客平台，最终我选择了CSDN，这是我的<a href="http://blog.csdn.net/u012455213" target="_blank" rel="external">blog地址</a>.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;曾经花了一天时间才吭哧吭哧在github上搭建并写出第一篇blog，后来就再也没写过。&lt;br&gt;虽然用github写blog很酷，但我觉得自己应该拿最易上手的工具来写blog，以此养成写东西分享的习惯，达到此目的后再来追求跟酷炫的效果和更个性化的功能。通过对比各家博客平台，最
-    
-    </summary>
-    
     
   </entry>
   
