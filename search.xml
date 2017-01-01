@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[sample-mock-api]]></title>
+      <title><![CDATA[simple-mock-api]]></title>
       <url>http://felixzhang00.github.io/2017/01/01/simple-mock-api/</url>
       <content type="html"><![CDATA[<p>项目中有一个Activiy需要轮询多个接口，实时刷新数据。这里很多业务逻辑都需要依赖当前的状态，所以简单写了一个服务端，用于生成一些mock data，并且支持数据实时刷新。</p>
 <p>项目地址：<a href="https://github.com/FelixZhang00/simple-mock-api" target="_blank" rel="external">simple-mock-api</a></p>
