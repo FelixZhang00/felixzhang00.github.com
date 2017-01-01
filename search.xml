@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title><![CDATA[sample-mock-api]]></title>
+      <url>http://felixzhang00.github.io/2017/01/01/2017-01-01-simple-mock-api/</url>
+      <content type="html"><![CDATA[<p>项目中有一个Activiy需要轮询多个接口，实时刷新数据。这里很多业务逻辑都需要依赖当前的状态，所以简单写了一个服务端，用于生成一些mock data，并且支持数据实时刷新。</p>
+<p>项目地址：<a href="https://github.com/FelixZhang00/simple-mock-api" target="_blank" rel="external">simple-mock-api</a></p>
+<p>挂到<a href="https://www.qcloud.com/" target="_blank" rel="external">腾讯云</a>上就可以公网访问了。</p>
+<hr>
+<p>Use <a href="https://github.com/typicode/json-server" target="_blank" rel="external">json-server</a> make this sample mock api server.</p>
+<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><ol>
+<li>checkout this project,and cd</li>
+<li>type <code>npm install</code> in terminal to install dependences</li>
+<li>run <code>node app.js</code></li>
+<li>get result via your configed cgi，like <a href="http://localhost:3000/get_match_players" target="_blank" rel="external">http://localhost:3000/get_match_players</a></li>
+</ol>
+<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><p>You can config </p>
+<pre><code>cgi，
+default json file,
+custom handle the request, modify json response
+</code></pre><h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>Create a <code>get_match_detail.json</code> file in <code>data</code> folder.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"state"</span>: <span class="number">1</span>,</div><div class="line">  <span class="attr">"title"</span>:<span class="string">"NBA"</span>,</div><div class="line">  <span class="attr">"time"</span>:<span class="string">"2017-01-01"</span>,</div><div class="line">  <span class="attr">"homescore"</span>: <span class="string">"101"</span>,</div><div class="line">  <span class="attr">"guestscore"</span>: <span class="string">"115"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>In <code>config.js</code> config you mock api</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">var config = [</div><div class="line">&#123;</div><div class="line">	"cgi":"/get_match_detail",</div><div class="line">	"filepath":"data/get_match_detail.json",</div><div class="line">	"need_cache":true,</div><div class="line">	"hookfunc":func_get_match_detail</div><div class="line">&#125;,</div><div class="line">&#123;</div><div class="line">	"cgi":"/get_match_players",</div><div class="line">	"filepath":"data/get_match_players.json",</div><div class="line">	"need_cache":false,</div><div class="line">	"hookfunc":func_get_match_players</div><div class="line">&#125;,</div><div class="line"></div><div class="line">];</div></pre></td></tr></table></figure>
+<p>You can custom handle the request by define your custom “hookfunc”, like this:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> func_get_match_detail = <span class="function"><span class="keyword">function</span>(<span class="params">defaultObj,req</span>) </span>&#123;</div><div class="line">	<span class="comment">// increase homescore every time</span></div><div class="line">	<span class="keyword">var</span> homescore = <span class="built_in">parseInt</span>(defaultObj.homescore)+<span class="number">1</span>+<span class="string">""</span>;</div><div class="line">	defaultObj.homescore = homescore;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The param <code>defaultObj</code> means the parsed json object you defined in the key “filepath”. </p>
+<p>If the key “need_cache” seted true, than your hookfunc can change the defaultObj in the cache forever.</p>
+<h3 id="Start-JSON-Server"><a href="#Start-JSON-Server" class="headerlink" title="Start JSON Server"></a>Start JSON Server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ node app.js</div></pre></td></tr></table></figure>
+<p>Now if you go to <a href="http://localhost:3000/get_match_detail" target="_blank" rel="external">http://localhost:3000/get_match_detail</a>, you’ll get</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">state: 1,</div><div class="line">title: "NBA",</div><div class="line">time: "2017-01-01",</div><div class="line">homescore: "101",</div><div class="line">guestscore: "115"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>and the homescore’s value changed every time when you go to the same link.</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[使用TraceView工具定位耗时操作]]></title>
       <url>http://felixzhang00.github.io/2016/12/27/2016-12-27-%E9%80%9A%E8%BF%87trace%E6%96%87%E4%BB%B6%E5%AE%9A%E4%BD%8D%E8%80%97%E6%97%B6%E6%93%8D%E4%BD%9C/</url>
       <content type="html"><![CDATA[<p><a href="https://developer.android.com/studio/profile/traceview.html" target="_blank" rel="external">TraceView</a>是DDMS中的工具，可以用来定位Android app中java方法的耗时操作。</p>
