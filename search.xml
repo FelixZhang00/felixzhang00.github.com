@@ -4,6 +4,21 @@
   
     
     <entry>
+      <title><![CDATA[Python断点调试]]></title>
+      <url>http://felixzhang00.github.io/2017/01/07/Python%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/</url>
+      <content type="html"><![CDATA[<p>很多项目是用python写构建脚本的，比如微信最近开源的终端跨平台组件 <a href="https://github.com/Tencent/mars" target="_blank" rel="external">Mars</a><br>本文将以mars为例简单介绍下如何用<a href="https://www.jetbrains.com/pycharm/" target="_blank" rel="external">PyCharm</a>对python进行断点调试。</p>
+<hr>
+<h3 id="导入代码"><a href="#导入代码" class="headerlink" title="导入代码"></a>导入代码</h3><p>open整个mars项目，切换合适的python版本，mars需要python2.7版本。<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gw1fbifkuh496j20h81f0q9j.jpg" alt=""><br><img src="http://ww2.sinaimg.cn/large/8b331ee1gw1fbifke5anpj20xm0du0xi.jpg" alt=""></p>
+<h3 id="打断点"><a href="#打断点" class="headerlink" title="打断点"></a>打断点</h3><p><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fbifnm18q9j20gk04gt94.jpg" alt=""></p>
+<h3 id="Debug-it"><a href="#Debug-it" class="headerlink" title="Debug it"></a>Debug it</h3><p><img src="http://ww1.sinaimg.cn/large/8b331ee1gw1fbifo65ncyj20po0v6wm7.jpg" alt=""></p>
+<p>当代码中需要input时，切换到Console窗口输入<br><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fbifq7bsxlj20nm0e4jvb.jpg" alt=""></p>
+<p><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fbifqp5rcaj211q0lutf5.jpg" alt=""></p>
+<p>用PyCharm调试跟Android Studio一样，毕竟都是一家公司的产品。</p>
+<hr>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Stetho工具介绍]]></title>
       <url>http://felixzhang00.github.io/2017/01/05/Stetho%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/</url>
       <content type="html"><![CDATA[<p><a href="http://facebook.github.io/stetho/" target="_blank" rel="external">stetho</a>是Facebook推出的安卓APP网络诊断和数据监控的工具，接入方便，功能强大，是开发者必备的好工具。</p>

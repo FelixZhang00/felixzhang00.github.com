@@ -4,7 +4,7 @@
     <!-- Title -->
     
     <title>
-        KMP子字符串查找算法 | FelixZhang&#39;s Blog
+        Python断点调试 | FelixZhang&#39;s Blog
     </title>
     
     <!-- Favicons -->
@@ -40,7 +40,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://felixzhang00.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="KMP子字符串查找算法 | FelixZhang&#39;s Blog">
+    <meta property="og:title" content="Python断点调试 | FelixZhang&#39;s Blog">
     <meta property="og:description" content="null">
     
      <!--[if lte IE 9]>
@@ -217,7 +217,7 @@
 	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
 		for="post-toc-trigger-btn">
 			
-			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DFA（确定有限状态机）模拟"><span class="post-toc-number">2.</span> <span class="post-toc-text">DFA（确定有限状态机）模拟</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#构造DFA"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">构造DFA</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#编码实现"><span class="post-toc-number">3.</span> <span class="post-toc-text">编码实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#用暴力算法实现子字符串查找算法"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">用暴力算法实现子字符串查找算法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#KMP查找"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">KMP查找</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#构造DFA-1"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">构造DFA</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优缺点"><span class="post-toc-number">4.</span> <span class="post-toc-text">优缺点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考</span></a></li></ol>
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#导入代码"><span class="post-toc-number">1.</span> <span class="post-toc-text">导入代码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#打断点"><span class="post-toc-number">2.</span> <span class="post-toc-text">打断点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Debug-it"><span class="post-toc-number">3.</span> <span class="post-toc-text">Debug it</span></a></li></ol>
 		
 <!--			<li class="mdl-menu__item">Some Action</li>-->
 	</ul>
@@ -251,7 +251,7 @@
 		
 	
         <p class="article-headline-p">
-            KMP子字符串查找算法
+            Python断点调试
         </p>
     </div>
 
@@ -269,7 +269,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Felix</strong>
-        <span>5月 02, 2015</span>
+        <span>1月 07, 2017</span>
     </div>
     
     <div class="section-spacer"></div>
@@ -289,7 +289,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/算法/">算法</a>
+        <a class="post_tag-link" href="/tags/工具-python/">工具 python</a>
     </ul>
     
     <!-- Share -->
@@ -304,28 +304,28 @@
     
 
     <!-- Share Twitter -->
-    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=KMP子字符串查找算法&url=http://felixzhang00.github.io//2015/05/02/2015-05-02- KMP子字符串查找算法/index.html&via=Felix" target="_blank">
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Python断点调试&url=http://felixzhang00.github.io//2017/01/07/Python断点调试/index.html&via=Felix" target="_blank">
         <li class="mdl-menu__item">
             分享到 Twitter
         </li>
     </a>
 
     <!-- Share Google+ -->
-    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2015/05/02/2015-05-02- KMP子字符串查找算法/index.html" target="_blank">
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2017/01/07/Python断点调试/index.html" target="_blank">
         <li class="mdl-menu__item">
             分享到 Google+
         </li>
     </a>
 
     <!-- Share Weibo -->
-    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=KMP子字符串查找算法&url=http://felixzhang00.github.io//2015/05/02/2015-05-02- KMP子字符串查找算法/index.html&pic=&searchPic=false&style=simple" target="_blank">
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Python断点调试&url=http://felixzhang00.github.io//2017/01/07/Python断点调试/index.html&pic=&searchPic=false&style=simple" target="_blank">
         <li class="mdl-menu__item">
             分享到微博
         </li>
     </a>
 
     <!-- Share LinkedIn -->
-    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2015/05/02/2015-05-02- KMP子字符串查找算法/index.html&title=KMP子字符串查找算法" target="_blank">
+    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2017/01/07/Python断点调试/index.html&title=Python断点调试" target="_blank">
         <li class="mdl-menu__item">
             分享到 LinkedIn
         </li>
@@ -338,17 +338,15 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
 	
-		<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>算法的基本思想是：当出现不匹配时，就能知晓一部分文本的内容，可以利用这些信息避免将指针回退到所有这些已知的字符串之前。</p>
-<h2 id="DFA（确定有限状态机）模拟"><a href="#DFA（确定有限状态机）模拟" class="headerlink" title="DFA（确定有限状态机）模拟"></a>DFA（确定有限状态机）模拟</h2><p>提前判断如何重新查找，而这种判断只取决于模式本身，所以可以对模式的字符序列做一个确定有限状态机。</p>
-<p>DFA的数据结构表示为二维数组dfa[R][M]，其中R为指定字典中的字符集的个数（比如ASCII为256），M为匹配字符串pat的长度，状态的意思是文本中某个位置i匹配pat的程度，0状态为未匹配状态，M状态为终止状态，找到了完整匹配的字符串。<br>如图中R=3，M=6，二维数组中的值指向下一个状态。<br><img src="http://7viip0.com1.z0.glb.clouddn.com/KMP-2015-05-02.jpeg"></p>
-<h3 id="构造DFA"><a href="#构造DFA" class="headerlink" title="构造DFA"></a>构造DFA</h3><p>穷举模式pat的所有可能情况，将这些情况用状态图表示。其中X记录匹配失败时重启的索引位置。</p>
-<p><img src="http://7viip0.com1.z0.glb.clouddn.com/KMP--2-2015-05-02.png"></p>
-<h2 id="编码实现"><a href="#编码实现" class="headerlink" title="编码实现"></a>编码实现</h2><h3 id="用暴力算法实现子字符串查找算法"><a href="#用暴力算法实现子字符串查找算法" class="headerlink" title="用暴力算法实现子字符串查找算法"></a>用暴力算法实现子字符串查找算法</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(String txt, String pat)</span> </span>&#123;</div><div class="line">     <span class="keyword">int</span> i, N = txt.length();</div><div class="line">     <span class="keyword">int</span> j, M = pat.length();</div><div class="line"></div><div class="line">     <span class="keyword">for</span> (i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; N &amp;&amp; j &lt; M; i++) &#123;</div><div class="line">         <span class="keyword">if</span> (txt.charAt(i) == pat.charAt(j)) &#123;</div><div class="line">             j++;</div><div class="line">         &#125; <span class="keyword">else</span> &#123;  <span class="comment">//显式回退</span></div><div class="line">             i-=j;</div><div class="line">             j=<span class="number">0</span>;</div><div class="line">         &#125;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     <span class="keyword">if</span> (j==M) <span class="keyword">return</span> i-M;</div><div class="line">     <span class="keyword">return</span> N;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-</code></pre><h3 id="KMP查找"><a href="#KMP查找" class="headerlink" title="KMP查找"></a>KMP查找</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">    * <span class="doctag">@return</span> pat在txt中开始出现的位置，如果等于txt.length()表示没有找到</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(String txt)</span> </span>&#123;</div><div class="line">       <span class="keyword">int</span> M = pat.length();</div><div class="line">       <span class="keyword">int</span> N = txt.length();</div><div class="line"></div><div class="line">       <span class="keyword">int</span> i, j;  <span class="comment">//i指向txt，j指向pat</span></div><div class="line">       <span class="keyword">for</span> (i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; N &amp;&amp; j &lt; M; i++) &#123;</div><div class="line">           j = dfa[txt.charAt(i)][j];</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">if</span> (j == M) <span class="keyword">return</span> i - M;   <span class="comment">//匹配</span></div><div class="line">       <span class="keyword">return</span> N;                   <span class="comment">//不匹配</span></div><div class="line"></div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-</code></pre><h3 id="构造DFA-1"><a href="#构造DFA-1" class="headerlink" title="构造DFA"></a>构造DFA</h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> R;       <span class="comment">// the radix</span></div><div class="line">   <span class="keyword">private</span> <span class="keyword">int</span>[][] dfa;       <span class="comment">// the KMP automoton</span></div><div class="line"></div><div class="line">   <span class="keyword">private</span> String pat;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="title">KMP</span><span class="params">(String pat)</span> </span>&#123;</div><div class="line">       <span class="keyword">this</span>.R = <span class="number">256</span>;   <span class="comment">//设置字典大小</span></div><div class="line">       <span class="keyword">this</span>.pat = pat;</div><div class="line"></div><div class="line">       <span class="comment">//构造pat对应的dfa</span></div><div class="line">       <span class="keyword">int</span> M = pat.length();</div><div class="line">       dfa = <span class="keyword">new</span> <span class="keyword">int</span>[R][M];</div><div class="line">       dfa[pat.charAt(<span class="number">0</span>)][<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> X = <span class="number">0</span>, j = <span class="number">1</span>; j &lt; M; j++) &#123;  <span class="comment">//X记录匹配失败时的索引位置,j指向pat</span></div><div class="line"></div><div class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">0</span>; c &lt; R; c++) &#123;   <span class="comment">//对于匹配失败的情况，直接复制重启状态</span></div><div class="line">               dfa[c][j] = dfa[c][X];</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           dfa[pat.charAt(j)][j] = j + <span class="number">1</span>;           <span class="comment">//匹配成功的指向下一个状态</span></div><div class="line"></div><div class="line">           X = dfa[pat.charAt(j)][X]; <span class="comment">//更新重启位置X</span></div><div class="line">       &#125;</div><div class="line"></div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-</code></pre><h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><pre><code>优点：适合在长度不确定的输入流中进行查找，不需要在输入中回退。
-缺点：最坏的情况（在重复性很高的文本中查找重复性很高的模式）在实际应用中很少出现，还不如使用暴力算法来的容易，性能也差不了多少。
-</code></pre><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://algs4.cs.princeton.edu/home/" target="_blank" rel="external">Algorithms, 4th Edition by Robert Sedgewick and Kevin Wayne</a></p>
+		<p>很多项目是用python写构建脚本的，比如微信最近开源的终端跨平台组件 <a href="https://github.com/Tencent/mars" target="_blank" rel="external">Mars</a><br>本文将以mars为例简单介绍下如何用<a href="https://www.jetbrains.com/pycharm/" target="_blank" rel="external">PyCharm</a>对python进行断点调试。</p>
+<hr>
+<h3 id="导入代码"><a href="#导入代码" class="headerlink" title="导入代码"></a>导入代码</h3><p>open整个mars项目，切换合适的python版本，mars需要python2.7版本。<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gw1fbifkuh496j20h81f0q9j.jpg" alt=""><br><img src="http://ww2.sinaimg.cn/large/8b331ee1gw1fbifke5anpj20xm0du0xi.jpg" alt=""></p>
+<h3 id="打断点"><a href="#打断点" class="headerlink" title="打断点"></a>打断点</h3><p><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fbifnm18q9j20gk04gt94.jpg" alt=""></p>
+<h3 id="Debug-it"><a href="#Debug-it" class="headerlink" title="Debug it"></a>Debug it</h3><p><img src="http://ww1.sinaimg.cn/large/8b331ee1gw1fbifo65ncyj20po0v6wm7.jpg" alt=""></p>
+<p>当代码中需要input时，切换到Console窗口输入<br><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fbifq7bsxlj20nm0e4jvb.jpg" alt=""></p>
+<p><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fbifqp5rcaj211q0lutf5.jpg" alt=""></p>
+<p>用PyCharm调试跟Android Studio一样，毕竟都是一家公司的产品。</p>
+<hr>
 
 	
 	
@@ -377,9 +375,9 @@
 <div id="comments">
     <!-- 多说评论框 start -->
         <div class="ds-thread" 
-            data-thread-key="2015/05/02/2015-05-02- KMP子字符串查找算法/" 
-            data-url="http://felixzhang00.github.io/2015/05/02/2015-05-02- KMP子字符串查找算法/"
-            data-title="KMP子字符串查找算法"></div>
+            data-thread-key="2017/01/07/Python断点调试/" 
+            data-url="http://felixzhang00.github.io/2017/01/07/Python断点调试/"
+            data-title="Python断点调试"></div>
     <!-- 多说评论框 end -->
 </div>
 
@@ -393,21 +391,13 @@
     
     <!-- Prev Nav -->
     
-        <a href="/2015/05/05/2015-05-05-游程编码算法/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2015/04/30/2015-04-30-滑动卡片式效果/" id="post_nav-older" class="next-content">
+        <a href="/2017/01/05/Stetho工具介绍/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
