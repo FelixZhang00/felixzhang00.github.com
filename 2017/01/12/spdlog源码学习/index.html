@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- Title -->
+    
+    <title>
+        spdlog源码学习 | FelixZhang&#39;s Blog
+    </title>
+    
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+    
+    <!-- Meta & INfo -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Felix">
+    <meta name="description" content="null">
+    <meta name="keywords" content="null">
+    
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="FelixZhang&#39;s Blog">
+    
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://felixzhang00.github.io">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="spdlog源码学习 | FelixZhang&#39;s Blog">
+    <meta property="og:description" content="null">
+    
+     <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+        
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+    
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+	body, html{
+		font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+	}
+	
+    a{
+        color: #00838F
+    }
+    
+    .mdl-card__media,
+    #search-label,
+    #search-form-label:after,
+    #scheme-Paradox .hot_tags-count,
+    #scheme-Paradox .sidebar_archives-count,
+    #scheme-Paradox .sidebar-colored .sidebar-header,
+    #scheme-Paradox .sidebar-colored .sidebar-badge{
+        background-color: #0097A7 !important
+    }
+    
+	/* Sidebar User Drop Down Menu Text Color */
+	#scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+    #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{
+        color: #0097A7 !important
+    }
+    
+    #post_entry-right-info,
+    .sidebar-colored .sidebar-nav li:hover > a,
+    .sidebar-colored .sidebar-nav li:hover > a i,
+    .sidebar-colored .sidebar-nav li > a:hover,
+    .sidebar-colored .sidebar-nav li > a:hover i,
+    .sidebar-colored .sidebar-nav li > a:focus i,
+    .sidebar-colored .sidebar-nav > .open > a,
+    .sidebar-colored .sidebar-nav > .open > a:hover,
+    .sidebar-colored .sidebar-nav > .open > a:focus,
+    #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a{
+        color: #0097A7 !important
+    }
+    
+    .toTop{
+        background: #757575 !important
+    }
+		
+	.material-layout .material-post>.material-nav,
+	.material-layout .material-index>.material-nav,
+	.material-nav a{
+		color: #757575;
+	}
+		
+	#scheme-Paradox .MD-burger-layer {
+		background-color: #757575;
+	}
+
+	#scheme-Paradox #post-toc-trigger-btn{
+		color: #757575;
+	}
+	
+	.post-toc a:hover{
+		color: #00838F;
+		text-decoration: underline;
+	}
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+        body{
+            background-color: #F5F5F5
+        }
+		
+		/* blog_info bottom background */
+        #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+            background-color: #fff;
+        }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+        .fade {
+            transition: all 800ms linear;
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            opacity: 1;
+        }
+
+        .fade.out{
+            opacity: 0;
+        }
+    </style>
+
+	<script src="/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="/css/highlight/solarized-dark.css">
+	
+	<!-- UC Browser Compatible-->
+	<script>
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf('ucbrowser')>0) {
+			document.write('<link rel="stylesheet" href="/css/uc.css">');
+		   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+		}
+	</script>
+    
+    <!-- Custom Head -->
+    
+</head>
+	
+	
+
+    <body id="scheme-Paradox">
+
+		
+        <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+				
+			
+			
+            <!-- Main Container -->
+            <main class="material-layout__content" id="main">
+				
+                <!-- Top Anchor -->
+                <div id="top"></div>
+				
+				
+                <!-- Hamburger Button -->
+                <button class="MD-burger-icon sidebar-toggle">
+                    <span class="MD-burger-layer"></span>
+                </button>
+				
+				
+                <!-- Post TOC -->
+
+    
+	<!-- Back Button -->
+<!--
+	<div class="material-back" id="backhome-div" tabindex="0">
+		<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#" onclick="window.history.back();return false;" target="_self" role="button" data-upgraded=",MaterialButton,MaterialRipple">
+			<i class="material-icons" role="presentation">arrow_back</i>
+			<span class="mdl-button__ripple-container">
+				<span class="mdl-ripple"></span>
+			</span>
+		</a>
+	</div>			
+-->
+	<!-- Left aligned menu below button -->
+	<button id="post-toc-trigger-btn"
+			class="mdl-button mdl-js-button mdl-button--icon">
+	  <i class="material-icons">format_list_numbered</i>
+	</button>
+
+	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+		for="post-toc-trigger-btn">
+			
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Features"><span class="post-toc-number">1.</span> <span class="post-toc-text">Features</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#核心设计"><span class="post-toc-number">2.</span> <span class="post-toc-text">核心设计</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现Rotating-file写日志"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">实现Rotating file写日志</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现异步写日志"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">实现异步写日志</span></a></li></ol></li></ol>
+		
+<!--			<li class="mdl-menu__item">Some Action</li>-->
+	</ul>
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+		
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+	<!-- Paradox Post Header -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+				<script>
+    
+    var randomNum;
+    randomNum = Math.floor(Math.random() * 5 + 1);
+    
+    $(".post_thumbnail-random").css('background-image', 'url(' + '/img/random/' + randomNum + '.png' + ')');
+    
+</script>
+
+		
+	
+        <p class="article-headline-p">
+            spdlog源码学习
+        </p>
+    </div>
+
+	
+
+				
+				
+					<!-- Paradox Post Info -->
+					<div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+    
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Felix</strong>
+        <span>1月 12, 2017</span>
+    </div>
+    
+    <div class="section-spacer"></div>
+	
+    <!-- Favorite -->
+<!--
+    <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+        <i class="material-icons" role="presentation">favorite</i>
+        <span class="visuallyhidden">favorites</span>
+    </button>
+-->
+    
+    <!-- Tags (bookmark) -->
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/c-开源代码/">c++ 开源代码</a>
+    </ul>
+    
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+
+    
+
+    
+
+    <!-- Share Twitter -->
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=spdlog源码学习&url=http://felixzhang00.github.io//2017/01/12/spdlog源码学习/index.html&via=Felix" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Twitter
+        </li>
+    </a>
+
+    <!-- Share Google+ -->
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2017/01/12/spdlog源码学习/index.html" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Google+
+        </li>
+    </a>
+
+    <!-- Share Weibo -->
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=spdlog源码学习&url=http://felixzhang00.github.io//2017/01/12/spdlog源码学习/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <li class="mdl-menu__item">
+            分享到微博
+        </li>
+    </a>
+
+    <!-- Share LinkedIn -->
+    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2017/01/12/spdlog源码学习/index.html&title=spdlog源码学习" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 LinkedIn
+        </li>
+    </a>
+</ul>
+
+</div>
+				
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+	
+		<p><a href="https://github.com/gabime/spdlog" target="_blank" rel="external">spdlog</a>是一个用c++11实现的高性能日志库。<br>接入方便，功能丰富，代码可读性较高。</p>
+<hr>
+<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><ul>
+<li>Very fast - performance is the primary goal </li>
+<li>Headers only, just copy and use.</li>
+<li>Feature rich  using the excellent <a href="https://github.com/fmtlib/fmt" target="_blank" rel="external">fmt</a> library.</li>
+<li>Extremely fast asynchronous mode (optional) - using lockfree queues and other tricks to reach millions of calls/sec.</li>
+<li><a href="https://github.com/gabime/spdlog/wiki/3.-Custom-formatting" target="_blank" rel="external">Custom</a> formatting.</li>
+<li>Multi/Single threaded loggers.</li>
+<li>Various log targets:<ul>
+<li>Rotating log files.</li>
+<li>Daily log files.</li>
+<li>Console logging (colors supported).</li>
+<li>syslog.</li>
+<li>Windows debugger </li>
+<li>Easily extendable with custom log targets  (just implement a single function in the sink interface).</li>
+</ul>
+</li>
+<li>Severity based filtering - threshold levels can be modified in runtime as well as in compile time.</li>
+</ul>
+<hr>
+<h2 id="核心设计"><a href="#核心设计" class="headerlink" title="核心设计"></a>核心设计</h2><p>spdlog中定义了一系列Sink类，作为实际上把log输出到指定目标的对象，每一个Sink唯一对应一个log的输出目标（如console、文件、db）.<br>每一个logger包含一个sink列表，每当上层调用logger的log方法写日志时，logger就会调用sink列表中的每一个sink的 <code>sink(log_msg)</code> 函数，真正往目标中写日志。</p>
+<h3 id="实现Rotating-file写日志"><a href="#实现Rotating-file写日志" class="headerlink" title="实现Rotating file写日志"></a>实现Rotating file写日志</h3><p>当前正在写日志的文件名一直都是log.txt。<br>当log.txt写不下时，把它重命名为log1.txt,再重新打开一个log.txt文件。<br>多个文件循环也依次类推。</p>
+<pre><code>// Rotate files:
+// log.txt -&gt; log.1.txt
+// log.1.txt -&gt; log2.txt
+// log.2.txt -&gt; log3.txt
+// log.3.txt -&gt; delete
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * Rotating file sink based on size</div><div class="line"> */</div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> Mutex&gt;</div><div class="line"><span class="keyword">class</span> rotating_file_sink : <span class="keyword">public</span> base_sink &lt; Mutex &gt;</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    rotating_file_sink(<span class="keyword">const</span> <span class="keyword">filename_t</span> &amp;base_filename, <span class="keyword">const</span> <span class="keyword">filename_t</span> &amp;extension,</div><div class="line">                       <span class="built_in">std</span>::<span class="keyword">size_t</span> max_size, <span class="built_in">std</span>::<span class="keyword">size_t</span> max_files                       ) :</div><div class="line">    &#123;</div><div class="line">        _file_helper.open(calc_filename(_base_filename, <span class="number">0</span>, _extension));</div><div class="line">        _current_size = _file_helper.size(); <span class="comment">//expensive. called only once</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">protected</span>:</div><div class="line">    <span class="keyword">void</span> _sink_it(<span class="keyword">const</span> details::log_msg&amp; msg) override</div><div class="line">    &#123;</div><div class="line">        _current_size += msg.formatted.size();</div><div class="line">        <span class="keyword">if</span> (_current_size &gt; _max_size)</div><div class="line">        &#123;</div><div class="line">            _rotate();</div><div class="line">            _current_size = msg.formatted.size();</div><div class="line">        &#125;</div><div class="line">        _file_helper.write(msg);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">static</span> filename_t <span class="title">calc_filename</span><span class="params">(<span class="keyword">const</span> <span class="keyword">filename_t</span>&amp; filename, <span class="built_in">std</span>::<span class="keyword">size_t</span> index, <span class="keyword">const</span> <span class="keyword">filename_t</span>&amp; extension)</span></span></div><div class="line">    &#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">        <span class="keyword">return</span> w.str();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">void</span> _rotate()</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">using</span> details::os::filename_to_str;</div><div class="line">        _file_helper.close();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> i = _max_files; i &gt; <span class="number">0</span>; --i)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">filename_t</span> src = calc_filename(_base_filename, i - <span class="number">1</span>, _extension);</div><div class="line">            <span class="keyword">filename_t</span> target = calc_filename(_base_filename, i, _extension);</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (details::file_helper::file_exists(target))</div><div class="line">            &#123;</div><div class="line">                details::os::remove(target);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (details::file_helper::file_exists(src) &amp;&amp; details::os::rename(src, target))</div><div class="line">            &#123;</div><div class="line">				<span class="comment">//...</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        _file_helper.reopen(<span class="literal">true</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">filename_t</span> _base_filename;</div><div class="line">    <span class="keyword">filename_t</span> _extension;</div><div class="line">    <span class="built_in">std</span>::<span class="keyword">size_t</span> _max_size;</div><div class="line">    <span class="built_in">std</span>::<span class="keyword">size_t</span> _max_files;</div><div class="line">    <span class="built_in">std</span>::<span class="keyword">size_t</span> _current_size;</div><div class="line">    details::file_helper _file_helper;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="实现异步写日志"><a href="#实现异步写日志" class="headerlink" title="实现异步写日志"></a>实现异步写日志</h3><p>所有异步写日志的请求都会被push到一个固定大小的队列中。<br>有一个工作线程会不停的从队列中pop一条日志消息，并最终写到日志中。</p>
+<p>调用方：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">async_example</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">size_t</span> q_size = <span class="number">4096</span>; <span class="comment">//queue size must be power of 2</span></div><div class="line">    spdlog::set_async_mode(q_size);</div><div class="line">    <span class="keyword">auto</span> async_file = spd::daily_logger_st(<span class="string">"async_file_logger"</span>, <span class="string">"logs/async_log.txt"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; ++i)</div><div class="line">        async_file-&gt;info(<span class="string">"Async message #&#123;&#125;"</span>, i);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>具体实现：<br>开启一个工作线程，在async_log初始时就开始工作了。并且在析构是被关闭<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Async Logger implementation</span></div><div class="line"><span class="comment">// Use an async_sink (queue per logger) to perform the logging in a worker thread</span></div><div class="line"></div><div class="line"><span class="comment">//一个工作线程，在async_log初始时就开始工作了。并且在析构是被关闭</span></div><div class="line"><span class="comment">// worker thread</span></div><div class="line"><span class="built_in">std</span>::thread _worker_thread;</div><div class="line">_worker_thread(&amp;async_log_helper::worker_loop, <span class="keyword">this</span>)</div><div class="line"><span class="keyword">inline</span> <span class="keyword">void</span> spdlog::details::async_log_helper::worker_loop()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">try</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (_worker_warmup_cb) _worker_warmup_cb();</div><div class="line">        <span class="keyword">auto</span> last_pop = details::os::now();</div><div class="line">        <span class="keyword">auto</span> last_flush = last_pop;</div><div class="line">        <span class="keyword">while</span>(process_next_msg(last_pop, last_flush));</div><div class="line">        <span class="keyword">if</span> (_worker_teardown_cb) _worker_teardown_cb();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception &amp;ex)</div><div class="line">    &#123;</div><div class="line">        _err_handler(ex.what());</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span> (...)</div><div class="line">    &#123;</div><div class="line">        _err_handler(<span class="string">"Unknown exception"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">// Send to the worker thread termination message(level=off)</span></div><div class="line"><span class="comment">// and wait for it to finish gracefully</span></div><div class="line"><span class="keyword">inline</span> spdlog::details::async_log_helper::~async_log_helper()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">try</span></div><div class="line">    &#123;</div><div class="line">        push_msg(async_msg(async_msg_type::terminate));</div><div class="line">        _worker_thread.join();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span> (...) <span class="comment">// don't crash in destructor</span></div><div class="line">    &#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>从队列中取消息，如果是写日志的消息，则调用sink写日志。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//从队列中取消息，如果是写日志的消息，则调用sink写日志。</span></div><div class="line"><span class="comment">// process next message in the queue</span></div><div class="line"><span class="comment">// return true if this thread should still be active (while no terminate msg was received)</span></div><div class="line"><span class="keyword">inline</span> <span class="keyword">bool</span> spdlog::details::async_log_helper::process_next_msg(log_clock::time_point&amp; last_pop, log_clock::time_point&amp; last_flush)</div><div class="line">&#123;</div><div class="line">    async_msg incoming_async_msg;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (_q.dequeue(incoming_async_msg))</div><div class="line">    &#123;</div><div class="line">        last_pop = details::os::now();</div><div class="line">        <span class="keyword">switch</span> (incoming_async_msg.msg_type)</div><div class="line">        &#123;</div><div class="line">        <span class="keyword">case</span> async_msg_type::flush:</div><div class="line">            _flush_requested = <span class="literal">true</span>;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">        <span class="keyword">case</span> async_msg_type::terminate:</div><div class="line">            _flush_requested = <span class="literal">true</span>;</div><div class="line">            _terminate_requested = <span class="literal">true</span>;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            log_msg incoming_log_msg;</div><div class="line">            incoming_async_msg.fill_log_msg(incoming_log_msg);</div><div class="line">            _formatter-&gt;format(incoming_log_msg);</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;s : _sinks)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span>(s-&gt;should_log( incoming_log_msg.level))</div><div class="line">                &#123;</div><div class="line">                    s-&gt;<span class="built_in">log</span>(incoming_log_msg);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Handle empty queue..</span></div><div class="line">    <span class="comment">// This is the only place where the queue can terminate or flush to avoid losing messages already in the queue</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">auto</span> now = details::os::now();</div><div class="line">        handle_flush_interval(now, last_flush);</div><div class="line">        sleep_or_yield(now, last_pop);</div><div class="line">        <span class="keyword">return</span> !_terminate_requested;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>调用写日志，往队列里塞一条写日志消息。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">inline</span> <span class="keyword">void</span> spdlog::logger::<span class="built_in">log</span>(level::level_enum lvl, <span class="keyword">const</span> T&amp; msg)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (!should_log(lvl)) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">try</span></div><div class="line">    &#123;</div><div class="line">        details::<span class="function">log_msg <span class="title">log_msg</span><span class="params">(&amp;_name, lvl)</span></span>;</div><div class="line">        log_msg.raw &lt;&lt; msg;</div><div class="line">        _sink_it(log_msg);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception &amp;ex)</div><div class="line">    &#123;</div><div class="line">        _err_handler(ex.what());</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span> (...)</div><div class="line">    &#123;</div><div class="line">        _err_handler(<span class="string">"Unknown exception"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">inline</span> <span class="keyword">void</span> spdlog::async_logger::_sink_it(details::log_msg&amp; msg)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">try</span></div><div class="line">    &#123;</div><div class="line">        _async_log_helper-&gt;<span class="built_in">log</span>(msg);</div><div class="line">        <span class="keyword">if</span> (_should_flush_on(msg))</div><div class="line">            _async_log_helper-&gt;flush(<span class="literal">false</span>); <span class="comment">// do async flush</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span> (<span class="keyword">const</span> <span class="built_in">std</span>::exception &amp;ex)</div><div class="line">    &#123;</div><div class="line">        _err_handler(ex.what());</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span> (...)</div><div class="line">    &#123;</div><div class="line">        _err_handler(<span class="string">"Unknown exception"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 往队列里塞一条日志进去，准备被写</span></div><div class="line"><span class="comment">//Try to push and block until succeeded (if the policy is not to discard when the queue is full)</span></div><div class="line"><span class="keyword">inline</span> <span class="keyword">void</span> spdlog::details::async_log_helper::<span class="built_in">log</span>(<span class="keyword">const</span> details::log_msg&amp; msg)</div><div class="line">&#123;</div><div class="line">    push_msg(async_msg(msg));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">inline</span> <span class="keyword">void</span> spdlog::details::async_log_helper::push_msg(details::async_log_helper::async_msg&amp;&amp; new_msg)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (!_q.enqueue(<span class="built_in">std</span>::move(new_msg)) &amp;&amp; _overflow_policy != async_overflow_policy::discard_log_msg)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">auto</span> last_op_time = details::os::now();</div><div class="line">        <span class="keyword">auto</span> now = last_op_time;</div><div class="line">        <span class="keyword">do</span></div><div class="line">        &#123;</div><div class="line">            now = details::os::now();</div><div class="line">            sleep_or_yield(now, last_op_time);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span> (!_q.enqueue(<span class="built_in">std</span>::move(new_msg)));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>根据时间间隔让线程等待<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// spin, yield or sleep. use the time passed since last message as a hint</span></div><div class="line"><span class="keyword">inline</span> <span class="keyword">void</span> spdlog::details::async_log_helper::sleep_or_yield(<span class="keyword">const</span> spdlog::log_clock::time_point&amp; now, <span class="keyword">const</span> spdlog::log_clock::time_point&amp; last_op_time)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>::this_thread;</div><div class="line">    <span class="keyword">using</span> <span class="built_in">std</span>::chrono::milliseconds;</div><div class="line">    <span class="keyword">using</span> <span class="built_in">std</span>::chrono::microseconds;</div><div class="line"></div><div class="line">    <span class="keyword">auto</span> time_since_op = now - last_op_time;</div><div class="line"></div><div class="line">    <span class="comment">// spin upto 50 micros</span></div><div class="line">    <span class="keyword">if</span> (time_since_op &lt;= microseconds(<span class="number">50</span>))</div><div class="line">        <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    <span class="comment">// yield upto 150 micros</span></div><div class="line">    <span class="keyword">if</span> (time_since_op &lt;= microseconds(<span class="number">100</span>))</div><div class="line">        <span class="keyword">return</span> <span class="built_in">std</span>::this_thread::yield();</div><div class="line"></div><div class="line">    <span class="comment">// sleep for 20 ms upto 200 ms</span></div><div class="line">    <span class="keyword">if</span> (time_since_op &lt;= milliseconds(<span class="number">200</span>))</div><div class="line">        <span class="keyword">return</span> sleep_for(milliseconds(<span class="number">20</span>));</div><div class="line"></div><div class="line">    <span class="comment">// sleep for 200 ms</span></div><div class="line">    <span class="keyword">return</span> sleep_for(milliseconds(<span class="number">200</span>));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+	
+	
+	
+	
+</div>
+				
+				
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用多说评论 -->
+    <link rel="stylesheet" href="/css/duoshuo.min.css">
+<style>
+    #ds-thread #ds-reset .ds-post-button{
+        background-color: #0097A7 !important;
+    }
+    #ds-wrapper #ds-reset .ds-icons-32{
+        background-color: #0097A7 !important;
+    }
+    #ds-reset .ds-highlight {
+        color: #0097A7 !important;
+    }
+</style>
+<div id="comments">
+    <!-- 多说评论框 start -->
+        <div class="ds-thread" 
+            data-thread-key="2017/01/12/spdlog源码学习/" 
+            data-url="http://felixzhang00.github.io/2017/01/12/spdlog源码学习/"
+            data-title="spdlog源码学习"></div>
+    <!-- 多说评论框 end -->
+</div>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/01/07/Python断点调试/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+        </div>
+    </div>
+
+				
+				
+					<!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay "></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored  sidebar-fixed-left" role="navigation">
+	<div id="sidebar-main">
+	    <!-- Sidebar Header -->
+		<div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+    <i class="material-icons">clear_all</i>
+    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.jpg" alt="Felix's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        836828946@qq.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+		<!-- Sidebar Navigation  -->
+		<ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+			
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+						<i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    <li id="sidebar-first-li">
+        <a href="/" target="_self">
+            <i class="material-icons sidebar-material-icons">home</i>
+             主页
+        </a>
+    </li>
+
+    <!-- I'm Feeling Lucky -->
+<!--
+    <li class="dropdown">
+        <a href="" target="_self">
+            <i class="material-icons sidebar-material-icons">explore</i>
+             sidebar.imlucky
+        </a>
+    </li>
+-->
+
+	
+    <!-- Archives  -->
+    <li class="dropdown">
+        <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons sidebar-material-icons">inbox</i>
+             归档
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+            <a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/05/">五月 2015<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/04/">四月 2015<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/02/">二月 2015<span class="sidebar_archives-count">1</span></a>
+        </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="divider"></li>
+
+
+    <!-- Pages  -->
+	
+
+    <!-- Article Numebr  -->
+    <li>
+        <a href="/archives">
+             文章总数
+             <span class="sidebar-badge">27</span>
+        </a>
+    </li>
+</ul>
+
+		<!-- Sidebar Divider -->
+		<div class="sidebar-divider"></div>
+
+		<!-- Sidebar Footer -->
+		<!-- 
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持。 :) 
+-->
+
+<!-- Theme Material -->
+<a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+	<div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		主题 - Material
+		<span class="sidebar-badge badge-circle">i</span>
+	</div>
+</a>
+
+<!-- Help & Support -->
+<!--
+<a href="mailto:hiviosey@gmail.com" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		sidebar.help
+		<span class="mdl-button__ripple-container">
+			<span class="mdl-ripple"></span>
+		</span>
+	</div>
+</a>
+-->
+
+<!-- Feedback -->
+<!--
+<a href="https://github.com/viosey/hexo-theme-material/issues" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.feedback
+                    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>
+-->
+
+<!-- Abount Theme -->
+<!--
+<a href="https://blog.viosey.com/index.php/Material.html" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.about_theme
+        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>-->
+
+	</div>
+    
+    <!-- Sidebar Sponsor -->
+    
+
+
+</aside>
+
+				
+				
+				
+					<!-- Footer Top Button -->
+					<div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+				
+				
+				<!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+	
+	
+		<!-- Paradox Footer Left Section -->
+		<div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+    <a href="https://twitter.com/twitter" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-twitter.png);">
+        <span class="visuallyhidden">Twitter</span>
+    </button></a>
+    
+
+    <!-- Facebook -->
+    
+    <a href="https://www.facebook.com/facebook" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.png);">
+        <span class="visuallyhidden">Facebook</span>
+    </button></a>
+    
+
+    <!-- Google + -->
+    
+    <a href="https://www.google.com/" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-gplus.png);">
+        <span class="visuallyhidden">Google Plus</span>
+    </button></a>
+    
+
+    <!-- Weibo -->
+    
+    
+
+    <!-- Instagram -->
+    
+    
+
+    <!-- Tumblr -->
+    
+    
+
+    <!-- Github -->
+    
+    <a href="https://github.com/FelixZhang00" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
+        <span class="visuallyhidden">Github</span>
+    </button></a>
+    
+
+    <!-- LinkedIn -->
+    
+    
+</div>
+
+
+		<!--Copyright-->
+		<div id="copyright">Copyright&nbsp;©&nbsp;<script type="text/javascript">var fd = new Date();document.write(fd.getFullYear());</script>&nbsp;FelixZhang's Blog</div>
+
+		<!-- Paradox Footer Right Section -->
+
+		<!-- 
+		I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+		It will not impact the appearance and can give developers a lot of support :)
+
+		很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+		它不会影响美观并可以给开发者很大的支持。 :) 
+		-->
+
+		<div class="mdl-mini-footer--right-section">
+			<div>
+				<div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+				<div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+			</div>
+		</div>
+	
+    
+</footer>
+                
+				<!-- Import File -->
+<script src="/js/highlight.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+    <!-- 多说公共 js 代码 start -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"felixzhang00"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'https://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共 js 代码 end -->
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+	<script>
+	var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        str += "<li><a href='"+ data_url +"' class='search-result-title' target='_blank'>"+ data_title;
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out characters
+                            var start = first_occur - 6;
+                            var end = first_occur + 6;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 10;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            })
+                            str += "<p class=\"search-result\">" + match_content +"...</p>" +"</a>";
+                        }
+                    }
+                })
+                $resultContent.innerHTML = str;
+            })
+        }
+    })
+}
+</script>
+
+	<script>
+        var inputArea = document.querySelector("#search");
+        var getSearchFile = function(){
+            var path = "search.xml";
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        inputArea.onfocus = function(){ getSearchFile() }
+	</script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $(".post-toc-wrap").parent(".mdl-menu__container").css("position", "fixed");
+    });
+</script>
+
+<!-- MathJax Load-->
+
+            </main>
+        </div>
+		
+    </body>
+		
+	
+</html>
