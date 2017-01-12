@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- Title -->
+    
+    <title>
+        xlog接入方案 | FelixZhang&#39;s Blog
+    </title>
+    
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+    
+    <!-- Meta & INfo -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Felix">
+    <meta name="description" content="null">
+    <meta name="keywords" content="null">
+    
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="FelixZhang&#39;s Blog">
+    
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://felixzhang00.github.io">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="xlog接入方案 | FelixZhang&#39;s Blog">
+    <meta property="og:description" content="null">
+    
+     <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+        
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+    
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+	body, html{
+		font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+	}
+	
+    a{
+        color: #00838F
+    }
+    
+    .mdl-card__media,
+    #search-label,
+    #search-form-label:after,
+    #scheme-Paradox .hot_tags-count,
+    #scheme-Paradox .sidebar_archives-count,
+    #scheme-Paradox .sidebar-colored .sidebar-header,
+    #scheme-Paradox .sidebar-colored .sidebar-badge{
+        background-color: #0097A7 !important
+    }
+    
+	/* Sidebar User Drop Down Menu Text Color */
+	#scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+    #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{
+        color: #0097A7 !important
+    }
+    
+    #post_entry-right-info,
+    .sidebar-colored .sidebar-nav li:hover > a,
+    .sidebar-colored .sidebar-nav li:hover > a i,
+    .sidebar-colored .sidebar-nav li > a:hover,
+    .sidebar-colored .sidebar-nav li > a:hover i,
+    .sidebar-colored .sidebar-nav li > a:focus i,
+    .sidebar-colored .sidebar-nav > .open > a,
+    .sidebar-colored .sidebar-nav > .open > a:hover,
+    .sidebar-colored .sidebar-nav > .open > a:focus,
+    #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a{
+        color: #0097A7 !important
+    }
+    
+    .toTop{
+        background: #757575 !important
+    }
+		
+	.material-layout .material-post>.material-nav,
+	.material-layout .material-index>.material-nav,
+	.material-nav a{
+		color: #757575;
+	}
+		
+	#scheme-Paradox .MD-burger-layer {
+		background-color: #757575;
+	}
+
+	#scheme-Paradox #post-toc-trigger-btn{
+		color: #757575;
+	}
+	
+	.post-toc a:hover{
+		color: #00838F;
+		text-decoration: underline;
+	}
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+        body{
+            background-color: #F5F5F5
+        }
+		
+		/* blog_info bottom background */
+        #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+            background-color: #fff;
+        }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+        .fade {
+            transition: all 800ms linear;
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            opacity: 1;
+        }
+
+        .fade.out{
+            opacity: 0;
+        }
+    </style>
+
+	<script src="/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="/css/highlight/solarized-dark.css">
+	
+	<!-- UC Browser Compatible-->
+	<script>
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf('ucbrowser')>0) {
+			document.write('<link rel="stylesheet" href="/css/uc.css">');
+		   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+		}
+	</script>
+    
+    <!-- Custom Head -->
+    
+</head>
+	
+	
+
+    <body id="scheme-Paradox">
+
+		
+        <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+				
+			
+			
+            <!-- Main Container -->
+            <main class="material-layout__content" id="main">
+				
+                <!-- Top Anchor -->
+                <div id="top"></div>
+				
+				
+                <!-- Hamburger Button -->
+                <button class="MD-burger-icon sidebar-toggle">
+                    <span class="MD-burger-layer"></span>
+                </button>
+				
+				
+                <!-- Post TOC -->
+
+    
+	<!-- Back Button -->
+<!--
+	<div class="material-back" id="backhome-div" tabindex="0">
+		<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#" onclick="window.history.back();return false;" target="_self" role="button" data-upgraded=",MaterialButton,MaterialRipple">
+			<i class="material-icons" role="presentation">arrow_back</i>
+			<span class="mdl-button__ripple-container">
+				<span class="mdl-ripple"></span>
+			</span>
+		</a>
+	</div>			
+-->
+	<!-- Left aligned menu below button -->
+	<button id="post-toc-trigger-btn"
+			class="mdl-button mdl-js-button mdl-button--icon">
+	  <i class="material-icons">format_list_numbered</i>
+	</button>
+
+	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+		for="post-toc-trigger-btn">
+			
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#xlog的特点"><span class="post-toc-number">1.</span> <span class="post-toc-text">xlog的特点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#上一次没写完的日志，如何重新写到日志中"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">上一次没写完的日志，如何重新写到日志中</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#修改xlog默认的输出到文件的策略"><span class="post-toc-number">2.</span> <span class="post-toc-text">修改xlog默认的输出到文件的策略</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#xlog默认的策略"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">xlog默认的策略</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#改写输出到文件的策略"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">改写输出到文件的策略</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#相关链接"><span class="post-toc-number">3.</span> <span class="post-toc-text">相关链接</span></a></li></ol>
+		
+<!--			<li class="mdl-menu__item">Some Action</li>-->
+	</ul>
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+		
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+	<!-- Paradox Post Header -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+				<script>
+    
+    var randomNum;
+    randomNum = Math.floor(Math.random() * 5 + 1);
+    
+    $(".post_thumbnail-random").css('background-image', 'url(' + '/img/random/' + randomNum + '.png' + ')');
+    
+</script>
+
+		
+	
+        <p class="article-headline-p">
+            xlog接入方案
+        </p>
+    </div>
+
+	
+
+				
+				
+					<!-- Paradox Post Info -->
+					<div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+    
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Felix</strong>
+        <span>1月 12, 2017</span>
+    </div>
+    
+    <div class="section-spacer"></div>
+	
+    <!-- Favorite -->
+<!--
+    <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+        <i class="material-icons" role="presentation">favorite</i>
+        <span class="visuallyhidden">favorites</span>
+    </button>
+-->
+    
+    <!-- Tags (bookmark) -->
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/c-开源代码/">c++ 开源代码</a>
+    </ul>
+    
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+
+    
+
+    
+
+    <!-- Share Twitter -->
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=xlog接入方案&url=http://felixzhang00.github.io//2017/01/12/xlog接入方案/index.html&via=Felix" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Twitter
+        </li>
+    </a>
+
+    <!-- Share Google+ -->
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2017/01/12/xlog接入方案/index.html" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Google+
+        </li>
+    </a>
+
+    <!-- Share Weibo -->
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=xlog接入方案&url=http://felixzhang00.github.io//2017/01/12/xlog接入方案/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <li class="mdl-menu__item">
+            分享到微博
+        </li>
+    </a>
+
+    <!-- Share LinkedIn -->
+    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2017/01/12/xlog接入方案/index.html&title=xlog接入方案" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 LinkedIn
+        </li>
+    </a>
+</ul>
+
+</div>
+				
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+	
+		<p><a href="https://github.com/Tencent/mars" target="_blank" rel="external">mars</a> 是微信最近开源的终端基础组件，是一个使用 C++ 编写的基础组件。<br>xlog是其中一个可单独使用的高性能日志模块。<br>本文将简单介绍下xlog的特点，并给出一个自定义的输出到文件的策略。</p>
+<hr>
+<h2 id="xlog的特点"><a href="#xlog的特点" class="headerlink" title="xlog的特点"></a>xlog的特点</h2><p>使用流式压缩方式对单行日志进行压缩，压缩加密后写进作为 log 中间 buffer的 mmap 中，当 mmap 中的数据到达一定大小后再写进磁盘文件中。<br><img src="http://ww4.sinaimg.cn/large/8b331ee1gw1fbmxsvozhbj20jg08iglr.jpg" alt=""><br><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fbmxtm3kajj20kp04caa7.jpg" alt=""></p>
+<p>输出到文件的主要实现是在 Appender 模块也是可插拔的，如果对默认的策略不满意可以自己实现一套。<br><img src="http://ww3.sinaimg.cn/large/8b331ee1gw1fblriu5wrqj20ci0630sv.jpg" alt=""></p>
+<p>xlog还存在一些其他策略：</p>
+<ul>
+<li>每次启动的时候会清理日志，防止占用太多用户磁盘空间</li>
+<li>为了防止 sdcard 被拔掉导致写不了日志，支持设置缓存目录，当 sdcard 插上时会把缓存目录里的日志写入到 sdcard 上</li>
+</ul>
+<p>从下面的log2file流程图中可以看出xlog是如何利用cahce目录解决插拔sdcard的问题的。<br><code>log2file流程图</code><br><img src="http://ww4.sinaimg.cn/large/8b331ee1gw1fbmlojbj7dj210i19648b.jpg" alt=""></p>
+<h3 id="上一次没写完的日志，如何重新写到日志中"><a href="#上一次没写完的日志，如何重新写到日志中" class="headerlink" title="上一次没写完的日志，如何重新写到日志中"></a>上一次没写完的日志，如何重新写到日志中</h3><p>在日志模块初始化会执行如下的代码，sg_log_buff为与mmap文件映射的逻辑内存，这里会主动调用Flush，把mmap文件中的数据（即上一次没写到日志文件中的日志）fluse到buffer中，并调用__log2file写到日志文件中。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> mmap_file_path[<span class="number">512</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line"><span class="built_in">snprintf</span>(mmap_file_path, <span class="keyword">sizeof</span>(mmap_file_path), <span class="string">"%s/%s.mmap2"</span>, sg_cache_logdir.empty()?_dir:sg_cache_logdir.c_str(), _nameprefix);</div><div class="line"></div><div class="line">    <span class="keyword">bool</span> use_mmap = <span class="literal">false</span>;</div><div class="line">    <span class="keyword">if</span> (OpenMmapFile(mmap_file_path, kBufferBlockLength, sg_mmmap_file))  &#123;</div><div class="line">        sg_log_buff = <span class="keyword">new</span> LogBuffer(sg_mmmap_file.data(), kBufferBlockLength, <span class="literal">true</span>);</div><div class="line">        use_mmap = <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    AutoBuffer buffer;</div><div class="line">    sg_log_buff-&gt;Flush(buffer); <span class="comment">// 把mmap文件中日志信息flush到内存中，下面调用__log2file写到文件中。</span></div><div class="line">    <span class="keyword">if</span> (buffer.Ptr()) &#123;</div><div class="line">        __writetips2file(<span class="string">"~~~~~ begin of mmap ~~~~~\n"</span>);</div><div class="line">        __log2file(buffer.Ptr(), buffer.Length());</div><div class="line">        __writetips2file(<span class="string">"~~~~~ end of mmap ~~~~~%s\n"</span>, mark_info);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="修改xlog默认的输出到文件的策略"><a href="#修改xlog默认的输出到文件的策略" class="headerlink" title="修改xlog默认的输出到文件的策略"></a>修改xlog默认的输出到文件的策略</h2><h3 id="xlog默认的策略"><a href="#xlog默认的策略" class="headerlink" title="xlog默认的策略"></a>xlog默认的策略</h3><p>每次启动时会删除过期文件，只保留十天内的日志文件(该值定义在appender.cc中的 kMaxLogAliveTime )，所以给 Xlog 的目录请使用单独目录，防止误删其他文件。目前不会根据文件大小进行清理。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> __del_timeout_file(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; _log_path) &#123;</div><div class="line">    <span class="keyword">time_t</span> now_time = time(<span class="literal">NULL</span>);</div><div class="line">    </div><div class="line">    boost::filesystem::<span class="function">path <span class="title">path</span><span class="params">(_log_path)</span></span>;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (boost::filesystem::exists(path) &amp;&amp; boost::filesystem::is_directory(path))&#123;</div><div class="line">        boost::filesystem::directory_iterator end_iter;</div><div class="line">        <span class="keyword">for</span> (boost::filesystem::directory_iterator iter(path); iter != end_iter; ++iter) &#123;</div><div class="line">            <span class="keyword">time_t</span> fileModifyTime = boost::filesystem::last_write_time(iter-&gt;path());</div><div class="line">            </div><div class="line">            <span class="keyword">if</span> (now_time &gt; fileModifyTime &amp;&amp; now_time - fileModifyTime &gt; kMaxLogAliveTime) &#123;</div><div class="line">                <span class="keyword">if</span> (boost::filesystem::is_regular_file(iter-&gt;status())) &#123;</div><div class="line">                    boost::filesystem::remove(iter-&gt;path());</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (boost::filesystem::is_directory(iter-&gt;status())) &#123;</div><div class="line">                    __del_files(iter-&gt;path().<span class="built_in">string</span>());</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>日志文件是按天命名的，每天产生一个日志文件。<br>在<code>__openlogfile</code>、<code>__log2file</code>中会调用。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> __make_logfilename(<span class="keyword">const</span> timeval&amp; _tv, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; _logdir, <span class="keyword">const</span> <span class="keyword">char</span>* _prefix, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; _fileext, <span class="keyword">char</span>* _filepath, <span class="keyword">unsigned</span> <span class="keyword">int</span> _len) &#123;</div><div class="line">    <span class="keyword">time_t</span> sec = _tv.tv_sec;</div><div class="line">    tm tcur = *localtime((<span class="keyword">const</span> <span class="keyword">time_t</span>*)&amp;sec);</div><div class="line"></div><div class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> logfilepath = _logdir;</div><div class="line">    logfilepath += <span class="string">"/"</span>;</div><div class="line">    logfilepath += _prefix;</div><div class="line">    <span class="keyword">char</span> temp [<span class="number">64</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">    <span class="built_in">snprintf</span>(temp, <span class="number">64</span>, <span class="string">"_%d%02d%02d"</span>, <span class="number">1900</span> + tcur.tm_year, <span class="number">1</span> + tcur.tm_mon, tcur.tm_mday);</div><div class="line">    logfilepath += temp;</div><div class="line">    logfilepath += <span class="string">"."</span>;</div><div class="line">    logfilepath += _fileext;</div><div class="line">    <span class="built_in">strncpy</span>(_filepath, logfilepath.c_str(), _len - <span class="number">1</span>);</div><div class="line">    _filepath[_len - <span class="number">1</span>] = <span class="string">'\0'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>比如在2017年01月10号的日志会写到LOG_20170110.log文件中，到2017年01月11号时，日志写到LOG_20170111.log，依次类推。过期的日志文件会在日志模块初始化时被清理掉。</p>
+<h3 id="改写输出到文件的策略"><a href="#改写输出到文件的策略" class="headerlink" title="改写输出到文件的策略"></a>改写输出到文件的策略</h3><p>xlog输出的文件的逻辑都在<code>appender.cc</code>中实现，可以修改这里的代码实现一套自己的策略。<br>比如想要控制日志文件的大小，即Rotating file based on size的策略。<br>这里的实现方案并不支持cachedir。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">bool</span> __writefile(<span class="keyword">const</span> <span class="keyword">void</span>* _data, <span class="keyword">size_t</span> _len) &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == sg_logfile) &#123;</div><div class="line">        assert(<span class="literal">false</span>);</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">long</span> before_len = ftell(sg_logfile);</div><div class="line">    <span class="keyword">if</span> (before_len &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果发生了__roate，需要reopen sg_logfile</span></div><div class="line">    <span class="keyword">if</span>(before_len+_len &gt; sg_max_size)&#123;</div><div class="line">        <span class="keyword">if</span>(!__roate())&#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="number">1</span> != fwrite(_data, _len, <span class="number">1</span>, sg_logfile)) &#123;</div><div class="line">        <span class="keyword">int</span> err = ferror(sg_logfile);</div><div class="line"></div><div class="line">        __writetips2console(<span class="string">"write file error:%d"</span>, err);</div><div class="line"></div><div class="line"></div><div class="line">        ftruncate(fileno(sg_logfile), before_len);</div><div class="line">        fseek(sg_logfile, <span class="number">0</span>, SEEK_END);</div><div class="line"></div><div class="line">        <span class="keyword">char</span> err_log[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">        <span class="built_in">snprintf</span>(err_log, <span class="keyword">sizeof</span>(err_log), <span class="string">"\nwrite file error:%d\n"</span>, err);</div><div class="line"></div><div class="line">        <span class="keyword">char</span> tmp[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">        <span class="keyword">size_t</span> len = <span class="keyword">sizeof</span>(tmp);</div><div class="line">        LogBuffer::Write(err_log, strnlen(err_log, <span class="keyword">sizeof</span>(err_log)), tmp, len);</div><div class="line"></div><div class="line">        fwrite(tmp, len, <span class="number">1</span>, sg_logfile);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="built_in">std</span>::<span class="function"><span class="built_in">string</span> <span class="title">NumberToString</span> <span class="params">( T Number )</span></span></div><div class="line">&#123;</div><div class="line">     <span class="built_in">std</span>::<span class="built_in">ostringstream</span> ss;</div><div class="line">     ss &lt;&lt; Number;</div><div class="line">     <span class="keyword">return</span> ss.str();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="built_in">std</span>::<span class="built_in">string</span> __calc_filename(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; _logdir, <span class="keyword">const</span> <span class="keyword">char</span>* _prefix, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; _fileext,<span class="keyword">unsigned</span> <span class="keyword">int</span> index)&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> logfilepath = _logdir;</div><div class="line">    logfilepath += <span class="string">"/"</span>;</div><div class="line">    logfilepath += _prefix;</div><div class="line">    <span class="keyword">if</span>(index)&#123;</div><div class="line">        logfilepath += <span class="string">"."</span>;</div><div class="line">        logfilepath += NumberToString(index);</div><div class="line">    &#125;</div><div class="line">    logfilepath += <span class="string">"."</span>;</div><div class="line">    logfilepath += _fileext;</div><div class="line">    <span class="keyword">return</span> logfilepath;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// Rotate files:</span></div><div class="line">    <span class="comment">// log.txt -&gt; log.1.txt</span></div><div class="line">    <span class="comment">// log.1.txt -&gt; log2.txt</span></div><div class="line">    <span class="comment">// log.2.txt -&gt; log3.txt</span></div><div class="line">    <span class="comment">// log.3.txt -&gt; delete</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">bool</span> __roate()&#123;</div><div class="line">    <span class="keyword">if</span>(sg_logfilename.empty() || sg_logdir.empty() || sg_logfileprefix.empty())&#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    fclose(sg_logfile);</div><div class="line">    sg_logfile = <span class="literal">NULL</span>;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i = sg_max_files; i &gt; <span class="number">0</span>; --i)&#123;</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">string</span> src = __calc_filename(sg_logdir,sg_logfileprefix.c_str(),LOG_EXT,i<span class="number">-1</span>);</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">string</span> target = __calc_filename(sg_logdir,sg_logfileprefix.c_str(),LOG_EXT,i);</div><div class="line">        boost::filesystem::<span class="function">path <span class="title">src_path</span><span class="params">(src)</span></span>;</div><div class="line">        boost::filesystem::<span class="function">path <span class="title">target_path</span><span class="params">(target)</span></span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(boost::filesystem::exists(target_path))&#123;</div><div class="line">            boost::filesystem::remove(target_path);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(boost::filesystem::exists(src_path))&#123;</div><div class="line">            boost::filesystem::rename(src_path,target_path);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//reopen</span></div><div class="line">    sg_logfile = fopen(sg_logfilename.c_str(), <span class="string">"wb"</span>);</div><div class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == sg_logfile) &#123;</div><div class="line">        __writetips2console(<span class="string">"open file error:%d %s, path:%s"</span>, errno, strerror(errno), sg_logfilename.c_str());</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">bool</span> __openlogfile(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; _log_dir)&#123;</div><div class="line">    <span class="keyword">if</span> (sg_logdir.empty()) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果sg_logfile已经打开了，则直接返回。</span></div><div class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> != sg_logfile) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    sg_current_dir = _log_dir;</div><div class="line">    sg_logfilename = __calc_filename(_log_dir, sg_logfileprefix.c_str(), LOG_EXT,<span class="number">0</span>);</div><div class="line"></div><div class="line">    sg_logfile = fopen(sg_logfilename.c_str(), <span class="string">"ab"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == sg_logfile) &#123;</div><div class="line">        __writetips2console(<span class="string">"open file error:%d %s, path:%s"</span>, errno, strerror(errno), sg_logfilename.c_str());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">NULL</span> != sg_logfile;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> __log2file(<span class="keyword">const</span> <span class="keyword">void</span>* _data, <span class="keyword">size_t</span> _len) &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == _data || <span class="number">0</span> == _len || sg_logdir.empty()) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	    <span class="function">ScopedLock <span class="title">lock_file</span><span class="params">(sg_mutex_log_file)</span></span>;</div><div class="line">        <span class="keyword">if</span> (__openlogfile(sg_logdir)) &#123;</div><div class="line">            __writefile(_data, _len);</div><div class="line">            <span class="keyword">if</span> (kAppednerAsync == sg_mode) &#123;</div><div class="line">                __closelogfile();</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>代码详见：<a href="https://github.com/FelixZhang00/xlog-rotating-base-size" target="_blank" rel="external">github</a></p>
+<hr>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p><a href="http://dev.qq.com/topic/581c2c46bef1702a2db3ae53" target="_blank" rel="external">http://dev.qq.com/topic/581c2c46bef1702a2db3ae53</a></p>
+
+	
+	
+	
+	
+</div>
+				
+				
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用多说评论 -->
+    <link rel="stylesheet" href="/css/duoshuo.min.css">
+<style>
+    #ds-thread #ds-reset .ds-post-button{
+        background-color: #0097A7 !important;
+    }
+    #ds-wrapper #ds-reset .ds-icons-32{
+        background-color: #0097A7 !important;
+    }
+    #ds-reset .ds-highlight {
+        color: #0097A7 !important;
+    }
+</style>
+<div id="comments">
+    <!-- 多说评论框 start -->
+        <div class="ds-thread" 
+            data-thread-key="2017/01/12/xlog接入方案/" 
+            data-url="http://felixzhang00.github.io/2017/01/12/xlog接入方案/"
+            data-title="xlog接入方案"></div>
+    <!-- 多说评论框 end -->
+</div>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/01/12/spdlog源码学习/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+        </div>
+    </div>
+
+				
+				
+					<!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay "></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored  sidebar-fixed-left" role="navigation">
+	<div id="sidebar-main">
+	    <!-- Sidebar Header -->
+		<div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+    <i class="material-icons">clear_all</i>
+    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.jpg" alt="Felix's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        836828946@qq.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+		<!-- Sidebar Navigation  -->
+		<ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+			
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+						<i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    <li id="sidebar-first-li">
+        <a href="/" target="_self">
+            <i class="material-icons sidebar-material-icons">home</i>
+             主页
+        </a>
+    </li>
+
+    <!-- I'm Feeling Lucky -->
+<!--
+    <li class="dropdown">
+        <a href="" target="_self">
+            <i class="material-icons sidebar-material-icons">explore</i>
+             sidebar.imlucky
+        </a>
+    </li>
+-->
+
+	
+    <!-- Archives  -->
+    <li class="dropdown">
+        <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons sidebar-material-icons">inbox</i>
+             归档
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+            <a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/05/">五月 2015<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/04/">四月 2015<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/02/">二月 2015<span class="sidebar_archives-count">1</span></a>
+        </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="divider"></li>
+
+
+    <!-- Pages  -->
+	
+
+    <!-- Article Numebr  -->
+    <li>
+        <a href="/archives">
+             文章总数
+             <span class="sidebar-badge">28</span>
+        </a>
+    </li>
+</ul>
+
+		<!-- Sidebar Divider -->
+		<div class="sidebar-divider"></div>
+
+		<!-- Sidebar Footer -->
+		<!-- 
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持。 :) 
+-->
+
+<!-- Theme Material -->
+<a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+	<div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		主题 - Material
+		<span class="sidebar-badge badge-circle">i</span>
+	</div>
+</a>
+
+<!-- Help & Support -->
+<!--
+<a href="mailto:hiviosey@gmail.com" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		sidebar.help
+		<span class="mdl-button__ripple-container">
+			<span class="mdl-ripple"></span>
+		</span>
+	</div>
+</a>
+-->
+
+<!-- Feedback -->
+<!--
+<a href="https://github.com/viosey/hexo-theme-material/issues" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.feedback
+                    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>
+-->
+
+<!-- Abount Theme -->
+<!--
+<a href="https://blog.viosey.com/index.php/Material.html" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.about_theme
+        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>-->
+
+	</div>
+    
+    <!-- Sidebar Sponsor -->
+    
+
+
+</aside>
+
+				
+				
+				
+					<!-- Footer Top Button -->
+					<div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+				
+				
+				<!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+	
+	
+		<!-- Paradox Footer Left Section -->
+		<div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+    <a href="https://twitter.com/twitter" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-twitter.png);">
+        <span class="visuallyhidden">Twitter</span>
+    </button></a>
+    
+
+    <!-- Facebook -->
+    
+    <a href="https://www.facebook.com/facebook" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.png);">
+        <span class="visuallyhidden">Facebook</span>
+    </button></a>
+    
+
+    <!-- Google + -->
+    
+    <a href="https://www.google.com/" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-gplus.png);">
+        <span class="visuallyhidden">Google Plus</span>
+    </button></a>
+    
+
+    <!-- Weibo -->
+    
+    
+
+    <!-- Instagram -->
+    
+    
+
+    <!-- Tumblr -->
+    
+    
+
+    <!-- Github -->
+    
+    <a href="https://github.com/FelixZhang00" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
+        <span class="visuallyhidden">Github</span>
+    </button></a>
+    
+
+    <!-- LinkedIn -->
+    
+    
+</div>
+
+
+		<!--Copyright-->
+		<div id="copyright">Copyright&nbsp;©&nbsp;<script type="text/javascript">var fd = new Date();document.write(fd.getFullYear());</script>&nbsp;FelixZhang's Blog</div>
+
+		<!-- Paradox Footer Right Section -->
+
+		<!-- 
+		I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+		It will not impact the appearance and can give developers a lot of support :)
+
+		很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+		它不会影响美观并可以给开发者很大的支持。 :) 
+		-->
+
+		<div class="mdl-mini-footer--right-section">
+			<div>
+				<div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+				<div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+			</div>
+		</div>
+	
+    
+</footer>
+                
+				<!-- Import File -->
+<script src="/js/highlight.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+    <!-- 多说公共 js 代码 start -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"felixzhang00"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'https://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共 js 代码 end -->
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+	<script>
+	var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        str += "<li><a href='"+ data_url +"' class='search-result-title' target='_blank'>"+ data_title;
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out characters
+                            var start = first_occur - 6;
+                            var end = first_occur + 6;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 10;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            })
+                            str += "<p class=\"search-result\">" + match_content +"...</p>" +"</a>";
+                        }
+                    }
+                })
+                $resultContent.innerHTML = str;
+            })
+        }
+    })
+}
+</script>
+
+	<script>
+        var inputArea = document.querySelector("#search");
+        var getSearchFile = function(){
+            var path = "search.xml";
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        inputArea.onfocus = function(){ getSearchFile() }
+	</script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $(".post-toc-wrap").parent(".mdl-menu__container").css("position", "fixed");
+    });
+</script>
+
+<!-- MathJax Load-->
+
+            </main>
+        </div>
+		
+    </body>
+		
+	
+</html>
