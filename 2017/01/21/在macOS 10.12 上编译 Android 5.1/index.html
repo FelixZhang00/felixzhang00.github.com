@@ -4,7 +4,7 @@
     <!-- Title -->
     
     <title>
-        Android快速索引条控件 | FelixZhang&#39;s Blog
+        在macOS 10.12 上编译 Android 5.1 | FelixZhang&#39;s Blog
     </title>
     
     <!-- Favicons -->
@@ -40,7 +40,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://felixzhang00.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Android快速索引条控件 | FelixZhang&#39;s Blog">
+    <meta property="og:title" content="在macOS 10.12 上编译 Android 5.1 | FelixZhang&#39;s Blog">
     <meta property="og:description" content="null">
     
      <!--[if lte IE 9]>
@@ -217,7 +217,7 @@
 	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
 		for="post-toc-trigger-btn">
 			
-			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#效果展示"><span class="post-toc-number">1.</span> <span class="post-toc-text">效果展示</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码实现"><span class="post-toc-number">2.</span> <span class="post-toc-text">代码实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#自定义view，画出静态的图形"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">自定义view，画出静态的图形</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现onTouch事件，完成动态效果"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">实现onTouch事件，完成动态效果</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#给触摸事件添加更加人性化的交互"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">给触摸事件添加更加人性化的交互</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#QuickIndexBar交互效果的实现"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">QuickIndexBar交互效果的实现</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#中间放大框的实现"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">中间放大框的实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#完整代码"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">完整代码</span></a></li></ol></li></ol>
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#搭建编译环境"><span class="post-toc-number">1.</span> <span class="post-toc-text">搭建编译环境</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建分区"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">创建分区</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#切换shell"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">切换shell</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装Xcode"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">安装Xcode</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装JDK"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">安装JDK</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装其他软件"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">安装其他软件</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下载源码"><span class="post-toc-number">2.</span> <span class="post-toc-text">下载源码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下载驱动"><span class="post-toc-number">3.</span> <span class="post-toc-text">下载驱动</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#编译"><span class="post-toc-number">4.</span> <span class="post-toc-text">编译</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#设置文件描述符限制"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">设置文件描述符限制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#环境设置"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">环境设置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#选择设备"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">选择设备</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#开始编译"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">开始编译</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#源码导入到Android-Studio中"><span class="post-toc-number">5.</span> <span class="post-toc-text">源码导入到Android Studio中</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#刷机"><span class="post-toc-number">6.</span> <span class="post-toc-text">刷机</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#相关链接"><span class="post-toc-number">7.</span> <span class="post-toc-text">相关链接</span></a></li></ol>
 		
 <!--			<li class="mdl-menu__item">Some Action</li>-->
 	</ul>
@@ -251,7 +251,7 @@
 		
 	
         <p class="article-headline-p">
-            Android快速索引条控件
+            在macOS 10.12 上编译 Android 5.1
         </p>
     </div>
 
@@ -269,7 +269,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Felix</strong>
-        <span>4月 25, 2015</span>
+        <span>1月 21, 2017</span>
     </div>
     
     <div class="section-spacer"></div>
@@ -289,7 +289,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/自定义控件/">自定义控件</a>
+        <a class="post_tag-link" href="/tags/Android/">Android</a>
     </ul>
     
     <!-- Share -->
@@ -304,28 +304,28 @@
     
 
     <!-- Share Twitter -->
-    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Android快速索引条控件&url=http://felixzhang00.github.io//2015/04/25/2015-04-25-Android快速索引条控件/index.html&via=Felix" target="_blank">
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=在macOS 10.12 上编译 Android 5.1&url=http://felixzhang00.github.io//2017/01/21/在macOS 10.12 上编译 Android 5.1/index.html&via=Felix" target="_blank">
         <li class="mdl-menu__item">
             分享到 Twitter
         </li>
     </a>
 
     <!-- Share Google+ -->
-    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2015/04/25/2015-04-25-Android快速索引条控件/index.html" target="_blank">
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2017/01/21/在macOS 10.12 上编译 Android 5.1/index.html" target="_blank">
         <li class="mdl-menu__item">
             分享到 Google+
         </li>
     </a>
 
     <!-- Share Weibo -->
-    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Android快速索引条控件&url=http://felixzhang00.github.io//2015/04/25/2015-04-25-Android快速索引条控件/index.html&pic=&searchPic=false&style=simple" target="_blank">
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=在macOS 10.12 上编译 Android 5.1&url=http://felixzhang00.github.io//2017/01/21/在macOS 10.12 上编译 Android 5.1/index.html&pic=&searchPic=false&style=simple" target="_blank">
         <li class="mdl-menu__item">
             分享到微博
         </li>
     </a>
 
     <!-- Share LinkedIn -->
-    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2015/04/25/2015-04-25-Android快速索引条控件/index.html&title=Android快速索引条控件" target="_blank">
+    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2017/01/21/在macOS 10.12 上编译 Android 5.1/index.html&title=在macOS 10.12 上编译 Android 5.1" target="_blank">
         <li class="mdl-menu__item">
             分享到 LinkedIn
         </li>
@@ -338,20 +338,47 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
 	
-		<h2 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/2015-04-25 快速索引条.gif"></p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="自定义view，画出静态的图形"><a href="#自定义view，画出静态的图形" class="headerlink" title="自定义view，画出静态的图形"></a>自定义view，画出静态的图形</h3><pre><code>在canvas上指定好位置，用各种画笔Paint，重要的是分析的过程。
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> Paint paint;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">int</span> cellWidth, cellHeight;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">       paint = <span class="keyword">new</span> Paint();</div><div class="line">       paint.setTextSize(<span class="number">40</span>);</div><div class="line">       paint.setColor(Color.WHITE);</div><div class="line">       paint.setTypeface(Typeface.DEFAULT_BOLD);</div><div class="line">       paint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">   &#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">   <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">   <span class="keyword">if</span> (cellHeight == <span class="number">0</span>) cellHeight = getMeasuredHeight() / indexs.length;</div><div class="line">   <span class="keyword">if</span> (cellWidth == <span class="number">0</span>) cellWidth = getMeasuredWidth();</div><div class="line"></div><div class="line">   <span class="comment">//分别画26个字母</span></div><div class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; indexs.length; i++) &#123;</div><div class="line"></div><div class="line">       <span class="comment">//先测量用此画笔画字母的大小，用一个矩形把它包裹起来，这样方便计算字母的高度</span></div><div class="line">       Rect bounds = <span class="keyword">new</span> Rect();</div><div class="line">       paint.getTextBounds(indexs[i], <span class="number">0</span>, indexs[i].length(), bounds);</div><div class="line"></div><div class="line">       <span class="comment">//计算画每个字母的起始坐标</span></div><div class="line">       <span class="keyword">float</span> x = cellWidth / <span class="number">2</span> - paint.measureText(indexs[i]) / <span class="number">2</span>;</div><div class="line">       <span class="keyword">float</span> y = cellHeight / <span class="number">2</span> + bounds.height() / <span class="number">2</span> + i * cellHeight;</div><div class="line">       canvas.drawText(indexs[i], x, y, paint);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="实现onTouch事件，完成动态效果"><a href="#实现onTouch事件，完成动态效果" class="headerlink" title="实现onTouch事件，完成动态效果"></a>实现onTouch事件，完成动态效果</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> lastIndex = -<span class="number">1</span>;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</div><div class="line"><span class="comment">//        if (x &gt;= 0 &amp;&amp; x &lt;= cellWidth) &#123;  //只对quickindexbar的触摸事件有效</span></div><div class="line"><span class="comment">//            return false;</span></div><div class="line"><span class="comment">//        &#125;</span></div><div class="line">        <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</div><div class="line">        <span class="keyword">switch</span> (event.getAction()) &#123;</div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</div><div class="line">                <span class="keyword">if</span> (isSameIndex(y / cellHeight)) <span class="keyword">break</span>;</div><div class="line"></div><div class="line"></div><div class="line">                String word = indexs[((<span class="keyword">int</span>) (y / cellHeight))];</div><div class="line">                lastIndex = y / cellHeight;</div><div class="line">                <span class="keyword">if</span> (mIndexChangedListener != <span class="keyword">null</span>) &#123;</div><div class="line">                    mIndexChangedListener.indexChanged(word);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">                lastIndex = -<span class="number">1</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//自行处理触摸事件，不向上传递</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 当前的索引位置是否和上一个相等</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isSameIndex</span><span class="params">(<span class="keyword">int</span> currIndex)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> lastIndex == currIndex;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> IndexChangedListener mIndexChangedListener;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIndexChangedListener</span><span class="params">(IndexChangedListener indexChangedListener)</span> </span>&#123;</div><div class="line">        mIndexChangedListener = indexChangedListener;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IndexChangedListener</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">indexChanged</span><span class="params">(String word)</span></span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h3 id="给触摸事件添加更加人性化的交互"><a href="#给触摸事件添加更加人性化的交互" class="headerlink" title="给触摸事件添加更加人性化的交互"></a>给触摸事件添加更加人性化的交互</h3><h4 id="QuickIndexBar交互效果的实现"><a href="#QuickIndexBar交互效果的实现" class="headerlink" title="QuickIndexBar交互效果的实现"></a>QuickIndexBar交互效果的实现</h4><pre><code>在处理onTouch事件时，改变画笔的设置，画出不同的图案。
-
-在onTouch中调用
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//重新调用onDraw</span></div><div class="line">invalidate();</div></pre></td></tr></table></figure>
-<pre><code>在onDraw中增加下面的逻辑：
-画每个元素之前先设置不同的画笔。    
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">if</span> (i == lastIndex) &#123;               <span class="comment">//正在touch的位置 需要更加人性化的交互</span></div><div class="line">   paint.setTextSize(<span class="number">60</span>);</div><div class="line">   paint.setColor(Color.GRAY);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">   paint.setTextSize(<span class="number">40</span>);</div><div class="line">   paint.setColor(Color.WHITE);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="中间放大框的实现"><a href="#中间放大框的实现" class="headerlink" title="中间放大框的实现"></a>中间放大框的实现</h4><pre><code>当前Activity接受到QuickIndexBar的变化事件后，调用showIndexLabel方法，通过handler完成延迟操作。
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> Handler mHandler = <span class="keyword">new</span> Handler();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showIndexLabel</span><span class="params">(String word)</span> </span>&#123;</div><div class="line">   mLabel.setVisibility(View.VISIBLE);</div><div class="line">   mLabel.setText(word);</div><div class="line"></div><div class="line">   mHandler.removeCallbacksAndMessages(<span class="keyword">null</span>); <span class="comment">//移除所有消息队列</span></div><div class="line">   mHandler.postDelayed(<span class="keyword">new</span> Runnable() &#123;      <span class="comment">//发送延时消息</span></div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">           mLabel.setVisibility(View.GONE);</div><div class="line">       &#125;</div><div class="line">   &#125;, DEFAULT_DELAY);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><p><a href="https://github.com/FelixZhang00/My_QuickIndexBar" target="_blank" rel="external">github</a></p>
+		<hr>
+<p>官方文档虽然也有介绍，但是macOS平台上的编译环境问题还存在很多坑。本文介绍下如何在在macOS 10.12 上编译 Android 5.1源码，导入源码到Android Studio中，把系统烧录到Nexus6手机中。</p>
+<hr>
+<h2 id="搭建编译环境"><a href="#搭建编译环境" class="headerlink" title="搭建编译环境"></a>搭建编译环境</h2><h3 id="创建分区"><a href="#创建分区" class="headerlink" title="创建分区"></a>创建分区</h3><p>AOSP源码需要一个支持大小写敏感的文件系统，100G是至少要的。<a href="https://source.android.com/source/initializing.html#setting-up-a-mac-os-x-build-environment" target="_blank" rel="external">官网</a>有详细的介绍，这里简单列一下。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hdiutil create -type SPARSE -fs <span class="string">'Case-sensitive Journaled HFS+'</span> -size 40g ~/android.dmg</div></pre></td></tr></table></figure></p>
+<p>然后挂载这个分区：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hdiutil attach ~/android.dmg -mountpoint /Volumes/android;</div></pre></td></tr></table></figure></p>
+<h3 id="切换shell"><a href="#切换shell" class="headerlink" title="切换shell"></a>切换shell</h3><p>Android的相关编译只能是使用bash.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ chsh -s /bin/bash</div></pre></td></tr></table></figure></p>
+<p>重启终端。</p>
+<h3 id="安装Xcode"><a href="#安装Xcode" class="headerlink" title="安装Xcode"></a>安装Xcode</h3><p>1、这里需要两个Xcode，可以用命令切换需要使用的Xcode，会有不同的用处。</p>
+<ul>
+<li>去AppStore下载最新的Xcode</li>
+<li>到<a href="https://developer.apple.com/download/more/" target="_blank" rel="external">这里</a>下载5.1.1的Xcode</li>
+</ul>
+<p>2、创建一个<code>/Developer/SDK</code>文件夹，从Xcode5.1.1中把<code>MacOSX10.8.sdk</code>从<code>Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/</code>复制到 <code>/Developer/SDK</code>中。<br>3、从<code>Xcode5.1.1.dmg</code>复制Xcode.app 到  <code>/Developer</code>目录中。<br>4、从AppStore下载的最新版Xcode会默认放在<code>/Applications</code>目录中<br>5、给两个版本的Xcode都安装command line tools<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ sudo xcode-select -switch /Developer/Xcode.app</div><div class="line">$ xcode-select --install</div><div class="line">$ sudo xcode-select -switch /Applications/Xcode.app</div><div class="line">$ xcode-select --install</div></pre></td></tr></table></figure></p>
+<h3 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h3><p>编译Android5.1需要jdk1.7，去<a href="http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html" target="_blank" rel="external">官网</a>下载.<br>如果有切换多个版本的jdk需求的话，可以使用<code>jenv</code>这个工具，参考<a href="http://boxingp.github.io/blog/2015/01/25/manage-multiple-versions-of-java-on-os-x/" target="_blank" rel="external">在OS X中使用jEnv管理多个Java版本</a></p>
+<h3 id="安装其他软件"><a href="#安装其他软件" class="headerlink" title="安装其他软件"></a>安装其他软件</h3><p>1、安装MacPorts，需要去<a href="https://www.macports.org/install.php" target="_blank" rel="external">官网</a>下载对应版本的MacPorts<br>2、配置port命令环境变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">export</span> PATH=/opt/<span class="built_in">local</span>/bin:<span class="variable">$PATH</span></div></pre></td></tr></table></figure></p>
+<p>3、下载依赖包<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ POSIXLY_CORRECT=1 sudo port install gmake libsdl git gnupg</div></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><p>直接去google官方下载会很慢，这里推荐用<a href="https://lug.ustc.edu.cn/wiki/mirrors/help/aosp" target="_blank" rel="external">中科大镜像</a><br>1、首先下载 repo 工具。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ mkdir ~/bin</div><div class="line">$ PATH=~/bin:<span class="variable">$PATH</span></div><div class="line">$ curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/bin/repo</div><div class="line"><span class="comment">## 如果上述 URL 不可访问，可以用下面的：</span></div><div class="line"><span class="comment">## curl https://storage-googleapis.proxy.ustclug.org/git-repo-downloads/repo &gt; ~/bin/repo</span></div><div class="line">$ chmod a+x ~/bin/repo</div></pre></td></tr></table></figure></p>
+<p>2、在之前创建的大小写分区上建立一个工作目录，之后源码下载和编译都在这里进行。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ mkdir WORKING_DIRECTORY</div><div class="line">$ <span class="built_in">cd</span> WORKING_DIRECTORY</div></pre></td></tr></table></figure></p>
+<p>3、初始化仓库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ repo init -u git://mirrors.ustc.edu.cn/aosp/platform/manifest</div><div class="line"><span class="comment">## 如果提示无法连接到 gerrit.googlesource.com，可以编辑 ~/bin/repo，把 REPO_URL 一行替换成下面的：</span></div><div class="line"><span class="comment">## REPO_URL = 'https://gerrit-googlesource.proxy.ustclug.org/git-repo'</span></div></pre></td></tr></table></figure></p>
+<p>4、选择某个特定的 Android 版本，具体查看<a href="https://source.android.com/source/build-numbers.html#source-code-tags-and-builds" target="_blank" rel="external">这里</a>,我选择的是android-5.1.1_r14，build号是LMY48M，等会用这个build号下载对应的驱动包，烧录到nexus真机时会用到。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ repo init -u git://mirrors.ustc.edu.cn/aosp/platform/manifest -b android-5.1.1_r14</div></pre></td></tr></table></figure></p>
+<p>5、同步源码树<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ repo sync</div></pre></td></tr></table></figure></p>
+<p>源码下载完后，如果没有同步的需求的话，就可以把<code>.repo</code>目录删掉了，防止编译时磁盘空间不够用。</p>
+<h2 id="下载驱动"><a href="#下载驱动" class="headerlink" title="下载驱动"></a>下载驱动</h2><p>烧录到真机时需要用到，默认只是用模拟器的话，可以跳过这步。<br>在<a href="https://developers.google.com/android/nexus/drivers#hikey中找到对应设备与源码分支的硬件驱动。刚才选择的源码分支所对应的build码是LMY48M，因此，就下载此代号的驱动程序即可。" target="_blank" rel="external">https://developers.google.com/android/nexus/drivers#hikey中找到对应设备与源码分支的硬件驱动。刚才选择的源码分支所对应的build码是LMY48M，因此，就下载此代号的驱动程序即可。</a><br>下载得到的是三个tgz文件，我们只需依次解压三个文件，得到的是三个shell脚本文件，我们先将其置于源码根目录中。<br>依次执行这3个脚本将在源码根目录中生成一个vendor文件夹。</p>
+<hr>
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><h3 id="设置文件描述符限制"><a href="#设置文件描述符限制" class="headerlink" title="设置文件描述符限制"></a>设置文件描述符限制</h3><p>在macOS中，默认限制的同时打开的文件数量很少，不能满足编译过程中的高并发需要，因此需要在shell中运行命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">ulimit</span> -S -n 1024</div></pre></td></tr></table></figure></p>
+<h3 id="环境设置"><a href="#环境设置" class="headerlink" title="环境设置"></a>环境设置</h3><p>在源码根目录下调用下面的命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">source</span> build/envsetup.sh</div></pre></td></tr></table></figure></p>
+<h3 id="选择设备"><a href="#选择设备" class="headerlink" title="选择设备"></a>选择设备</h3><p>因为我编译后需要烧录到Nexus6上，所以选择<code>aosp_shamu-userdebug</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ lunch aosp_shamu-userdebug</div></pre></td></tr></table></figure></p>
+<p>如果不需要烧录到真机上的话，用默认的<code>aosp_arm-eng</code>类型就可以了。</p>
+<h3 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h3><p>因为本机CPU的内核是8核的，所以开16个线程加快编译。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ make -j16</div></pre></td></tr></table></figure></p>
+<p>编译成功后，会有类似下面的日志：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#### make completed successfully (30:28:08 (hh:mm:ss)) ####</span></div></pre></td></tr></table></figure></p>
+<p>编译成功的结果都在<code>out</code>目录中。<br>如果lunch的是<code>aosp_arm-eng</code>类型，就可以用<code>$ emulator</code>命令刷到模拟器了。</p>
+<hr>
+<h2 id="源码导入到Android-Studio中"><a href="#源码导入到Android-Studio中" class="headerlink" title="源码导入到Android Studio中"></a>源码导入到Android Studio中</h2><p>为了方便查看源码，可以把代码导入到AS中。目前看来，只能支持Java的跳转，对c++的支持不太好。<br>为了让AS理解代码的符号和源码树的结构，需要用如下命令生成一个<code>android.ipr</code>工程配置文件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ mmm development/tools/idegen/</div><div class="line">$ development/tools/idegen/idegen.sh</div></pre></td></tr></table></figure></p>
+<p>大约需要十几秒的时间，就能在源码根目录下生成android.ipr和android.iml了。<br>用AS打开android.ipr就能导入整个源码了。<br>如果要支持跳转的话，还需要做些配置，可以看这篇教程：<a href="http://blog.justain.net/index.php/import-aosp-into-android-studio/" target="_blank" rel="external">Import AOSP into Android Studio</a></p>
+<hr>
+<h2 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a>刷机</h2><p>Nexus6手机在打开USB调试，连接电脑后允许调试这台手机，并且在设置中打开“允许 OEM 解锁”。然后令手机进入recovery模式，在关机下，输入如下命令即可：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ adb reboot bootloader</div></pre></td></tr></table></figure></p>
+<p>执行如下命令刷机：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ fastboot -w flashall</div></pre></td></tr></table></figure></p>
+<p>刷机成功后，手机会自动重启，新鲜出炉的系统终于跑起来了。<br>刷机过程中也出现过变砖的情况，可以试一下<a href="http://www.shuame.com/faq/restore-tutorial/14679-google-nexus6.html" target="_blank" rel="external">这个教程</a>，亲测有效。</p>
+<hr>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p><a href="https://medium.com/@raminmahmoodi/build-android-5-0-lollipop-on-osx-10-10-yosemite-441bd00ee77a" target="_blank" rel="external">Build Android 5.0 Lollipop on OSX 10.10 Yosemite</a><br><a href="http://blog.bihe0832.com/macOS-AOSP.html" target="_blank" rel="external">http://blog.bihe0832.com/macOS-AOSP.html</a><br><a href="http://boxingp.github.io/blog/2015/01/25/manage-multiple-versions-of-java-on-os-x/" target="_blank" rel="external">在OS X中使用jEnv管理多个Java版本</a><br><a href="http://blog.justain.net/index.php/import-aosp-into-android-studio/" target="_blank" rel="external">Import AOSP into Android Studio</a><br><a href="http://www.shuame.com/faq/restore-tutorial/14679-google-nexus6.html" target="_blank" rel="external">Nexus 6 恢复官方兼救砖</a></p>
 
 	
 	
@@ -380,9 +407,9 @@
 <div id="comments">
     <!-- 多说评论框 start -->
         <div class="ds-thread" 
-            data-thread-key="2015/04/25/2015-04-25-Android快速索引条控件/" 
-            data-url="http://felixzhang00.github.io/2015/04/25/2015-04-25-Android快速索引条控件/"
-            data-title="Android快速索引条控件"></div>
+            data-thread-key="2017/01/21/在macOS 10.12 上编译 Android 5.1/" 
+            data-url="http://felixzhang00.github.io/2017/01/21/在macOS 10.12 上编译 Android 5.1/"
+            data-title="在macOS 10.12 上编译 Android 5.1"></div>
     <!-- 多说评论框 end -->
 </div>
 
@@ -396,21 +423,13 @@
     
     <!-- Prev Nav -->
     
-        <a href="/2015/04/25/2015-04-25-Android ListView头部视差控件/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2015/04/20/2015-04-20-HTML5动态时钟/" id="post_nav-older" class="next-content">
+        <a href="/2017/01/21/Docker简单使用/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
