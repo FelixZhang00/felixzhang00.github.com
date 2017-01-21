@@ -4,7 +4,7 @@
     <!-- Title -->
     
     <title>
-        Android快速索引条控件 | FelixZhang&#39;s Blog
+        Docker简单使用 | FelixZhang&#39;s Blog
     </title>
     
     <!-- Favicons -->
@@ -40,7 +40,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://felixzhang00.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Android快速索引条控件 | FelixZhang&#39;s Blog">
+    <meta property="og:title" content="Docker简单使用 | FelixZhang&#39;s Blog">
     <meta property="og:description" content="null">
     
      <!--[if lte IE 9]>
@@ -217,7 +217,7 @@
 	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
 		for="post-toc-trigger-btn">
 			
-			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#效果展示"><span class="post-toc-number">1.</span> <span class="post-toc-text">效果展示</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码实现"><span class="post-toc-number">2.</span> <span class="post-toc-text">代码实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#自定义view，画出静态的图形"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">自定义view，画出静态的图形</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现onTouch事件，完成动态效果"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">实现onTouch事件，完成动态效果</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#给触摸事件添加更加人性化的交互"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">给触摸事件添加更加人性化的交互</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#QuickIndexBar交互效果的实现"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">QuickIndexBar交互效果的实现</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#中间放大框的实现"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">中间放大框的实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#完整代码"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">完整代码</span></a></li></ol></li></ol>
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Docker简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">Docker简介</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么说Docker比虚拟机快呢？"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">为什么说Docker比虚拟机快呢？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是docker"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">什么是docker</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本用法"><span class="post-toc-number">2.</span> <span class="post-toc-text">基本用法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#通过docker-info-可以得到的一些信息"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">通过docker info 可以得到的一些信息</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建交互式容器"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">创建交互式容器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建守护式容器"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">创建守护式容器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#容器内部都在干些什么"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">容器内部都在干些什么</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#查看容器内的进程"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">查看容器内的进程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#在容器内部运行进程"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">在容器内部运行进程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#停止守护式容器"><span class="post-toc-number">2.7.</span> <span class="post-toc-text">停止守护式容器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#自动重启容器"><span class="post-toc-number">2.8.</span> <span class="post-toc-text">自动重启容器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#深入容器"><span class="post-toc-number">2.9.</span> <span class="post-toc-text">深入容器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#删除容器"><span class="post-toc-number">2.10.</span> <span class="post-toc-text">删除容器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#列出镜像"><span class="post-toc-number">2.11.</span> <span class="post-toc-text">列出镜像</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#后记"><span class="post-toc-number">3.</span> <span class="post-toc-text">后记</span></a></li></ol>
 		
 <!--			<li class="mdl-menu__item">Some Action</li>-->
 	</ul>
@@ -251,7 +251,7 @@
 		
 	
         <p class="article-headline-p">
-            Android快速索引条控件
+            Docker简单使用
         </p>
     </div>
 
@@ -269,7 +269,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Felix</strong>
-        <span>4月 25, 2015</span>
+        <span>1月 21, 2017</span>
     </div>
     
     <div class="section-spacer"></div>
@@ -289,7 +289,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/自定义控件/">自定义控件</a>
+        <a class="post_tag-link" href="/tags/工具-docker/">工具 docker</a>
     </ul>
     
     <!-- Share -->
@@ -304,28 +304,28 @@
     
 
     <!-- Share Twitter -->
-    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Android快速索引条控件&url=http://felixzhang00.github.io//2015/04/25/2015-04-25-Android快速索引条控件/index.html&via=Felix" target="_blank">
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Docker简单使用&url=http://felixzhang00.github.io//2017/01/21/Docker简单使用/index.html&via=Felix" target="_blank">
         <li class="mdl-menu__item">
             分享到 Twitter
         </li>
     </a>
 
     <!-- Share Google+ -->
-    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2015/04/25/2015-04-25-Android快速索引条控件/index.html" target="_blank">
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2017/01/21/Docker简单使用/index.html" target="_blank">
         <li class="mdl-menu__item">
             分享到 Google+
         </li>
     </a>
 
     <!-- Share Weibo -->
-    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Android快速索引条控件&url=http://felixzhang00.github.io//2015/04/25/2015-04-25-Android快速索引条控件/index.html&pic=&searchPic=false&style=simple" target="_blank">
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Docker简单使用&url=http://felixzhang00.github.io//2017/01/21/Docker简单使用/index.html&pic=&searchPic=false&style=simple" target="_blank">
         <li class="mdl-menu__item">
             分享到微博
         </li>
     </a>
 
     <!-- Share LinkedIn -->
-    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2015/04/25/2015-04-25-Android快速索引条控件/index.html&title=Android快速索引条控件" target="_blank">
+    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2017/01/21/Docker简单使用/index.html&title=Docker简单使用" target="_blank">
         <li class="mdl-menu__item">
             分享到 LinkedIn
         </li>
@@ -338,20 +338,55 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
 	
-		<h2 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/2015-04-25 快速索引条.gif"></p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="自定义view，画出静态的图形"><a href="#自定义view，画出静态的图形" class="headerlink" title="自定义view，画出静态的图形"></a>自定义view，画出静态的图形</h3><pre><code>在canvas上指定好位置，用各种画笔Paint，重要的是分析的过程。
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> Paint paint;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">int</span> cellWidth, cellHeight;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">       paint = <span class="keyword">new</span> Paint();</div><div class="line">       paint.setTextSize(<span class="number">40</span>);</div><div class="line">       paint.setColor(Color.WHITE);</div><div class="line">       paint.setTypeface(Typeface.DEFAULT_BOLD);</div><div class="line">       paint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">   &#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">   <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">   <span class="keyword">if</span> (cellHeight == <span class="number">0</span>) cellHeight = getMeasuredHeight() / indexs.length;</div><div class="line">   <span class="keyword">if</span> (cellWidth == <span class="number">0</span>) cellWidth = getMeasuredWidth();</div><div class="line"></div><div class="line">   <span class="comment">//分别画26个字母</span></div><div class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; indexs.length; i++) &#123;</div><div class="line"></div><div class="line">       <span class="comment">//先测量用此画笔画字母的大小，用一个矩形把它包裹起来，这样方便计算字母的高度</span></div><div class="line">       Rect bounds = <span class="keyword">new</span> Rect();</div><div class="line">       paint.getTextBounds(indexs[i], <span class="number">0</span>, indexs[i].length(), bounds);</div><div class="line"></div><div class="line">       <span class="comment">//计算画每个字母的起始坐标</span></div><div class="line">       <span class="keyword">float</span> x = cellWidth / <span class="number">2</span> - paint.measureText(indexs[i]) / <span class="number">2</span>;</div><div class="line">       <span class="keyword">float</span> y = cellHeight / <span class="number">2</span> + bounds.height() / <span class="number">2</span> + i * cellHeight;</div><div class="line">       canvas.drawText(indexs[i], x, y, paint);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="实现onTouch事件，完成动态效果"><a href="#实现onTouch事件，完成动态效果" class="headerlink" title="实现onTouch事件，完成动态效果"></a>实现onTouch事件，完成动态效果</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> lastIndex = -<span class="number">1</span>;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</div><div class="line"><span class="comment">//        if (x &gt;= 0 &amp;&amp; x &lt;= cellWidth) &#123;  //只对quickindexbar的触摸事件有效</span></div><div class="line"><span class="comment">//            return false;</span></div><div class="line"><span class="comment">//        &#125;</span></div><div class="line">        <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</div><div class="line">        <span class="keyword">switch</span> (event.getAction()) &#123;</div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</div><div class="line">                <span class="keyword">if</span> (isSameIndex(y / cellHeight)) <span class="keyword">break</span>;</div><div class="line"></div><div class="line"></div><div class="line">                String word = indexs[((<span class="keyword">int</span>) (y / cellHeight))];</div><div class="line">                lastIndex = y / cellHeight;</div><div class="line">                <span class="keyword">if</span> (mIndexChangedListener != <span class="keyword">null</span>) &#123;</div><div class="line">                    mIndexChangedListener.indexChanged(word);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">                lastIndex = -<span class="number">1</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//自行处理触摸事件，不向上传递</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 当前的索引位置是否和上一个相等</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isSameIndex</span><span class="params">(<span class="keyword">int</span> currIndex)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> lastIndex == currIndex;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> IndexChangedListener mIndexChangedListener;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIndexChangedListener</span><span class="params">(IndexChangedListener indexChangedListener)</span> </span>&#123;</div><div class="line">        mIndexChangedListener = indexChangedListener;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IndexChangedListener</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">indexChanged</span><span class="params">(String word)</span></span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h3 id="给触摸事件添加更加人性化的交互"><a href="#给触摸事件添加更加人性化的交互" class="headerlink" title="给触摸事件添加更加人性化的交互"></a>给触摸事件添加更加人性化的交互</h3><h4 id="QuickIndexBar交互效果的实现"><a href="#QuickIndexBar交互效果的实现" class="headerlink" title="QuickIndexBar交互效果的实现"></a>QuickIndexBar交互效果的实现</h4><pre><code>在处理onTouch事件时，改变画笔的设置，画出不同的图案。
-
-在onTouch中调用
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//重新调用onDraw</span></div><div class="line">invalidate();</div></pre></td></tr></table></figure>
-<pre><code>在onDraw中增加下面的逻辑：
-画每个元素之前先设置不同的画笔。    
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">if</span> (i == lastIndex) &#123;               <span class="comment">//正在touch的位置 需要更加人性化的交互</span></div><div class="line">   paint.setTextSize(<span class="number">60</span>);</div><div class="line">   paint.setColor(Color.GRAY);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">   paint.setTextSize(<span class="number">40</span>);</div><div class="line">   paint.setColor(Color.WHITE);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="中间放大框的实现"><a href="#中间放大框的实现" class="headerlink" title="中间放大框的实现"></a>中间放大框的实现</h4><pre><code>当前Activity接受到QuickIndexBar的变化事件后，调用showIndexLabel方法，通过handler完成延迟操作。
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> Handler mHandler = <span class="keyword">new</span> Handler();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showIndexLabel</span><span class="params">(String word)</span> </span>&#123;</div><div class="line">   mLabel.setVisibility(View.VISIBLE);</div><div class="line">   mLabel.setText(word);</div><div class="line"></div><div class="line">   mHandler.removeCallbacksAndMessages(<span class="keyword">null</span>); <span class="comment">//移除所有消息队列</span></div><div class="line">   mHandler.postDelayed(<span class="keyword">new</span> Runnable() &#123;      <span class="comment">//发送延时消息</span></div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">           mLabel.setVisibility(View.GONE);</div><div class="line">       &#125;</div><div class="line">   &#125;, DEFAULT_DELAY);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><p><a href="https://github.com/FelixZhang00/My_QuickIndexBar" target="_blank" rel="external">github</a></p>
+		<p><a href="https://zhuanlan.zhihu.com/p/24633328" target="_blank" rel="external">史上最简单Android源码编译环境搭建方法</a>这篇分享介绍了借助Docker来编译Android源码，Docker可以直接把编译工具链和Ubuntu系统整体打包，保证了编译环境和官方的一致。<br>我用的macOS，之前尝试过编译AOSP，出现各种问题，采用虚拟机的方式也常常编译不过，看到可以用docker的新方式，打算尝试用一下。但是从我实际操作来看，docker在mac上是很慢的，并不比虚拟机快多少，在编译AOSP时也会造成卡死，因为在mac平台上docker是要运行在一个虚拟机上的。在尝试docker编译AOSP失败后，我最终还是用macOS编译了，最终成功烧录到nexus手机上。<br>虽然docker不适合我编译AOSP，但是作为一个操作系统级虚拟化实现方案，还是非常优秀滴。写一个编译器做成一个镜像，放在docker容器里运行还是绰绰有余的，比如《自制编译器》里的<code>cbc编译器</code>, 有人就做了一个镜像上传到<a href="https://hub.docker.com/r/leungwensen/cbc-ubuntu-64bit/" target="_blank" rel="external">DockerHub</a>上了，这样就避免了需要配置一堆环境依赖的麻烦了。<br>也算是对Docker研究了半天，简单记录下docker的用法吧。</p>
+<hr>
+<h2 id="Docker简介"><a href="#Docker简介" class="headerlink" title="Docker简介"></a>Docker简介</h2><h3 id="为什么说Docker比虚拟机快呢？"><a href="#为什么说Docker比虚拟机快呢？" class="headerlink" title="为什么说Docker比虚拟机快呢？"></a>为什么说Docker比虚拟机快呢？</h3><p>因为Docker容器需要的开销有限。和传统的虚拟化相比，容器运行不需要模拟层和管理层，而是使用操作系统的系统调用接口。这降低了运行单个容器所需的开销，也使得宿主机中可以运行更多容器。<br>但这个是对Host机为Linux而言的，macOS上运行docker容器本质上还是跑在linux虚拟机上的。</p>
+<h3 id="什么是docker"><a href="#什么是docker" class="headerlink" title="什么是docker"></a>什么是docker</h3><p>镜像是Docker生命周期中的构建或打包阶段，而容器则是启动或执行阶段。<br>简单来说，Docker就是：</p>
+<ul>
+<li>一个镜像格式</li>
+<li>一系列标准的操作</li>
+<li>一个执行环境</li>
+</ul>
+<p>镜像是基于联合文件系统的一种层式的结构，由一系列指令一步一步构建出来，例如：添加一个文件；执行一个名人；打开一个端口。<br>当从一个镜像启动容器时，Docker会在该镜像的最底层加载一个读写文件系统，我们想在Docker中运行的程序就是在这个读写层中执行的。<br>下图是Docker的文件系统层。<br><img src="http://p1.bqimg.com/567571/d31fea71fb692f4d.png" alt="Docker文件系统层"></p>
+<p>构建镜像最方便的做法是写一个Dockerfile文件，让docker自带的工具读它，然后生出一个镜像文件来。<br>Dockerfile使用基本的基于DSL语法的指令来构建一个Docker镜像，之后使用docker build命令基于该Dockerfile中的指令构建一个新的镜像。<br>每条指令都会创建一个新的镜像层并对镜像进行提交。Docker大体上按照如下的流程执行Dockerfile中的指令。</p>
+<ul>
+<li>Docker从基础镜像运行一个容器。</li>
+<li>执行一条指令，对容器做出修改。</li>
+<li>执行类似docker commit的操作，提交一个新的镜像层。</li>
+<li>Docker再基于刚提交的镜像运行一个新容器。</li>
+<li>执行Dockerfile中的下一条指令，直到所有指令都执行完毕。</li>
+</ul>
+<p>这里给两个简单的例子，可以自己研究下：</p>
+<ul>
+<li><a href="https://hub.docker.com/r/leungwensen/cbc-ubuntu-64bit/" target="_blank" rel="external">cbc-ubuntu-64bit</a></li>
+<li><a href="https://hub.docker.com/r/kylemanna/aosp/" target="_blank" rel="external">aosp</a></li>
+</ul>
+<hr>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>去<a href="https://www.docker.com/" target="_blank" rel="external">Docker官网</a>下载对应操作系统的安装包后，就可以使用了。<br>打开 Kitematic, 可以在这里下载镜像，dockerhub的形式跟github很像，可以commit、pull等。<br><img src="http://p1.bqimg.com/567571/9d49704a11c5ecad.jpg" alt=""></p>
+<p>Docker是基于C/S架构的，它有一个docker程序，既能作为客户端，也可以作为服务端。作为客户端时，docker程序向Docker守护进程发送请求（如请求返回守护进程自身的信息），然后再对返回的请求结果进行处理。</p>
+<h3 id="通过docker-info-可以得到的一些信息"><a href="#通过docker-info-可以得到的一些信息" class="headerlink" title="通过docker info 可以得到的一些信息"></a>通过docker info 可以得到的一些信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$ docker info      </div><div class="line">Containers: 10</div><div class="line"> Running: 1</div><div class="line"> Paused: 0</div><div class="line"> Stopped: 9</div><div class="line">Images: 7</div><div class="line">Server Version: 1.12.6</div><div class="line">//...</div><div class="line">Registry: https://index.docker.io/v1/</div><div class="line">WARNING: No kernel memory <span class="built_in">limit</span> support</div><div class="line">Insecure Registries:</div><div class="line"> 127.0.0.0/8</div></pre></td></tr></table></figure>
+<h3 id="创建交互式容器"><a href="#创建交互式容器" class="headerlink" title="创建交互式容器"></a>创建交互式容器</h3><p>我们告诉Docker执行<code>docker run</code>命令，我们告诉Docker基于<code>ubuntu</code>镜像来创建容器，如果本地没有该镜像的话，Docker会连接官方维护的Docker Hub Registry查找该镜像，下载并保存到本地宿主机中。 <code>-i</code>保证容器中STDIN是开启的，<code>-t</code>告诉Docker为要创建的容器分配一个伪tty终端。这样，新创建的容器才能提供一个交互式shell。最后的<code>/bin/bash</code>告诉Docker在新容器中要运行什么命令。其中<code>--name</code>参数告诉Docker创建一个名为<code>test_container</code>的容器。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ sudo docker --name test_container run -i -t ubuntu /bin/bash</div><div class="line">//...</div><div class="line">root@12345:/<span class="comment">#</span></div></pre></td></tr></table></figure></p>
+<p>这样，我们就能看到容器内的shell了。容器的id是12345。容器的主机名就是该容器的ID。具体可以通过<code>cat /etc/hosts</code>查看。<br>输入<code>exit</code>,就可以返回宿主机的命令行了。一旦退出容器，<code>/bin/bash</code>命令也就结束了，容器也随之停止运行。但容器是仍然存在的。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root@12345:/<span class="comment"># exit</span></div></pre></td></tr></table></figure></p>
+<p>用<code>docker ps -a</code>命令查看当前系统中容器的列表</p>
+<p>Docker容器重新启动的时候，会沿用docker run命令时指定的参数来运行。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker restart (container name or id)</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="创建守护式容器"><a href="#创建守护式容器" class="headerlink" title="创建守护式容器"></a>创建守护式容器</h3><p><code>-d</code>参数告诉Docker把容器放到后台运行。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker run --name daemon_dave <span class="_">-d</span> ubuntu /bin/sh -c <span class="string">"while true; do echo hello world; sleep 1; done"</span></div></pre></td></tr></table></figure></p>
+<h3 id="容器内部都在干些什么"><a href="#容器内部都在干些什么" class="headerlink" title="容器内部都在干些什么"></a>容器内部都在干些什么</h3><p>用<code>docker logs</code>命令来获取容器的日志。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker logs (container name or id)</div></pre></td></tr></table></figure></p>
+<h3 id="查看容器内的进程"><a href="#查看容器内的进程" class="headerlink" title="查看容器内的进程"></a>查看容器内的进程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker top (container name or id)</div></pre></td></tr></table></figure>
+<h3 id="在容器内部运行进程"><a href="#在容器内部运行进程" class="headerlink" title="在容器内部运行进程"></a>在容器内部运行进程</h3><p>通过<code>docker exec</code>命令在容器内部额外启动新进程，<br>如下启动了新的后台任务和交互式任务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker <span class="built_in">exec</span> <span class="_">-d</span> (container name or id) touch /etc/new_config_file</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker <span class="built_in">exec</span> -t -i (container name or id) /bin/bash</div></pre></td></tr></table></figure>
+<h3 id="停止守护式容器"><a href="#停止守护式容器" class="headerlink" title="停止守护式容器"></a>停止守护式容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker stop (container name or id)</div></pre></td></tr></table></figure>
+<h3 id="自动重启容器"><a href="#自动重启容器" class="headerlink" title="自动重启容器"></a>自动重启容器</h3><p><code>--restart</code>标志会检查容器的退出代码，并据此来决定是否重启容器。<br>比如<code>--restart=onfailure:5</code>表示Docker会尝试自动重启该容器，最多重启5次。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker run --restart=always --name daemon_dave <span class="_">-d</span> ubuntu /bin/sh -c <span class="string">"while true; do echo hello world; sleep 1; done"</span></div></pre></td></tr></table></figure></p>
+<h3 id="深入容器"><a href="#深入容器" class="headerlink" title="深入容器"></a>深入容器</h3><p><code>docker inspect</code>命令会对容器进行详细的检查，然后返回其配置信息，包括名称、命令、网络配置等。这是一大串json数据，可以用<code>--format</code>标志来选定查看结果。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sudo docker inspect --format=<span class="string">'&#123;&#123;.Args&#125;&#125;'</span> (container name or id)</div><div class="line">[run.sh docker]</div></pre></td></tr></table></figure></p>
+<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker rm (container name or id)</div></pre></td></tr></table></figure>
+<p>一次删除所有容器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker rm `docker ps <span class="_">-a</span> -q`</div></pre></td></tr></table></figure></p>
+<h3 id="列出镜像"><a href="#列出镜像" class="headerlink" title="列出镜像"></a>列出镜像</h3><p>用<code>docker images</code>得到本地的镜像列表。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ sudo docker images</div><div class="line">REPOSITORY  TAG     IMAGE ID       CREATED    	SIZE</div><div class="line">ubuntu      latest  104bec311bcd   4 weeks ago  129 MB</div><div class="line">ubuntu      14.04   xxx   		   x weeks ago  xxx MB</div></pre></td></tr></table></figure></p>
+<p>镜像保存在仓库中，而仓库在于Registry中，默认的Registry是Docker Hub。<br>每个镜像仓库都可以存放很多镜像（比如ubuntu仓库包含了ubuntu各个版本的镜像）。<br>执行<code>sudo docker pull ubuntu</code>命令来拉取ubuntu仓库中所有内容。<br>每个镜像在列出来时都带有一个标签，用于对组成特定镜像的一些镜像层镜像标记。<br>用如下的方式来指定该仓库的某一镜像<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker run -ti ubuntu:12.04 /bin/bash</div></pre></td></tr></table></figure></p>
+<p>Docker Hub中有两种类型的仓库：用户仓库和顶层仓库。<br><code>用户名/仓库名</code>这种形式表示用户仓库，是由Docker用户创建的；<br>顶层仓库只包含仓库名部分，由Docker内部人来管理的。</p>
+<hr>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>因为我只是想用docker来配一个编译aosp的环境，对于Docker的很多高级功能还没有接触，比如利用连接和卷之类的Docker特性来组合并管理运行与Docker中的应用、创建多容器的应用栈等。</p>
+<hr>
+<p> 相关链接<br><a href="https://zhuanlan.zhihu.com/p/24633328" target="_blank" rel="external">史上最简单Android源码编译环境搭建方法</a><br><a href="https://hub.docker.com/r/leungwensen/cbc-ubuntu-64bit/" target="_blank" rel="external">cbc-ubuntu-64bit</a><br><a href="http://numbbbbb.com/2016/09/26/20160926_%E7%94%A8%20Docker%20%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" target="_blank" rel="external">用 Docker 快速配置前端开发环境</a><br><a href="https://book.douban.com/subject/26285268/" target="_blank" rel="external">《第一本Docker书》</a></p>
 
 	
 	
@@ -380,9 +415,9 @@
 <div id="comments">
     <!-- 多说评论框 start -->
         <div class="ds-thread" 
-            data-thread-key="2015/04/25/2015-04-25-Android快速索引条控件/" 
-            data-url="http://felixzhang00.github.io/2015/04/25/2015-04-25-Android快速索引条控件/"
-            data-title="Android快速索引条控件"></div>
+            data-thread-key="2017/01/21/Docker简单使用/" 
+            data-url="http://felixzhang00.github.io/2017/01/21/Docker简单使用/"
+            data-title="Docker简单使用"></div>
     <!-- 多说评论框 end -->
 </div>
 
@@ -396,21 +431,13 @@
     
     <!-- Prev Nav -->
     
-        <a href="/2015/04/25/2015-04-25-Android ListView头部视差控件/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2015/04/20/2015-04-20-HTML5动态时钟/" id="post_nav-older" class="next-content">
+        <a href="/2017/01/12/xlog接入方案/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
