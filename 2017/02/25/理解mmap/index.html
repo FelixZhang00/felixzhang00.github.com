@@ -4,7 +4,7 @@
     <!-- Title -->
     
     <title>
-        Android滑动删除控件 | FelixZhang&#39;s Blog
+        理解mmap | FelixZhang&#39;s Blog
     </title>
     
     <!-- Favicons -->
@@ -40,7 +40,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://felixzhang00.github.io">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Android滑动删除控件 | FelixZhang&#39;s Blog">
+    <meta property="og:title" content="理解mmap | FelixZhang&#39;s Blog">
     <meta property="og:description" content="null">
     
      <!--[if lte IE 9]>
@@ -217,7 +217,7 @@
 	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
 		for="post-toc-trigger-btn">
 			
-			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#效果展示"><span class="post-toc-number">1.</span> <span class="post-toc-text">效果展示</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码实现"><span class="post-toc-number">2.</span> <span class="post-toc-text">代码实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#静态布局"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">静态布局</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#动画效果"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">动画效果</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ListView中的滑动删除效果"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">ListView中的滑动删除效果</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#完整代码"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">完整代码</span></a></li></ol></li></ol>
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-一个Linux进程的虚拟内存"><span class="post-toc-number">1.</span> <span class="post-toc-text">1.一个Linux进程的虚拟内存</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-Linux是如何组织虚拟内存的"><span class="post-toc-number">2.</span> <span class="post-toc-text">2.Linux是如何组织虚拟内存的</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-缺页处理"><span class="post-toc-number">3.</span> <span class="post-toc-text">3.缺页处理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-内存映射"><span class="post-toc-number">4.</span> <span class="post-toc-text">4.内存映射</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mmap原理"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">mmap原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#程序的加载"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">程序的加载</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-为什么mmap-可以节约IO读写时间"><span class="post-toc-number">5.</span> <span class="post-toc-text">5.为什么mmap()可以节约IO读写时间</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#xlog对mmap的效率做了验证"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">xlog对mmap的效率做了验证</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">6.</span> <span class="post-toc-text">参考</span></a></li></ol>
 		
 <!--			<li class="mdl-menu__item">Some Action</li>-->
 	</ul>
@@ -251,7 +251,7 @@
 		
 	
         <p class="article-headline-p">
-            Android滑动删除控件
+            理解mmap
         </p>
     </div>
 
@@ -269,7 +269,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Felix</strong>
-        <span>4月 26, 2015</span>
+        <span>2月 25, 2017</span>
     </div>
     
     <div class="section-spacer"></div>
@@ -289,7 +289,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/动画/">动画</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/自定义控件/">自定义控件</a>
+        <a class="post_tag-link" href="/tags/Linux/">Linux</a>
     </ul>
     
     <!-- Share -->
@@ -304,28 +304,28 @@
     
 
     <!-- Share Twitter -->
-    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Android滑动删除控件&url=http://felixzhang00.github.io//2015/04/26/2015-04-26-Android滑动删除控件/index.html&via=Felix" target="_blank">
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=理解mmap&url=http://felixzhang00.github.io//2017/02/25/理解mmap/index.html&via=Felix" target="_blank">
         <li class="mdl-menu__item">
             分享到 Twitter
         </li>
     </a>
 
     <!-- Share Google+ -->
-    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2015/04/26/2015-04-26-Android滑动删除控件/index.html" target="_blank">
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2017/02/25/理解mmap/index.html" target="_blank">
         <li class="mdl-menu__item">
             分享到 Google+
         </li>
     </a>
 
     <!-- Share Weibo -->
-    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Android滑动删除控件&url=http://felixzhang00.github.io//2015/04/26/2015-04-26-Android滑动删除控件/index.html&pic=&searchPic=false&style=simple" target="_blank">
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=理解mmap&url=http://felixzhang00.github.io//2017/02/25/理解mmap/index.html&pic=&searchPic=false&style=simple" target="_blank">
         <li class="mdl-menu__item">
             分享到微博
         </li>
     </a>
 
     <!-- Share LinkedIn -->
-    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2015/04/26/2015-04-26-Android滑动删除控件/index.html&title=Android滑动删除控件" target="_blank">
+    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2017/02/25/理解mmap/index.html&title=理解mmap" target="_blank">
         <li class="mdl-menu__item">
             分享到 LinkedIn
         </li>
@@ -338,15 +338,41 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
 	
-		<h2 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/2015-04-26-滑动删除.gif"></p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="静态布局"><a href="#静态布局" class="headerlink" title="静态布局"></a>静态布局</h3><p>自定义一个ViewGroup，继承至FrameLayout，覆写其中的几个关键方法，用于给其中的两个子view设置布局位置。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">	</div><div class="line">	private View contentView, deleteView;</div><div class="line">	int contentViewHeight, contentViewWidth;</div><div class="line">	int deleteViewHeight, deleteViewWidth;</div><div class="line"></div><div class="line">	private void init() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">	/**</div><div class="line">	 * 从xml中加载完布局，只知道有几个子view，并没有进行测量</div><div class="line">	 * 一般可以初始化子view的引用</div><div class="line">	 */</div><div class="line">	@Override</div><div class="line">	protected void onFinishInflate() &#123;</div><div class="line">    super.onFinishInflate();</div><div class="line">    contentView = getChildAt(0);</div><div class="line">    deleteView = getChildAt(1);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	/**</div><div class="line">	 * 测量完子view后调用，在这里可以直接获取子view的高度</div><div class="line">	 */</div><div class="line">	@Override</div><div class="line">	protected void onSizeChanged(int w, int h, int oldw, int oldh) &#123;</div><div class="line">    super.onSizeChanged(w, h, oldw, oldh);</div><div class="line">    contentViewWidth = contentView.getMeasuredWidth();</div><div class="line">    deleteViewHeight = deleteView.getMeasuredHeight();</div><div class="line">	&#125;</div><div class="line"></div><div class="line"></div><div class="line">	/**</div><div class="line">	 * 放置子view到合适的位置</div><div class="line">	 */</div><div class="line">	@Override</div><div class="line">	protected void onLayout(boolean changed, int left, int top, int right, int bottom) &#123;</div><div class="line">    super.onLayout(changed, left, top, right, bottom);</div><div class="line">    contentView.layout(0, 0, contentViewWidth, contentViewHeight);</div><div class="line">    deleteView.layout(contentViewWidth, 0, contentViewWidth + deleteViewWidth, 	deleteViewHeight);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">```	</div><div class="line"></div><div class="line"></div><div class="line">### 处理滑动逻辑</div><div class="line"></div><div class="line">利用ViewDragHelper类封装了对触摸位置、速度、距离的检测，以及Scroller.</div><div class="line">需要我们制定什么时候滑动，以及滑动多少。</div><div class="line">需要把ViewGroup中受到的触摸事件传给ViewDragHelper实例。</div><div class="line"></div><div class="line">#### 触摸事件传给ViewDragHelper实例</div><div class="line"></div><div class="line">```java</div><div class="line"></div><div class="line">	   @Override</div><div class="line">    public boolean onInterceptTouchEvent(MotionEvent ev) &#123;</div><div class="line">        return mViewDragHelper.shouldInterceptTouchEvent(ev);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean onTouchEvent(MotionEvent event) &#123;</div><div class="line">        mViewDragHelper.processTouchEvent(event);</div><div class="line"></div><div class="line">        //消费掉此触摸事件，不向上返回</div><div class="line">        return true;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>####在ViewDragHelper的回调函数中处理滑动逻辑。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> ViewDragHelper mViewDragHelper;</div><div class="line">   <span class="keyword">private</span> ViewDragHelper.Callback callback = <span class="keyword">new</span> ViewDragHelper.Callback() &#123;</div><div class="line"></div><div class="line">       <span class="comment">/**</span></div><div class="line">        * <span class="doctag">@return</span> 返回true表示获得view的控制权</div><div class="line">        */</div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">tryCaptureView</span><span class="params">(View view, <span class="keyword">int</span> i)</span> </span>&#123;</div><div class="line">           <span class="keyword">return</span> view == contentView || view == deleteView;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onViewCaptured</span><span class="params">(View capturedChild, <span class="keyword">int</span> activePointerId)</span> </span>&#123;</div><div class="line">           <span class="keyword">super</span>.onViewCaptured(capturedChild, activePointerId);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="comment">/**</span></div><div class="line">        * 控制view在水平方向上实际滑动了多少</div><div class="line">        * <span class="doctag">@param</span> child 当前触摸的view</div><div class="line">        * <span class="doctag">@param</span> left view的左边坐标，负数表示view的左边超出父view边界的长度</div><div class="line">        * <span class="doctag">@param</span> dx</div><div class="line">        * <span class="doctag">@return</span> 返回多少，代表想让child的left=多少</div><div class="line">        */</div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">clampViewPositionHorizontal</span><span class="params">(View child, <span class="keyword">int</span> left, <span class="keyword">int</span> dx)</span> </span>&#123;</div><div class="line">           Log.i(TAG, <span class="string">"clampViewPositionHorizontal--&gt;"</span> + <span class="string">"left="</span> + left);</div><div class="line">           <span class="keyword">if</span> (child == contentView) &#123;</div><div class="line">               <span class="keyword">if</span> (left &gt; <span class="number">0</span>) left = <span class="number">0</span>;</div><div class="line">               <span class="keyword">if</span> (left &lt; -deleteViewWidth) left = -deleteViewWidth;</div><div class="line">           &#125; <span class="keyword">else</span> <span class="keyword">if</span> (child == deleteView) &#123;</div><div class="line">               <span class="comment">//使deleteVie不会超出指定的边界</span></div><div class="line">               <span class="keyword">if</span> (left &lt; contentViewWidth - deleteViewWidth) &#123;</div><div class="line">                   left = contentViewWidth - deleteViewWidth;</div><div class="line">               &#125;</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">return</span> left;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="comment">/**</span></div><div class="line">        * 水平方向拖拽的范围</div><div class="line">        */</div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getViewHorizontalDragRange</span><span class="params">(View child)</span> </span>&#123;</div><div class="line">           <span class="keyword">return</span> <span class="keyword">super</span>.getViewHorizontalDragRange(child);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="comment">/**</span></div><div class="line">        * view滑动后的回调</div><div class="line">        * <span class="doctag">@param</span> changedView</div><div class="line">        * <span class="doctag">@param</span> left</div><div class="line">        * <span class="doctag">@param</span> top</div><div class="line">        * <span class="doctag">@param</span> dx   x轴方向的改编值</div><div class="line">        * <span class="doctag">@param</span> dy</div><div class="line">        */</div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onViewPositionChanged</span><span class="params">(View changedView, <span class="keyword">int</span> left, <span class="keyword">int</span> top, <span class="keyword">int</span> dx, <span class="keyword">int</span> dy)</span> </span>&#123;</div><div class="line">           <span class="keyword">super</span>.onViewPositionChanged(changedView, left, top, dx, dy);</div><div class="line">           Log.i(TAG, <span class="string">"onViewPositionChanged--&gt;"</span> + <span class="string">"dx="</span> + dx);</div><div class="line">           <span class="comment">//重新布局子view的位置</span></div><div class="line">           <span class="keyword">if</span> (changedView == contentView) &#123;</div><div class="line">               deleteView.layout(deleteView.getLeft() + dx, <span class="number">0</span>, deleteView.getRight() + dx, deleteView.getBottom());</div><div class="line">           &#125; <span class="keyword">else</span> <span class="keyword">if</span> (changedView == deleteView) &#123;</div><div class="line">               contentView.layout(contentView.getLeft() + dx, <span class="number">0</span>, contentView.getRight() + dx, contentView.getBottom());</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="comment">/**</span></div><div class="line">        * TouchUp的回调</div><div class="line">        * <span class="doctag">@param</span> releasedChild</div><div class="line">        * <span class="doctag">@param</span> xvel</div><div class="line">        * <span class="doctag">@param</span> yvel</div><div class="line">        */</div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onViewReleased</span><span class="params">(View releasedChild, <span class="keyword">float</span> xvel, <span class="keyword">float</span> yvel)</span> </span>&#123;</div><div class="line">           <span class="keyword">super</span>.onViewReleased(releasedChild, xvel, yvel);</div><div class="line"></div><div class="line">           <span class="keyword">if</span> (contentView.getLeft() &lt; -deleteViewWidth / <span class="number">2</span>) &#123;   <span class="comment">//滑动条打开状态</span></div><div class="line">               mViewDragHelper.smoothSlideViewTo(contentView, -deleteViewWidth, <span class="number">0</span>);</div><div class="line">           &#125; <span class="keyword">else</span> &#123;          <span class="comment">//滑动条关闭状态</span></div><div class="line">               mViewDragHelper.smoothSlideViewTo(contentView, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">           &#125;</div><div class="line">           <span class="comment">//</span></div><div class="line">           ViewCompat.postInvalidateOnAnimation(SwipeView.<span class="keyword">this</span>);  <span class="comment">//动画刷新</span></div><div class="line">       &#125;</div><div class="line">   &#125;;</div></pre></td></tr></table></figure>
-<h4 id="动画效果"><a href="#动画效果" class="headerlink" title="动画效果"></a>动画效果</h4><p>Scroller帮助计算好view在某个时间点会处于某个位置，达到动画的效果</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">computeScroll</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.computeScroll();</div><div class="line">    <span class="keyword">if</span>(mViewDragHelper.continueSettling(<span class="keyword">true</span>))&#123;     <span class="comment">//内部有Scroller计算位置和移动</span></div><div class="line">        ViewCompat.postInvalidateOnAnimation(SwipeView.<span class="keyword">this</span>);       <span class="comment">//刷新当前view</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="ListView中的滑动删除效果"><a href="#ListView中的滑动删除效果" class="headerlink" title="ListView中的滑动删除效果"></a>ListView中的滑动删除效果</h3><p><img src="http://7viip0.com1.z0.glb.clouddn.com/2015-04-2-ListView中的滑动删除.gif"></p>
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><p><a href="https://github.com/FelixZhang00/My_SwipeViewDemo" target="_blank" rel="external">github</a></p>
+		<p>在接入日志组件xlog的工作中，对mmap内存映射加深了了解，分享一下学习心得。</p>
+<h2 id="1-一个Linux进程的虚拟内存"><a href="#1-一个Linux进程的虚拟内存" class="headerlink" title="1.一个Linux进程的虚拟内存"></a>1.一个Linux进程的虚拟内存</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/50851685-file_1488011866599_1378c.jpg" alt=""><br>如图展示了一个Linux进程的虚拟内存。虚拟的意思是进程以为自己有这么一大块内存，实际上物理内存可能还没有分配给它，从虚拟内存到物理内存的映射过程需要一个专门的硬件单元MMU来完成。<br>系统调用的代码和数据就在内核虚拟内存中，<br>因为在保护模式下，用户态进程无法访问到这里，必须要通过系统调用的方式陷入到内核态才行。</p>
+<h2 id="2-Linux是如何组织虚拟内存的"><a href="#2-Linux是如何组织虚拟内存的" class="headerlink" title="2.Linux是如何组织虚拟内存的"></a>2.Linux是如何组织虚拟内存的</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/44198324-file_1488012277201_ee2a.png" alt=""><br>内核为系统中的每个进程维护一个单独的任务结构<code>task_struct</code>，其中元素包含了内核运行该进程所需要的所有信息（PID、指向用户栈的指针、可执行目标文件的名字、虚拟内存状态、pc指针等）<br><code>task_struct</code>中的<code>mm_struct</code>描述了虚拟内存的当前状态，其中mmap字段指向一个<code>vm_area_struct</code>（区域结构）的链表。顺序搜索区域结构的链表花销会很大，实际上Linux在链表中构建了一个树，并在这棵树中进行查找。<br>进程对某一虚拟内存区域的任何操作需要用要的信息，都可以从<code>vm_area_struct</code>中获得。mmap函数就是要创建一个新的<code>vm_area_struct</code>结构，并将其与文件的物理磁盘地址相连。</p>
+<h2 id="3-缺页处理"><a href="#3-缺页处理" class="headerlink" title="3.缺页处理"></a>3.缺页处理</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/30649400-file_1488012949934_13c4.jpg" alt=""><br>当MMU在试图翻译某个虚拟地址A时，触发了一个缺页。缺页异常处理程序会做如下检查：</p>
+<ul>
+<li>1）虚拟地址A是否合法？即是否在链表<code>mm_struct</code>所描述的区域内。</li>
+<li>2）试图进行的内存访问是否合法？即检查指令的权限是否与vm_prot字段所描述的页读写许可权限相匹配。</li>
+<li>3）正常缺页。系统会负责把该虚拟内存区域对应的文件加载到内存中。</li>
+</ul>
+<h2 id="4-内存映射"><a href="#4-内存映射" class="headerlink" title="4.内存映射"></a>4.内存映射</h2><p>Linux通过将一个虚拟内存区域与一个磁盘上的对象关联起来，以初始化这个虚拟内存区域的内容，这个过程称为内存映射。<br>Linux进程可以使用mmap函数来创建新的虚拟内存区域，并将对象映射到这些区域中。<br>mmap函数定义在libc中：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> *</span></div><div class="line">    <span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *start, <span class="keyword">size_t</span> length, <span class="keyword">int</span> prot, <span class="keyword">int</span> flags, <span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset)</span>;</div></pre></td></tr></table></figure></p>
+<p>mmap参数的可视化解释：<br><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/21318677-file_1488018309700_943f.png" alt=""></p>
+<h3 id="mmap原理"><a href="#mmap原理" class="headerlink" title="mmap原理"></a>mmap原理</h3><p>在调用mmap实现这样的映射关系后，它只是在进程的虚拟空间中分配了一段空间，真实的物理地址还不会分配的，当进程第一次访问这段空间（当作内存一样），CPU陷入OS内核执行异常处理，然后异常处理会在这个时间分配物理内存，并用文件的内容填充这片内存，然后才返回进程的上下文，这时进程才会感知到这片内存里有数据。<br>之后进程即可对这片主存进行读或者写的操作，如果写操作改变了其内容，一定时间后系统会自动回写脏页面到对应磁盘地址，也即完成了写入到文件的过程。</p>
+<p>mmap 的回写时机：</p>
+<ul>
+<li>内存不足</li>
+<li>进程退出</li>
+<li>调用 msync 或者 munmap</li>
+<li>不设置 MAP_NOSYNC 情况下 30s-60s(仅限FreeBSD)</li>
+</ul>
+<h3 id="程序的加载"><a href="#程序的加载" class="headerlink" title="程序的加载"></a>程序的加载</h3><p>Linux执行一个ELF格式的程序，这个程序在磁盘上，为了执行这个程序，需要把程序加载到内存中，这时采用的就是mmap，mmap让虚拟空间和文件的内容组成的空间（文件空间）对应。因为ELF格式是区分代码、数据段的，这里的就不是简单的整个文件的映射了，需要将文件的分段区域映射到内存的不同位置。OS加载ELF文件的过程非常复杂这里就不展开了，具体内容可以看《程序员的自我修养》。<br>当CPU真的在这个地址上发起读写执行等操作时，因为文件的内容在磁盘上是不能被CPU访问的，所以OS会进入异常，系统的缺页处理程序会调用文件系统把一页或者多页的文件内容加载到物理内存中。</p>
+<p>可以通过 <code>cat /proc/&lt;pid&gt;/maps</code>看到某个进程的mmap状态，其实就是通过遍历<code>vm_area_struct</code>链表得到的，有关maps的解释可以看<a href="http://askubuntu.com/questions/93509/how-to-interpret-proc-pid-maps-for-pidgin-application" target="_blank" rel="external">这里</a>。<br>下面是使用xlog的Android程序进程的内存状态（截取一小部分）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">shell@shamu:<span class="comment"># cat /proc/9032/maps</span></div><div class="line">address           perms offset  dev   inode   pathname</div><div class="line">0804d000-0806e000 rwxp 0804d000 00:00 0          [heap]</div><div class="line">b7e88000-b7e89000 rwxp b7e88000 00:00 0 </div><div class="line">a1a3b000<span class="_">-a</span>24aa000 r--p 00000000 fe:00 791721     /data/dalvik-cache/arm/data@app@com.xxx-1@base.apk@classes.dex</div><div class="line">a24aa000<span class="_">-a</span>2f98000 r-xp 00a6f000 fe:00 791721     /data/dalvik-cache/arm/data@app@com.xxx-1@base.apk@classes.dex</div><div class="line">a2f98000<span class="_">-a</span>2f99000 rw-p 0155d000 fe:00 791721     /data/dalvik-cache/arm/data@app@xxx-1@base.apk@classes.dex</div><div class="line">b35a7000-b35<span class="built_in">cd</span>000 rw<span class="_">-s</span> 00000000 00:14 3084       /storage/emulated/0/log.mmap2</div><div class="line">b6fb6000-b6<span class="built_in">fc</span>3000 r-xp 00000000 103:09 206       /system/bin/linker</div><div class="line">b6<span class="built_in">fc</span>3000-b6<span class="built_in">fc</span>4000 r-xp 00000000 00:00 0          [sigpage]</div><div class="line">b6<span class="built_in">fc</span>4000-b6<span class="built_in">fc</span>5000 r--p 0000d000 103:09 206       /system/bin/linker</div><div class="line">b6<span class="built_in">fc</span>5000-b6<span class="built_in">fc</span>6000 rw-p 0000e000 103:09 206       /system/bin/linker</div><div class="line">b6<span class="built_in">fc</span>6000-b6<span class="built_in">fc</span>7000 rw-p 00000000 00:00 0 </div><div class="line">b6<span class="built_in">fc</span>7000-b6fca000 r-xp 00000000 103:09 136       /system/bin/app_process32</div><div class="line">b6fca000-b6fcb000 r--p 00002000 103:09 136       /system/bin/app_process32</div><div class="line">be246000-bea45000 rw-p 00000000 00:00 0          [stack]</div><div class="line">ffff0000-ffff1000 r-xp 00000000 00:00 0          [vectors]</div></pre></td></tr></table></figure></p>
+<p>这些分段空间后面的那些，就是每个虚拟空间分段对应的文件。这些文件，称为这片虚拟空间的backlog文件，它的作用是当这些内存需要被使用的时候，从磁盘中把对应的文件内容加载到物理内存中。<br>这里同一个文件<code>/system/bin/linker</code>在虚拟内存中有不同的内存映射区域，就是因为其文件中有不同的分段，从<code>offset</code>可以看出来。<br><code>/storage/emulated/0/log.mmap2</code>就是xlog用作mmap的backlog文件了，它被映射到<code>b35a7000-b35cd000</code>这段内存区域。</p>
+<h2 id="5-为什么mmap-可以节约IO读写时间"><a href="#5-为什么mmap-可以节约IO读写时间" class="headerlink" title="5.为什么mmap()可以节约IO读写时间"></a>5.为什么mmap()可以节约IO读写时间</h2><p>常规文件操作为了提高读写效率和保护磁盘，使用了页缓存机制，这是由OS控制的。这样造成读文件时需要先将文件页从磁盘拷贝到页缓存中，由于页缓存处在内核空间，不能被用户进程直接寻址，所以还需要将页缓存中数据页再次拷贝到内存对应的用户空间中。这样，通过了两次数据拷贝过程，才能完成进程对文件内容的获取任务。写操作也是一样，待写入的buffer在内核空间不能直接访问，必须要先拷贝至内核空间对应的主存，再写回磁盘中（延迟写回），也是需要两次数据拷贝。</p>
+<p>而使用mmap操作文件中，由于不需要经过内核空间的数据缓存，只使用一次数据拷贝，就从磁盘中将数据传入内存的用户空间中，供进程使用。<br>mmap的关键点是实现了用户空间和内核空间的数据直接交互而省去了空间不同数据不通的繁琐过程。因此mmap效率更高。</p>
+<h3 id="xlog对mmap的效率做了验证"><a href="#xlog对mmap的效率做了验证" class="headerlink" title="xlog对mmap的效率做了验证"></a>xlog对mmap的效率做了验证</h3><p>为了验证 mmap 是否真的有直接写内存的效率，通过一个简单的测试用例进行验证：把512 Byte的数据分别写入150 kb大小的内存和 mmap，以及磁盘文件100w次并统计耗时<br><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/57475458-file_1488014455835_4ad2.jpg" alt=""><br>从上图看出mmap几乎和直接写内存一样的性能，而且 mmap 既不会丢日志，回写时机又基本可控。 </p>
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>《深入理解计算机操作系统》</li>
+<li>《程序员的自我修养》</li>
+<li><a href="http://www.cnblogs.com/huxiao-tee/p/4660352.html" target="_blank" rel="external">认真分析mmap：是什么 为什么 怎么用 </a></li>
+<li><a href="http://dev.qq.com/topic/581c2c46bef1702a2db3ae53" target="_blank" rel="external">微信mars 的高性能日志模块 xlog</a></li>
+<li><a href="https://www.zhihu.com/question/48161206/answer/110418693" target="_blank" rel="external">Linux 中 mmap() 函数的内存映射问题理解</a></li>
+<li><a href="https://linux.die.net/man/5/proc" target="_blank" rel="external">proc(5) - Linux man page</a></li>
+<li><a href="http://askubuntu.com/questions/93509/how-to-interpret-proc-pid-maps-for-pidgin-application" target="_blank" rel="external">How to interpret /proc/pid/maps</a></li>
+</ul>
 
 	
 	
@@ -375,9 +401,9 @@
 <div id="comments">
     <!-- 多说评论框 start -->
         <div class="ds-thread" 
-            data-thread-key="2015/04/26/2015-04-26-Android滑动删除控件/" 
-            data-url="http://felixzhang00.github.io/2015/04/26/2015-04-26-Android滑动删除控件/"
-            data-title="Android滑动删除控件"></div>
+            data-thread-key="2017/02/25/理解mmap/" 
+            data-url="http://felixzhang00.github.io/2017/02/25/理解mmap/"
+            data-title="理解mmap"></div>
     <!-- 多说评论框 end -->
 </div>
 
@@ -391,21 +417,13 @@
     
     <!-- Prev Nav -->
     
-        <a href="/2015/04/30/2015-04-30-滑动卡片式效果/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2015/04/25/2015-04-25-Android ListView头部视差控件/" id="post_nav-older" class="next-content">
+        <a href="/2017/01/23/用Android Studio调试Framework层代码/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">

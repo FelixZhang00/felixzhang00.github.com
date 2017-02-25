@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://felixzhang00.github.io/"/>
-  <updated>2017-01-23T01:29:41.000Z</updated>
+  <updated>2017-02-25T11:37:19.000Z</updated>
   <id>http://felixzhang00.github.io/</id>
   
   <author>
@@ -14,6 +14,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>理解mmap</title>
+    <link href="http://felixzhang00.github.io/2017/02/25/%E7%90%86%E8%A7%A3mmap/"/>
+    <id>http://felixzhang00.github.io/2017/02/25/理解mmap/</id>
+    <published>2017-02-25T11:35:26.000Z</published>
+    <updated>2017-02-25T11:37:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在接入日志组件xlog的工作中，对mmap内存映射加深了了解，分享一下学习心得。</p>
+<h2 id="1-一个Linux进程的虚拟内存"><a href="#1-一个Linux进程的虚拟内存" class="headerlink" title="1.一个Linux进程的虚拟内存"></a>1.一个Linux进程的虚拟内存</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/50851685-file_1488011866599_1378c.jpg" alt=""><br>如图展示了一个Linux进程的虚拟内存。虚拟的意思是进程以为自己有这么一大块内存，实际上物理内存可能还没有分配给它，从虚拟内存到物理内存的映射过程需要一个专门的硬件单元MMU来完成。<br>系统调用的代码和数据就在内核虚拟内存中，<br>因为在保护模式下，用户态进程无法访问到这里，必须要通过系统调用的方式陷入到内核态才行。</p>
+<h2 id="2-Linux是如何组织虚拟内存的"><a href="#2-Linux是如何组织虚拟内存的" class="headerlink" title="2.Linux是如何组织虚拟内存的"></a>2.Linux是如何组织虚拟内存的</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/44198324-file_1488012277201_ee2a.png" alt=""><br>内核为系统中的每个进程维护一个单独的任务结构<code>task_struct</code>，其中元素包含了内核运行该进程所需要的所有信息（PID、指向用户栈的指针、可执行目标文件的名字、虚拟内存状态、pc指针等）<br><code>task_struct</code>中的<code>mm_struct</code>描述了虚拟内存的当前状态，其中mmap字段指向一个<code>vm_area_struct</code>（区域结构）的链表。顺序搜索区域结构的链表花销会很大，实际上Linux在链表中构建了一个树，并在这棵树中进行查找。<br>进程对某一虚拟内存区域的任何操作需要用要的信息，都可以从<code>vm_area_struct</code>中获得。mmap函数就是要创建一个新的<code>vm_area_struct</code>结构，并将其与文件的物理磁盘地址相连。</p>
+<h2 id="3-缺页处理"><a href="#3-缺页处理" class="headerlink" title="3.缺页处理"></a>3.缺页处理</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/30649400-file_1488012949934_13c4.jpg" alt=""><br>当MMU在试图翻译某个虚拟地址A时，触发了一个缺页。缺页异常处理程序会做如下检查：</p>
+<ul>
+<li>1）虚拟地址A是否合法？即是否在链表<code>mm_struct</code>所描述的区域内。</li>
+<li>2）试图进行的内存访问是否合法？即检查指令的权限是否与vm_prot字段所描述的页读写许可权限相匹配。</li>
+<li>3）正常缺页。系统会负责把该虚拟内存区域对应的文件加载到内存中。</li>
+</ul>
+<h2 id="4-内存映射"><a href="#4-内存映射" class="headerlink" title="4.内存映射"></a>4.内存映射</h2><p>Linux通过将一个虚拟内存区域与一个磁盘上的对象关联起来，以初始化这个虚拟内存区域的内容，这个过程称为内存映射。<br>Linux进程可以使用mmap函数来创建新的虚拟内存区域，并将对象映射到这些区域中。<br>mmap函数定义在libc中：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> *</span></div><div class="line">    <span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *start, <span class="keyword">size_t</span> length, <span class="keyword">int</span> prot, <span class="keyword">int</span> flags, <span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset)</span>;</div></pre></td></tr></table></figure></p>
+<p>mmap参数的可视化解释：<br><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/21318677-file_1488018309700_943f.png" alt=""></p>
+<h3 id="mmap原理"><a href="#mmap原理" class="headerlink" title="mmap原理"></a>mmap原理</h3><p>在调用mmap实现这样的映射关系后，它只是在进程的虚拟空间中分配了一段空间，真实的物理地址还不会分配的，当进程第一次访问这段空间（当作内存一样），CPU陷入OS内核执行异常处理，然后异常处理会在这个时间分配物理内存，并用文件的内容填充这片内存，然后才返回进程的上下文，这时进程才会感知到这片内存里有数据。<br>之后进程即可对这片主存进行读或者写的操作，如果写操作改变了其内容，一定时间后系统会自动回写脏页面到对应磁盘地址，也即完成了写入到文件的过程。</p>
+<p>mmap 的回写时机：</p>
+<ul>
+<li>内存不足</li>
+<li>进程退出</li>
+<li>调用 msync 或者 munmap</li>
+<li>不设置 MAP_NOSYNC 情况下 30s-60s(仅限FreeBSD)</li>
+</ul>
+<h3 id="程序的加载"><a href="#程序的加载" class="headerlink" title="程序的加载"></a>程序的加载</h3><p>Linux执行一个ELF格式的程序，这个程序在磁盘上，为了执行这个程序，需要把程序加载到内存中，这时采用的就是mmap，mmap让虚拟空间和文件的内容组成的空间（文件空间）对应。因为ELF格式是区分代码、数据段的，这里的就不是简单的整个文件的映射了，需要将文件的分段区域映射到内存的不同位置。OS加载ELF文件的过程非常复杂这里就不展开了，具体内容可以看《程序员的自我修养》。<br>当CPU真的在这个地址上发起读写执行等操作时，因为文件的内容在磁盘上是不能被CPU访问的，所以OS会进入异常，系统的缺页处理程序会调用文件系统把一页或者多页的文件内容加载到物理内存中。</p>
+<p>可以通过 <code>cat /proc/&lt;pid&gt;/maps</code>看到某个进程的mmap状态，其实就是通过遍历<code>vm_area_struct</code>链表得到的，有关maps的解释可以看<a href="http://askubuntu.com/questions/93509/how-to-interpret-proc-pid-maps-for-pidgin-application" target="_blank" rel="external">这里</a>。<br>下面是使用xlog的Android程序进程的内存状态（截取一小部分）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">shell@shamu:<span class="comment"># cat /proc/9032/maps</span></div><div class="line">address           perms offset  dev   inode   pathname</div><div class="line">0804d000-0806e000 rwxp 0804d000 00:00 0          [heap]</div><div class="line">b7e88000-b7e89000 rwxp b7e88000 00:00 0 </div><div class="line">a1a3b000<span class="_">-a</span>24aa000 r--p 00000000 fe:00 791721     /data/dalvik-cache/arm/data@app@com.xxx-1@base.apk@classes.dex</div><div class="line">a24aa000<span class="_">-a</span>2f98000 r-xp 00a6f000 fe:00 791721     /data/dalvik-cache/arm/data@app@com.xxx-1@base.apk@classes.dex</div><div class="line">a2f98000<span class="_">-a</span>2f99000 rw-p 0155d000 fe:00 791721     /data/dalvik-cache/arm/data@app@xxx-1@base.apk@classes.dex</div><div class="line">b35a7000-b35<span class="built_in">cd</span>000 rw<span class="_">-s</span> 00000000 00:14 3084       /storage/emulated/0/log.mmap2</div><div class="line">b6fb6000-b6<span class="built_in">fc</span>3000 r-xp 00000000 103:09 206       /system/bin/linker</div><div class="line">b6<span class="built_in">fc</span>3000-b6<span class="built_in">fc</span>4000 r-xp 00000000 00:00 0          [sigpage]</div><div class="line">b6<span class="built_in">fc</span>4000-b6<span class="built_in">fc</span>5000 r--p 0000d000 103:09 206       /system/bin/linker</div><div class="line">b6<span class="built_in">fc</span>5000-b6<span class="built_in">fc</span>6000 rw-p 0000e000 103:09 206       /system/bin/linker</div><div class="line">b6<span class="built_in">fc</span>6000-b6<span class="built_in">fc</span>7000 rw-p 00000000 00:00 0 </div><div class="line">b6<span class="built_in">fc</span>7000-b6fca000 r-xp 00000000 103:09 136       /system/bin/app_process32</div><div class="line">b6fca000-b6fcb000 r--p 00002000 103:09 136       /system/bin/app_process32</div><div class="line">be246000-bea45000 rw-p 00000000 00:00 0          [stack]</div><div class="line">ffff0000-ffff1000 r-xp 00000000 00:00 0          [vectors]</div></pre></td></tr></table></figure></p>
+<p>这些分段空间后面的那些，就是每个虚拟空间分段对应的文件。这些文件，称为这片虚拟空间的backlog文件，它的作用是当这些内存需要被使用的时候，从磁盘中把对应的文件内容加载到物理内存中。<br>这里同一个文件<code>/system/bin/linker</code>在虚拟内存中有不同的内存映射区域，就是因为其文件中有不同的分段，从<code>offset</code>可以看出来。<br><code>/storage/emulated/0/log.mmap2</code>就是xlog用作mmap的backlog文件了，它被映射到<code>b35a7000-b35cd000</code>这段内存区域。</p>
+<h2 id="5-为什么mmap-可以节约IO读写时间"><a href="#5-为什么mmap-可以节约IO读写时间" class="headerlink" title="5.为什么mmap()可以节约IO读写时间"></a>5.为什么mmap()可以节约IO读写时间</h2><p>常规文件操作为了提高读写效率和保护磁盘，使用了页缓存机制，这是由OS控制的。这样造成读文件时需要先将文件页从磁盘拷贝到页缓存中，由于页缓存处在内核空间，不能被用户进程直接寻址，所以还需要将页缓存中数据页再次拷贝到内存对应的用户空间中。这样，通过了两次数据拷贝过程，才能完成进程对文件内容的获取任务。写操作也是一样，待写入的buffer在内核空间不能直接访问，必须要先拷贝至内核空间对应的主存，再写回磁盘中（延迟写回），也是需要两次数据拷贝。</p>
+<p>而使用mmap操作文件中，由于不需要经过内核空间的数据缓存，只使用一次数据拷贝，就从磁盘中将数据传入内存的用户空间中，供进程使用。<br>mmap的关键点是实现了用户空间和内核空间的数据直接交互而省去了空间不同数据不通的繁琐过程。因此mmap效率更高。</p>
+<h3 id="xlog对mmap的效率做了验证"><a href="#xlog对mmap的效率做了验证" class="headerlink" title="xlog对mmap的效率做了验证"></a>xlog对mmap的效率做了验证</h3><p>为了验证 mmap 是否真的有直接写内存的效率，通过一个简单的测试用例进行验证：把512 Byte的数据分别写入150 kb大小的内存和 mmap，以及磁盘文件100w次并统计耗时<br><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/57475458-file_1488014455835_4ad2.jpg" alt=""><br>从上图看出mmap几乎和直接写内存一样的性能，而且 mmap 既不会丢日志，回写时机又基本可控。 </p>
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>《深入理解计算机操作系统》</li>
+<li>《程序员的自我修养》</li>
+<li><a href="http://www.cnblogs.com/huxiao-tee/p/4660352.html" target="_blank" rel="external">认真分析mmap：是什么 为什么 怎么用 </a></li>
+<li><a href="http://dev.qq.com/topic/581c2c46bef1702a2db3ae53" target="_blank" rel="external">微信mars 的高性能日志模块 xlog</a></li>
+<li><a href="https://www.zhihu.com/question/48161206/answer/110418693" target="_blank" rel="external">Linux 中 mmap() 函数的内存映射问题理解</a></li>
+<li><a href="https://linux.die.net/man/5/proc" target="_blank" rel="external">proc(5) - Linux man page</a></li>
+<li><a href="http://askubuntu.com/questions/93509/how-to-interpret-proc-pid-maps-for-pidgin-application" target="_blank" rel="external">How to interpret /proc/pid/maps</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在接入日志组件xlog的工作中，对mmap内存映射加深了了解，分享一下学习心得。&lt;/p&gt;
+&lt;h2 id=&quot;1-一个Linux进程的虚拟内存&quot;&gt;&lt;a href=&quot;#1-一个Linux进程的虚拟内存&quot; class=&quot;headerlink&quot; title=&quot;1.一个Linux进程的
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://felixzhang00.github.io/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>用Android Studio调试Framework层代码</title>
@@ -1065,40 +1121,6 @@ return [1,6],[8,10],[15,18].
     
     
       <category term="算法" scheme="http://felixzhang00.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>滑动卡片式效果</title>
-    <link href="http://felixzhang00.github.io/2015/04/30/2015-04-30-%E6%BB%91%E5%8A%A8%E5%8D%A1%E7%89%87%E5%BC%8F%E6%95%88%E6%9E%9C/"/>
-    <id>http://felixzhang00.github.io/2015/04/30/2015-04-30-滑动卡片式效果/</id>
-    <published>2015-04-30T06:14:26.000Z</published>
-    <updated>2015-04-30T06:43:51.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>##效果图<br><img src="http://7viip0.com1.z0.glb.clouddn.com/SlideCard-demo-2015-04-30.gif"></p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="静态布局"><a href="#静态布局" class="headerlink" title="静态布局"></a>静态布局</h3><p>使用瀑布流效果的StaggeredGridView控件作为GroupView.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">com.etsy.android.grid.StaggeredGridView</span></span></div><div class="line">   <span class="attr">android:id</span>=<span class="string">"@+id/page"</span></div><div class="line">   <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">   <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></div><div class="line">   <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">   <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">   <span class="attr">app:column_count</span>=<span class="string">"1"</span></div><div class="line">   <span class="attr">app:item_margin</span>=<span class="string">"8dp"</span></div><div class="line">   &gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">com.etsy.android.grid.StaggeredGridView</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>定义item布局</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">             <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">             <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">             <span class="attr">android:background</span>=<span class="string">"@drawable/card_bg"</span></div><div class="line">             <span class="attr">android:descendantFocusability</span>=<span class="string">"blocksDescendants"</span></div><div class="line">             <span class="attr">android:orientation</span>=<span class="string">"vertical"</span></div><div class="line">             <span class="attr">android:padding</span>=<span class="string">"8dp"</span></div><div class="line">   &gt;</div><div class="line"></div><div class="line">   <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">       <span class="attr">android:id</span>=<span class="string">"@+id/tv_caption"</span></div><div class="line">       <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">       <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">       <span class="attr">android:text</span>=<span class="string">"caption"</span></div><div class="line">       <span class="attr">android:textSize</span>=<span class="string">"20sp"</span></div><div class="line">       <span class="attr">android:textStyle</span>=<span class="string">"normal"</span></div><div class="line">       /&gt;</div><div class="line"></div><div class="line">   <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">       <span class="attr">android:id</span>=<span class="string">"@+id/iv_normal"</span></div><div class="line">       <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">       <span class="attr">android:layout_height</span>=<span class="string">"200dp"</span></div><div class="line">       <span class="attr">android:background</span>=<span class="string">"#c9c9c9"</span></div><div class="line">       <span class="attr">android:minHeight</span>=<span class="string">"200dp"</span></div><div class="line">       <span class="attr">android:scaleType</span>=<span class="string">"centerCrop"</span></div><div class="line">       /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
-<h3 id="动画实现"><a href="#动画实现" class="headerlink" title="动画实现"></a>动画实现</h3><p>这里需要使用<a href="https://github.com/nhaarman/ListViewAnimations" target="_blank" rel="external">listviewanimations</a>和<a href="https://github.com/JakeWharton/NineOldAndroids" target="_blank" rel="external">nineoldandroids</a>两个有关动画效果的库，继承AnimationAdapter自定义CardsAnimationAdapter，覆写public Animator[] getAnimators(ViewGroup viewGroup, View view)方法，为每个view指定动画效果。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CardsAnimationAdapter</span> <span class="keyword">extends</span> <span class="title">AnimationAdapter</span> </span>&#123;</div><div class="line"></div><div class="line"></div><div class="line">   <span class="keyword">private</span> <span class="keyword">float</span> mTranslationY = <span class="number">400</span>;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">float</span> mRotationX = <span class="number">15</span>;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">long</span> mDuration = <span class="number">400</span>;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">long</span> mDelay = <span class="number">30</span>;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="title">CardsAnimationAdapter</span><span class="params">(BaseAdapter baseAdapter)</span> </span>&#123;</div><div class="line">       <span class="keyword">super</span>(baseAdapter);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">protected</span> <span class="keyword">long</span> <span class="title">getAnimationDelayMillis</span><span class="params">()</span> </span>&#123;</div><div class="line">       <span class="keyword">return</span> mDelay;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">protected</span> <span class="keyword">long</span> <span class="title">getAnimationDurationMillis</span><span class="params">()</span> </span>&#123;</div><div class="line">       <span class="keyword">return</span> mDuration;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="keyword">public</span> Animator[] getAnimators(ViewGroup viewGroup, View view) &#123;</div><div class="line">       <span class="keyword">return</span> <span class="keyword">new</span> Animator[]&#123;</div><div class="line">               ObjectAnimator.ofFloat(view, <span class="string">"translationY"</span>, mTranslationY, <span class="number">0</span>),</div><div class="line">               ObjectAnimator.ofFloat(view, <span class="string">"rotationX"</span>, mRotationX, <span class="number">0</span>)</div><div class="line">       &#125;;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>将原生的adapter装饰成带有动画效果的CardsAnimationAdapter.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> StaggeredGridView mPage;</div><div class="line">   mPage = (StaggeredGridView) findViewById(R.id.page);</div><div class="line"></div><div class="line">      mAdapter=<span class="keyword">new</span> PageAdapter(<span class="keyword">this</span>, imgIds);</div><div class="line">      AnimationAdapter animationAdapter = <span class="keyword">new</span> CardsAnimationAdapter(mAdapter);</div><div class="line">      animationAdapter.setAbsListView(mPage);</div><div class="line"></div><div class="line">      mPage.setAdapter(animationAdapter);</div></pre></td></tr></table></figure>
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><p><a href="https://github.com/FelixZhang00/SlideCard" target="_blank" rel="external">github</a></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://github.com/stormzhang/9GAG" target="_blank" rel="external">9GAG-Android (unofficial)</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;##效果图&lt;br&gt;&lt;img src=&quot;http://7viip0.com1.z0.glb.clouddn.com/SlideCard-demo-2015-04-30.gif&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;代码实现&quot;&gt;&lt;a href=&quot;#代码实现&quot; class=&quot;headerl
-    
-    </summary>
-    
-    
-      <category term="自定义控件" scheme="http://felixzhang00.github.io/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E4%BB%B6/"/>
-    
-      <category term="动画" scheme="http://felixzhang00.github.io/tags/%E5%8A%A8%E7%94%BB/"/>
     
   </entry>
   
