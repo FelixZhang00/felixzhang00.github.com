@@ -339,7 +339,7 @@
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
 	
 		<p>在接入日志组件xlog的工作中，对mmap内存映射加深了了解，分享一下学习心得。</p>
-<h2 id="1-一个Linux进程的虚拟内存"><a href="#1-一个Linux进程的虚拟内存" class="headerlink" title="1.一个Linux进程的虚拟内存"></a>1.一个Linux进程的虚拟内存</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/50851685-file_1488011866599_1378c.jpg" alt=""><br>如图展示了一个Linux进程的虚拟内存。虚拟的意思是进程以为自己有这么一大块内存，实际上物理内存可能还没有分配给它，从虚拟内存到物理内存的映射过程需要一个专门的硬件单元MMU来完成。<br>系统调用的代码和数据就在内核虚拟内存中，<br>因为在保护模式下，用户态进程无法访问到这里，必须要通过系统调用的方式陷入到内核态才行。</p>
+<h2 id="1-一个Linux进程的虚拟内存"><a href="#1-一个Linux进程的虚拟内存" class="headerlink" title="1.一个Linux进程的虚拟内存"></a>1.一个Linux进程的虚拟内存</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/50851685-file_1488011866599_1378c.jpg" alt=""><br>如图展示了一个Linux进程的虚拟内存。<br>虚拟的意思是进程以为自己有这么一大块内存，实际上物理内存可能还没有分配给它，等到缺页异常是系统才会分配，通过这种以时间换空间的方式提高了内存利用效率。从虚拟内存到物理内存的映射过程需要一个专门的硬件单元MMU来完成。<br>系统调用的代码和数据就在内核虚拟内存中，<br>因为在保护模式下，用户态进程无法访问到这里，必须要通过系统调用的方式陷入到内核态才行。</p>
 <h2 id="2-Linux是如何组织虚拟内存的"><a href="#2-Linux是如何组织虚拟内存的" class="headerlink" title="2.Linux是如何组织虚拟内存的"></a>2.Linux是如何组织虚拟内存的</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/44198324-file_1488012277201_ee2a.png" alt=""><br>内核为系统中的每个进程维护一个单独的任务结构<code>task_struct</code>，其中元素包含了内核运行该进程所需要的所有信息（PID、指向用户栈的指针、可执行目标文件的名字、虚拟内存状态、pc指针等）<br><code>task_struct</code>中的<code>mm_struct</code>描述了虚拟内存的当前状态，其中mmap字段指向一个<code>vm_area_struct</code>（区域结构）的链表。顺序搜索区域结构的链表花销会很大，实际上Linux在链表中构建了一个树，并在这棵树中进行查找。<br>进程对某一虚拟内存区域的任何操作需要用要的信息，都可以从<code>vm_area_struct</code>中获得。mmap函数就是要创建一个新的<code>vm_area_struct</code>结构，并将其与文件的物理磁盘地址相连。</p>
 <h2 id="3-缺页处理"><a href="#3-缺页处理" class="headerlink" title="3.缺页处理"></a>3.缺页处理</h2><p><img src="http://7viip0.com1.z0.glb.clouddn.com/17-2-25/30649400-file_1488012949934_13c4.jpg" alt=""><br>当MMU在试图翻译某个虚拟地址A时，触发了一个缺页。缺页异常处理程序会做如下检查：</p>
 <ul>
@@ -417,6 +417,14 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     
     <!-- Prev Nav -->
+    
+        <a href="/2017/03/12/Stetho的通信原理/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
     
 
     <!-- Section Spacer -->
@@ -510,7 +518,7 @@
         </a>
         <ul class="dropdown-menu">
             <li>
-            <a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/05/">五月 2015<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/04/">四月 2015<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/02/">二月 2015<span class="sidebar_archives-count">1</span></a>
+            <a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/05/">五月 2015<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/04/">四月 2015<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/02/">二月 2015<span class="sidebar_archives-count">1</span></a>
         </ul>
     </li>
 
@@ -525,7 +533,7 @@
     <li>
         <a href="/archives">
              文章总数
-             <span class="sidebar-badge">32</span>
+             <span class="sidebar-badge">33</span>
         </a>
     </li>
 </ul>
