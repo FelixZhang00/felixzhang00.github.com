@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- Title -->
+    
+    <title>
+        C++与汇编小结 | FelixZhang&#39;s Blog
+    </title>
+    
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+    
+    <!-- Meta & INfo -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Felix">
+    <meta name="description" content="null">
+    <meta name="keywords" content="null">
+    
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="FelixZhang&#39;s Blog">
+    
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://felixzhang00.github.io">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="C++与汇编小结 | FelixZhang&#39;s Blog">
+    <meta property="og:description" content="null">
+    
+     <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+        
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+    
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+	body, html{
+		font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+	}
+	
+    a{
+        color: #00838F
+    }
+    
+    .mdl-card__media,
+    #search-label,
+    #search-form-label:after,
+    #scheme-Paradox .hot_tags-count,
+    #scheme-Paradox .sidebar_archives-count,
+    #scheme-Paradox .sidebar-colored .sidebar-header,
+    #scheme-Paradox .sidebar-colored .sidebar-badge{
+        background-color: #0097A7 !important
+    }
+    
+	/* Sidebar User Drop Down Menu Text Color */
+	#scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+    #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{
+        color: #0097A7 !important
+    }
+    
+    #post_entry-right-info,
+    .sidebar-colored .sidebar-nav li:hover > a,
+    .sidebar-colored .sidebar-nav li:hover > a i,
+    .sidebar-colored .sidebar-nav li > a:hover,
+    .sidebar-colored .sidebar-nav li > a:hover i,
+    .sidebar-colored .sidebar-nav li > a:focus i,
+    .sidebar-colored .sidebar-nav > .open > a,
+    .sidebar-colored .sidebar-nav > .open > a:hover,
+    .sidebar-colored .sidebar-nav > .open > a:focus,
+    #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a{
+        color: #0097A7 !important
+    }
+    
+    .toTop{
+        background: #757575 !important
+    }
+		
+	.material-layout .material-post>.material-nav,
+	.material-layout .material-index>.material-nav,
+	.material-nav a{
+		color: #757575;
+	}
+		
+	#scheme-Paradox .MD-burger-layer {
+		background-color: #757575;
+	}
+
+	#scheme-Paradox #post-toc-trigger-btn{
+		color: #757575;
+	}
+	
+	.post-toc a:hover{
+		color: #00838F;
+		text-decoration: underline;
+	}
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+        body{
+            background-color: #F5F5F5
+        }
+		
+		/* blog_info bottom background */
+        #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+            background-color: #fff;
+        }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+        .fade {
+            transition: all 800ms linear;
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            opacity: 1;
+        }
+
+        .fade.out{
+            opacity: 0;
+        }
+    </style>
+
+	<script src="/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="/css/highlight/solarized-dark.css">
+	
+	<!-- UC Browser Compatible-->
+	<script>
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf('ucbrowser')>0) {
+			document.write('<link rel="stylesheet" href="/css/uc.css">');
+		   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+		}
+	</script>
+    
+    <!-- Custom Head -->
+    
+</head>
+	
+	
+
+    <body id="scheme-Paradox">
+
+		
+        <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+				
+			
+			
+            <!-- Main Container -->
+            <main class="material-layout__content" id="main">
+				
+                <!-- Top Anchor -->
+                <div id="top"></div>
+				
+				
+                <!-- Hamburger Button -->
+                <button class="MD-burger-icon sidebar-toggle">
+                    <span class="MD-burger-layer"></span>
+                </button>
+				
+				
+                <!-- Post TOC -->
+
+    
+	<!-- Back Button -->
+<!--
+	<div class="material-back" id="backhome-div" tabindex="0">
+		<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#" onclick="window.history.back();return false;" target="_self" role="button" data-upgraded=",MaterialButton,MaterialRipple">
+			<i class="material-icons" role="presentation">arrow_back</i>
+			<span class="mdl-button__ripple-container">
+				<span class="mdl-ripple"></span>
+			</span>
+		</a>
+	</div>			
+-->
+	<!-- Left aligned menu below button -->
+	<button id="post-toc-trigger-btn"
+			class="mdl-button mdl-js-button mdl-button--icon">
+	  <i class="material-icons">format_list_numbered</i>
+	</button>
+
+	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+		for="post-toc-trigger-btn">
+			
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#指针和引用"><span class="post-toc-number">1.</span> <span class="post-toc-text">指针和引用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#switch"><span class="post-toc-number">2.</span> <span class="post-toc-text">switch</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#this指针"><span class="post-toc-number">3.</span> <span class="post-toc-text">this指针</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#虚函数和虚表"><span class="post-toc-number">4.</span> <span class="post-toc-text">虚函数和虚表</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#虚表布局"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">虚表布局</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#调用成员函数"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">调用成员函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、非虚函数"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">1、非虚函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、虚函数"><span class="post-toc-number">4.2.2.</span> <span class="post-toc-text">2、虚函数</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#析构函数"><span class="post-toc-number">5.</span> <span class="post-toc-text">析构函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">6.</span> <span class="post-toc-text">参考</span></a></li></ol>
+		
+<!--			<li class="mdl-menu__item">Some Action</li>-->
+	</ul>
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+		
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+	<!-- Paradox Post Header -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+				<script>
+    
+    var randomNum;
+    randomNum = Math.floor(Math.random() * 5 + 1);
+    
+    $(".post_thumbnail-random").css('background-image', 'url(' + '/img/random/' + randomNum + '.png' + ')');
+    
+</script>
+
+		
+	
+        <p class="article-headline-p">
+            C++与汇编小结
+        </p>
+    </div>
+
+	
+
+				
+				
+					<!-- Paradox Post Info -->
+					<div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+    
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Felix</strong>
+        <span>7月 15, 2017</span>
+    </div>
+    
+    <div class="section-spacer"></div>
+	
+    <!-- Favorite -->
+<!--
+    <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+        <i class="material-icons" role="presentation">favorite</i>
+        <span class="visuallyhidden">favorites</span>
+    </button>
+-->
+    
+    <!-- Tags (bookmark) -->
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/c/">c++</a>
+    </ul>
+    
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+
+    
+
+    
+
+    <!-- Share Twitter -->
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=C++与汇编小结&url=http://felixzhang00.github.io//2017/07/15/C++与汇编小结/index.html&via=Felix" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Twitter
+        </li>
+    </a>
+
+    <!-- Share Google+ -->
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2017/07/15/C++与汇编小结/index.html" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Google+
+        </li>
+    </a>
+
+    <!-- Share Weibo -->
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=C++与汇编小结&url=http://felixzhang00.github.io//2017/07/15/C++与汇编小结/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <li class="mdl-menu__item">
+            分享到微博
+        </li>
+    </a>
+
+    <!-- Share LinkedIn -->
+    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2017/07/15/C++与汇编小结/index.html&title=C++与汇编小结" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 LinkedIn
+        </li>
+    </a>
+</ul>
+
+</div>
+				
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+	
+		<p>本文通过C++反编译，帮助理解C++中的一些概念。</p>
+<p>常用反汇编工具有：objdump、IDA Pro、<a href="https://gcc.godbolt.org/" target="_blank" rel="external">godbolt</a><br>以下代码均使用x86-64 gcc 6.3编译。</p>
+<h2 id="指针和引用"><a href="#指针和引用" class="headerlink" title="指针和引用"></a>指针和引用</h2><p>引用类型的存储方式和指针是一样的，都是使用内存空间存放地址值。<br>只是引用类型是通过编译器实现寻址，而指针需要手动寻址。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">funRef</span><span class="params">(<span class="keyword">int</span> &amp;ref)</span></span>&#123;</div><div class="line">	ref++;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//定义int类型变量</span></div><div class="line">	<span class="keyword">int</span> var = <span class="number">0x41</span>;</div><div class="line">	<span class="comment">//int指针变量，初始化为变量var的地址</span></div><div class="line">	<span class="keyword">int</span> *pnVar = &amp;var;</div><div class="line">	<span class="comment">//取出指针pcVar指向的地址内容并显示</span></div><div class="line">	<span class="keyword">char</span> *pcVar = (<span class="keyword">char</span>*)&amp;var;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%s"</span>,pcVar);</div><div class="line"></div><div class="line">	<span class="comment">//引用作为参数，即把var的地址作为参数</span></div><div class="line">	funRef(var);</div><div class="line"></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  用godbolt查看的效果如图，C++代码与对应的汇编代码用相同的颜色标注，非常方便查看。<br><img src="https://ws1.sinaimg.cn/large/8b331ee1gy1fhkgjfj3g5j21b01864b0.jpg" alt=""></p>
+<hr>
+<h2 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h2><p>在分支数少的情况下可以用if–else if模拟，<br>但是分支比较大的情况下，需要比较的次数太多，<br>如果是有序线性的数值，可将每个case语句块的地址预先保存在数组中，<br>考察switch语句的参数，并依次查询case语句块地址的数组，<br>从而得到对应case语句块的首地址，<br>这样可以降低比较的次数，提升效率。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">int</span> nIdx=<span class="number">1</span>;</div><div class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;nIdx);</div><div class="line"></div><div class="line">	<span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">	<span class="keyword">switch</span>(nIdx)&#123;</div><div class="line">		<span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">			result = <span class="number">1</span>;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span> <span class="number">2</span>:</div><div class="line">			result = <span class="number">2</span>;</div><div class="line">			<span class="keyword">break</span>;	</div><div class="line">		<span class="keyword">case</span> <span class="number">3</span>:</div><div class="line">			result = <span class="number">3</span>;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span> <span class="number">5</span>:</div><div class="line">			result = <span class="number">3</span>;</div><div class="line">			<span class="keyword">break</span>;	</div><div class="line">		<span class="keyword">case</span> <span class="number">7</span>:</div><div class="line">			result = <span class="number">3</span>;</div><div class="line">			<span class="keyword">break</span>;		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如下图，编译器把switch跳转表放到了.L4所指向的区域，其中的元素.L2、.L3 … .L8指向case对应代码地址。<br><img src="https://ws1.sinaimg.cn/large/8b331ee1gy1fhkglbho4lj21ba1m4ws4.jpg" alt=""></p>
+<hr>
+<h2 id="this指针"><a href="#this指针" class="headerlink" title="this指针"></a>this指针</h2><p>this指针中保存了所属对象的首地址。</p>
+<p>在调用成员函数的过程中，编译器利用rdi寄存器保存了对象的首地址，<br>并以寄存器传参的方式传递到成员函数中。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">class</span> Location&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Location()&#123;</div><div class="line">		<span class="comment">//this指针指向一块16字节的内存区域</span></div><div class="line">		m_x = <span class="number">1</span>;</div><div class="line">		<span class="comment">//m_x是一个8字节类型，所以mov一个4字</span></div><div class="line">		<span class="comment">//mov     DWORD PTR [rax], 1</span></div><div class="line">		m_y = <span class="number">2</span>;</div><div class="line">		<span class="comment">//mov     WORD PTR [rax+4], 2</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">short</span> <span class="title">getY</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="comment">//获取this指针（对象首地址）偏移4处的数据，即m_y的值</span></div><div class="line">		<span class="comment">//movzx   eax, WORD PTR [rbp-8+4]</span></div><div class="line">		<span class="keyword">return</span> m_y;</div><div class="line">	&#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> m_x; <span class="comment">//占4字节</span></div><div class="line">	<span class="keyword">short</span> m_y; <span class="comment">//占2字节</span></div><div class="line">	<span class="comment">//由于内存对齐，整个对象占8字节</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//在栈上分配16字节，其中有8字节分配给是loc</span></div><div class="line">	<span class="comment">//把栈上loc的内存地址（即this指针）作为参数调用Location构造函数。</span></div><div class="line">	Location loc;</div><div class="line"></div><div class="line">	<span class="comment">//把栈上loc的内存地址（即this指针）作为参数调用getY成员函数。</span></div><div class="line">	<span class="keyword">short</span> y = loc.getY();</div><div class="line">	<span class="comment">//y变量位于[rbp-2]处</span></div><div class="line">	<span class="comment">//mov     WORD PTR [rbp-2], ax</span></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对应的汇编如下：<br><img src="https://ws1.sinaimg.cn/large/8b331ee1gy1fhkglyyv96j21xy174qh5.jpg" alt=""></p>
+<h2 id="虚函数和虚表"><a href="#虚函数和虚表" class="headerlink" title="虚函数和虚表"></a>虚函数和虚表</h2><p>编译器会为每一个包含虚函数的类（或通过继承得到的子类）生成一个表，其中包含指向类中每一个虚函数的指针。<br>这样的表就叫做虚表（vtable）。<br>此外，每个包含虚函数的类都获得另外一个数据成员，用于在运行时指向适当的虚表。<br>这个成员通常叫做虚表指针（vtable pointer），并且是类中的第一个数据成员。</p>
+<p>在运行时创建对象时，对象的虚表指针将设置为指向合适的虚表。<br>如果该对象调用一个虚函数，则通过在该对象的虚表中进行查询来选择正确的函数。</p>
+<p>代码举例如下，详细代码在<a href="https://gist.github.com/FelixZhang00/173be139404ec703a47dd4d1e52137ad" target="_blank" rel="external">这里</a>。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> BaseClass &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">   BaseClass()&#123;x=<span class="number">1</span>;y=<span class="number">2</span>;&#125;;</div><div class="line">   <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc1</span><span class="params">()</span> </span>= <span class="number">0</span>;</div><div class="line">   <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc2</span><span class="params">()</span></span>&#123;&#125;;</div><div class="line">   <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc3</span><span class="params">()</span></span>;</div><div class="line">   <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc4</span><span class="params">()</span></span>&#123;&#125;;</div><div class="line">   <span class="function"><span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span></span>&#123;<span class="built_in">printf</span>(<span class="string">"hello，y=%d"</span>,<span class="keyword">this</span>-&gt;y);&#125;;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">   <span class="keyword">int</span> x;<span class="comment">//4字节</span></div><div class="line">   <span class="keyword">int</span> y;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">class</span> SubClass : <span class="keyword">public</span> BaseClass &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">   SubClass()&#123;z=<span class="number">3</span>;&#125;;</div><div class="line">   <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc1</span><span class="params">()</span></span>&#123;&#125;;</div><div class="line">   <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc3</span><span class="params">()</span></span>;</div><div class="line">   <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc5</span><span class="params">()</span></span>&#123;&#125;;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">   <span class="keyword">int</span> z;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="虚表布局"><a href="#虚表布局" class="headerlink" title="虚表布局"></a>虚表布局</h3><p>下图是一个简化后的内存布局，它动态分配了一个SubClass类型的对象，编译器会确保该对象的第一个字段虚表指针指向正确的虚表。虚表指向编译器为每个类在只读段创建的一块区域，即虚表，类似于数组，其中的大部分元素指向在代码段中的成员函数地址。C++编译器会在编译阶段给这些函数名做name mangling，以实现c++中函数重载、namespace等标准。<br><img src="https://ws1.sinaimg.cn/large/8b331ee1gy1fhkgbscy1sj20yk0ysn3h.jpg" alt="虚表布局"></p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">vtable for SubClass:</div><div class="line"><span class="meta">        .quad</span>   <span class="number">0</span></div><div class="line"><span class="meta">        .quad</span>   typeinfo for SubClass <span class="comment">;RTTI相关</span></div><div class="line"><span class="meta">        .quad</span>   SubClass::vfunc1() <span class="comment">;this指针中的虚表指针一般指向这个偏移处</span></div><div class="line"><span class="meta">        .quad</span>   BaseClass::vfunc2()</div><div class="line"><span class="meta">        .quad</span>   SubClass::vfunc3()</div><div class="line"><span class="meta">        .quad</span>   BaseClass::vfunc4()</div><div class="line"><span class="meta">        .quad</span>   SubClass::vfunc5()</div><div class="line">vtable for BaseClass:</div><div class="line"><span class="meta">        .quad</span>   <span class="number">0</span></div><div class="line"><span class="meta">        .quad</span>   typeinfo for BaseClass <span class="comment">;RTTI相关</span></div><div class="line"><span class="meta">        .quad</span>   __cxa_pure_virtual <span class="comment">;vfunc1是纯虚函数</span></div><div class="line"><span class="meta">        .quad</span>   BaseClass::vfunc2()</div><div class="line"><span class="meta">        .quad</span>   BaseClass::vfunc3()</div><div class="line"><span class="meta">        .quad</span>   BaseClass::vfunc4()</div></pre></td></tr></table></figure>
+<p> SubClass 中包含两个指向属于BaseClass的函数（ BaseClass::vfunc2 和 BaseClass::vfunc4）的指针。<br> 这是因为 SubClass 并没有重写这2个函数，而是直接继承自BaseClass 。<br>由于没有针对纯虚函数BaseClass::vfunc1的实现，因此，在 BaseClass的虚表中并没有存储 vfunc1 的地址。<br>这时，编译器会插入一个错误处理函数的地址，名为 purecall，万一被调用，它会令程序终止或者其他编译器想要发生的行为。<br>另外，一般的成员函数不在虚表里面，因为不涉及动态调用，如BaseClass中的hello()函数。</p>
+<p>###创建对象<br>这里已在堆上动态创建对象为例。<br>调用new操作符，在堆上动态分配一块SubClass大小的内存，rax指向这块内存的开始。<br>SubClass需要的内存大小为<code>24字节=8(虚表指针)+4*3(3个int类型的成员变量)+4(内存对齐)</code><br>对象首地址的值作为参数调用SubClass构造函数。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">BaseClass *a_ptr = <span class="keyword">new</span> SubClass();</div></pre></td></tr></table></figure></p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">main:</span></div><div class="line">		<span class="comment">;...</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">edi</span>, <span class="number">24</span> <span class="comment">;SubClass需要24字节的内存</span></div><div class="line">        <span class="keyword">call</span>    operator new(unsigned long)</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rbx</span>, <span class="built_in">rax</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rdi</span>, <span class="built_in">rbx</span> <span class="comment">;this指针作为参数</span></div><div class="line">        <span class="keyword">call</span>    SubClass::SubClass()</div></pre></td></tr></table></figure>
+<p>SubClass的构造函数，在完成自身的任务之前会调用基类的构造函数，然后对this指针的内存的虚表指针修改为指向SubClass自身的虚表。<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">SubClass:</span>:SubClass():</div><div class="line">        <span class="keyword">push</span>    <span class="built_in">rbp</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rbp</span>, <span class="built_in">rsp</span></div><div class="line">        <span class="keyword">sub</span>     <span class="built_in">rsp</span>, <span class="number">16</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>], <span class="built_in">rdi</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rdi</span>, <span class="built_in">rax</span> <span class="comment">;this指针</span></div><div class="line">        <span class="keyword">call</span>    BaseClass::BaseClass()</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">edx</span>, OFFSET FLAT:vtable for SubClass+<span class="number">16</span> <span class="comment">;指向SubClass虚表</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rax</span>], <span class="built_in">rdx</span> <span class="comment">;this指针的虚表指针字段赋值</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">DWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rax</span>+<span class="number">16</span>], <span class="number">3</span> <span class="comment">;z=3</span></div><div class="line">        <span class="keyword">nop</span></div><div class="line">        <span class="keyword">leave</span></div><div class="line">        <span class="keyword">ret</span></div></pre></td></tr></table></figure></p>
+<p>BaseClass的构造函数:<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">BaseClass:</span>:BaseClass():</div><div class="line">        <span class="keyword">push</span>    <span class="built_in">rbp</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rbp</span>, <span class="built_in">rsp</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>], <span class="built_in">rdi</span> <span class="comment">;this指针</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">edx</span>, OFFSET FLAT:vtable for BaseClass+<span class="number">16</span> <span class="comment">;指向BaseClass虚表</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rax</span>], <span class="built_in">rdx</span> <span class="comment">;this指针的虚表指针字段赋值</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">DWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rax</span>+<span class="number">8</span>], <span class="number">1</span> <span class="comment">;x=1</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">DWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rax</span>+<span class="number">12</span>], <span class="number">2</span> <span class="comment">;y=2</span></div><div class="line">        <span class="keyword">nop</span></div><div class="line">        <span class="keyword">pop</span>     <span class="built_in">rbp</span></div><div class="line">        <span class="keyword">ret</span></div></pre></td></tr></table></figure></p>
+<h3 id="调用成员函数"><a href="#调用成员函数" class="headerlink" title="调用成员函数"></a>调用成员函数</h3><h4 id="1、非虚函数"><a href="#1、非虚函数" class="headerlink" title="1、非虚函数"></a>1、非虚函数</h4><p>hello()是类BaseClass中的非虚成员函数，不需要通过虚表查找，编译器直接生成调用语句<code>call    BaseClass::hello()</code>，并且第一个参数默认为this指针。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BaseClass *a_ptr = <span class="keyword">new</span> SubClass();</div><div class="line">  <span class="comment">//一般的成员函数，不在虚表里</span></div><div class="line">  a_ptr-&gt;hello();</div></pre></td></tr></table></figure></p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">main:</span></div><div class="line">		<span class="comment">;...		</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rdi</span>, <span class="built_in">rax</span> <span class="comment">;参数:this指针</span></div><div class="line">        <span class="keyword">call</span>    BaseClass::hello()</div><div class="line"><span class="symbol"></span></div><div class="line">.LC0:</div><div class="line"><span class="meta">        .string</span> <span class="string">"hello\357\274\214y=%d"</span></div><div class="line"><span class="symbol">BaseClass:</span>:hello():</div><div class="line">        <span class="keyword">push</span>    <span class="built_in">rbp</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rbp</span>, <span class="built_in">rsp</span></div><div class="line">        <span class="keyword">sub</span>     <span class="built_in">rsp</span>, <span class="number">16</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>], <span class="built_in">rdi</span>  <span class="comment">;this指针放到栈上</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">eax</span>, <span class="built_in">DWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rax</span>+<span class="number">12</span>] <span class="comment">;this指针偏移12处，即成员变量y的位置</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">esi</span>, <span class="built_in">eax</span>              <span class="comment">;参数:format的数据，即y的值</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">edi</span>, OFFSET FLAT:.LC0 <span class="comment">;参数:format string</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">eax</span>, <span class="number">0</span>                <span class="comment">;参数:fd，指向stdout</span></div><div class="line">        <span class="keyword">call</span>    printf</div><div class="line">        <span class="keyword">nop</span></div><div class="line">        <span class="keyword">leave</span></div><div class="line">        <span class="keyword">ret</span></div></pre></td></tr></table></figure>
+<h4 id="2、虚函数"><a href="#2、虚函数" class="headerlink" title="2、虚函数"></a>2、虚函数</h4><p>a_ptr是BaseClass类型的指针，动态分配的是SubClass类型的内存。<br>call_vfunc函数的参数是基类BaseClass，再调用vfunc3函数时需要先根据虚表指针定位到虚表，再通过偏移，解引用找到vfunc3的代码段地址，完成调用。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	BaseClass *a_ptr = <span class="keyword">new</span> SubClass();</div><div class="line">	<span class="comment">//对象首地址作为参数调用函数call_vfunc</span></div><div class="line">   call_vfunc(a_ptr);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">call_vfunc</span><span class="params">(BaseClass *a)</span> </span>&#123;</div><div class="line">   a-&gt;vfunc3();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">main:</span></div><div class="line">	<span class="comment">;...	</span></div><div class="line">	<span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">24</span>]</div><div class="line">    <span class="keyword">mov</span>     <span class="built_in">rdi</span>, <span class="built_in">rax</span> <span class="comment">;rax为this指针</span></div><div class="line">    <span class="keyword">call</span>    call_vfunc(BaseClass*)</div><div class="line"> </div><div class="line">call_vfunc(BaseClass*):</div><div class="line">        <span class="keyword">push</span>    <span class="built_in">rbp</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rbp</span>, <span class="built_in">rsp</span></div><div class="line">        <span class="keyword">sub</span>     <span class="built_in">rsp</span>, <span class="number">16</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>], <span class="built_in">rdi</span> <span class="comment">;把this指针放到栈上</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rax</span>]   <span class="comment">;this指向的内存的开头8个字节的数据复制给rax,即虚表指针</span></div><div class="line">        <span class="keyword">add</span>     <span class="built_in">rax</span>, <span class="number">16</span>                <span class="comment">;找到虚表指针偏移16</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rax</span>]   <span class="comment">;虚表指针偏移16处解引用，得到函数的SubClass::vfunc3的地址</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rdx</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rdi</span>, <span class="built_in">rdx</span>              <span class="comment">;rdi为this指针，作为参数</span></div><div class="line">        <span class="keyword">call</span>    <span class="built_in">rax</span>                   <span class="comment">;调用vfunc3</span></div><div class="line">        <span class="keyword">nop</span></div><div class="line">        <span class="keyword">leave</span></div><div class="line">        <span class="keyword">ret</span></div></pre></td></tr></table></figure>
+<hr>
+<h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><p>这里以堆分配的对象析构为例，完整代码在<a href="https://gist.github.com/FelixZhang00/4bcfeec2ba3f8568a6da8e4151379800" target="_blank" rel="external">这里</a>。<br>堆分配的对象的析构函数在分配给对象的内存释放之前通过 delete 操作符调用。<br>其过程如下：<br>1、如果类拥有任何虚函数，则还原对象的虚表指针，使其指向相关类的虚表。如果一个子类在创建过程中覆盖了虚表指针，就需要这样做。<br>2、执行程序员为析构函数指定的代码。<br>3、如果类拥有本身就是对象的数据成员，则执行这些成员的析构函数。<br>4、如果对象拥有一个超类，则调用超类的析构函数<br>5、如果是释放堆的对象，则用一个代理析构函数执行1~4步骤，并在最后调用delete操作符释放堆上的对象。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> BaseClass &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">   BaseClass()&#123;x=<span class="number">1</span>;y=<span class="number">2</span>;&#125;;</div><div class="line">   <span class="keyword">virtual</span> ~BaseClass()&#123;<span class="built_in">printf</span>(<span class="string">"~BaseClass()\n"</span>);&#125;;</div><div class="line">   <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc1</span><span class="params">()</span> </span>= <span class="number">0</span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">   <span class="keyword">int</span> x;<span class="comment">//4字节</span></div><div class="line">   <span class="keyword">int</span> y;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">class</span> SubClass : <span class="keyword">public</span> BaseClass &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">   SubClass()&#123;z=<span class="number">3</span>;&#125;;</div><div class="line">   <span class="keyword">virtual</span> ~SubClass()&#123;<span class="built_in">printf</span>(<span class="string">"~SubClass()\n"</span>);&#125;;</div><div class="line">   <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">vfunc1</span><span class="params">()</span></span>&#123;&#125;;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">   <span class="keyword">int</span> z;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">   BaseClass *a_ptr = <span class="keyword">new</span> SubClass();</div><div class="line">   <span class="comment">//触发析构 </span></div><div class="line">   <span class="keyword">delete</span> a_ptr; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="comment">;只读段中的虚表结构</span></div><div class="line">vtable for SubClass:</div><div class="line"><span class="meta">    .quad</span>   <span class="number">0</span></div><div class="line"><span class="meta">    .quad</span>   typeinfo for SubClass</div><div class="line"><span class="meta">    .quad</span>   SubClass::<span class="string">'scalar deleting destructor'</span> <span class="comment">;代理析构函数的地址</span></div><div class="line"><span class="meta">    .quad</span>   SubClass::~SubClass() <span class="comment">;析构函数的地址，这里godbolt没有把它们区分出来</span></div><div class="line"><span class="meta">    .quad</span>   SubClass::vfunc1()</div><div class="line"><span class="symbol">        </span></div><div class="line">main:</div><div class="line">     <span class="keyword">mov</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">24</span>], <span class="built_in">rbx</span>  <span class="comment">;rbx为a_ptr的指针</span></div><div class="line">     <span class="keyword">cmp</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">24</span>], <span class="number">0</span>    <span class="comment">;判断a_ptr是否为null，这是编译器加的。</span></div><div class="line">     <span class="keyword">je</span>      .L9                      <span class="comment">;如果为null直接跳过析构</span></div><div class="line">     <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">24</span>]</div><div class="line">     <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rax</span>]</div><div class="line">     <span class="keyword">add</span>     <span class="built_in">rax</span>, <span class="number">8</span>                   <span class="comment">;this指针偏移8处，即指向代理析构函数</span></div><div class="line">     <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rax</span>]     <span class="comment">;rax为代理析构函数的地址</span></div><div class="line">     <span class="keyword">mov</span>     <span class="built_in">rdx</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">24</span>] </div><div class="line">     <span class="keyword">mov</span>     <span class="built_in">rdi</span>, <span class="built_in">rdx</span>                 <span class="comment">;参数：this指针</span></div><div class="line">     <span class="keyword">call</span>    <span class="built_in">rax</span>                      <span class="comment">;调用代理析构函数</span></div><div class="line"></div><div class="line"><span class="comment">;SubClass的代理析构函数</span></div><div class="line"><span class="symbol">SubClass:</span>:<span class="string">'scalar deleting destructor'</span>:</div><div class="line">        <span class="keyword">push</span>    <span class="built_in">rbp</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rbp</span>, <span class="built_in">rsp</span></div><div class="line">        <span class="keyword">sub</span>     <span class="built_in">rsp</span>, <span class="number">16</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>], <span class="built_in">rdi</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rdi</span>, <span class="built_in">rax</span>              <span class="comment">;参数:this指针</span></div><div class="line">        <span class="keyword">call</span>    SubClass::~SubClass() <span class="comment">;调用析构函数</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">esi</span>, <span class="number">24</span>               <span class="comment">;参数:释放24字节大小的堆空间</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rdi</span>, <span class="built_in">rax</span>              <span class="comment">;参数:堆空间的首地址</span></div><div class="line">        <span class="keyword">call</span>    operator delete(void*, unsigned long) <span class="comment">;释放堆空间</span></div><div class="line">        <span class="keyword">leave</span></div><div class="line">        <span class="keyword">ret</span></div><div class="line"><span class="symbol">        </span></div><div class="line"> .LC1:</div><div class="line"><span class="meta">        .string</span> <span class="string">"~SubClass()"</span>       </div><div class="line"><span class="comment">;SubClass的析构函数，执行析构函数中的代码</span></div><div class="line"><span class="symbol">SubClass:</span>:~SubClass():</div><div class="line">    <span class="keyword">push</span>    <span class="built_in">rbp</span></div><div class="line">    <span class="keyword">mov</span>     <span class="built_in">rbp</span>, <span class="built_in">rsp</span></div><div class="line">    <span class="keyword">sub</span>     <span class="built_in">rsp</span>, <span class="number">16</span></div><div class="line">    <span class="keyword">mov</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>], <span class="built_in">rdi</span></div><div class="line">    <span class="keyword">mov</span>     <span class="built_in">edx</span>, OFFSET FLAT:vtable for SubClass+<span class="number">16</span></div><div class="line">    <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">    <span class="keyword">mov</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rax</span>], <span class="built_in">rdx</span>      <span class="comment">;还原对象的虚表指针，使其指向相关类的虚表</span></div><div class="line">    <span class="keyword">mov</span>     <span class="built_in">edi</span>, OFFSET FLAT:.LC1</div><div class="line">    <span class="keyword">call</span>    puts                      <span class="comment">;调用puts函数，这里编译器把printf调用转换成puts了。</span></div><div class="line">    <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">    <span class="keyword">mov</span>     <span class="built_in">rdi</span>, <span class="built_in">rax</span>                  <span class="comment">;参数：this指针 </span></div><div class="line">    <span class="keyword">call</span>    BaseClass::~BaseClass()   <span class="comment">;调用基类的析构函数</span></div><div class="line">    <span class="keyword">nop</span></div><div class="line">    <span class="keyword">leave</span></div><div class="line">    <span class="keyword">ret</span></div><div class="line"><span class="symbol"></span></div><div class="line">.LC0:</div><div class="line"><span class="meta">        .string</span> <span class="string">"~BaseClass()"</span></div><div class="line"><span class="comment">;BaseClass的析构函数，执行析构函数中的代码        </span></div><div class="line"><span class="symbol">BaseClass:</span>:~BaseClass():</div><div class="line">        <span class="keyword">push</span>    <span class="built_in">rbp</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rbp</span>, <span class="built_in">rsp</span></div><div class="line">        <span class="keyword">sub</span>     <span class="built_in">rsp</span>, <span class="number">16</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>], <span class="built_in">rdi</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">edx</span>, OFFSET FLAT:vtable for BaseClass+<span class="number">16</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">rax</span>, <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">8</span>]</div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">QWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rax</span>], <span class="built_in">rdx</span></div><div class="line">        <span class="keyword">mov</span>     <span class="built_in">edi</span>, OFFSET FLAT:.LC0</div><div class="line">        <span class="keyword">call</span>    puts</div><div class="line">        <span class="keyword">nop</span></div><div class="line">        <span class="keyword">leave</span></div><div class="line">        <span class="keyword">ret</span></div></pre></td></tr></table></figure>
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>《IDA Pro权威指南》<br>《C++反汇编与逆向分析技术揭秘》</p>
+
+	
+	
+	
+	
+</div>
+				
+				
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用多说评论 -->
+    <link rel="stylesheet" href="/css/duoshuo.min.css">
+<style>
+    #ds-thread #ds-reset .ds-post-button{
+        background-color: #0097A7 !important;
+    }
+    #ds-wrapper #ds-reset .ds-icons-32{
+        background-color: #0097A7 !important;
+    }
+    #ds-reset .ds-highlight {
+        color: #0097A7 !important;
+    }
+</style>
+<div id="comments">
+    <!-- 多说评论框 start -->
+        <div class="ds-thread" 
+            data-thread-key="2017/07/15/C++与汇编小结/" 
+            data-url="http://felixzhang00.github.io/2017/07/15/C++与汇编小结/"
+            data-title="C++与汇编小结"></div>
+    <!-- 多说评论框 end -->
+</div>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/03/12/Stetho的通信原理/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+        </div>
+    </div>
+
+				
+				
+					<!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay "></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored  sidebar-fixed-left" role="navigation">
+	<div id="sidebar-main">
+	    <!-- Sidebar Header -->
+		<div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+    <i class="material-icons">clear_all</i>
+    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.jpg" alt="Felix's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        836828946@qq.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+		<!-- Sidebar Navigation  -->
+		<ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+			
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+						<i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    <li id="sidebar-first-li">
+        <a href="/" target="_self">
+            <i class="material-icons sidebar-material-icons">home</i>
+             主页
+        </a>
+    </li>
+
+    <!-- I'm Feeling Lucky -->
+<!--
+    <li class="dropdown">
+        <a href="" target="_self">
+            <i class="material-icons sidebar-material-icons">explore</i>
+             sidebar.imlucky
+        </a>
+    </li>
+-->
+
+	
+    <!-- Archives  -->
+    <li class="dropdown">
+        <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons sidebar-material-icons">inbox</i>
+             归档
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+            <a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/05/">五月 2015<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/04/">四月 2015<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/02/">二月 2015<span class="sidebar_archives-count">1</span></a>
+        </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="divider"></li>
+
+
+    <!-- Pages  -->
+	
+
+    <!-- Article Numebr  -->
+    <li>
+        <a href="/archives">
+             文章总数
+             <span class="sidebar-badge">34</span>
+        </a>
+    </li>
+</ul>
+
+		<!-- Sidebar Divider -->
+		<div class="sidebar-divider"></div>
+
+		<!-- Sidebar Footer -->
+		<!-- 
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持。 :) 
+-->
+
+<!-- Theme Material -->
+<a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+	<div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		主题 - Material
+		<span class="sidebar-badge badge-circle">i</span>
+	</div>
+</a>
+
+<!-- Help & Support -->
+<!--
+<a href="mailto:hiviosey@gmail.com" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		sidebar.help
+		<span class="mdl-button__ripple-container">
+			<span class="mdl-ripple"></span>
+		</span>
+	</div>
+</a>
+-->
+
+<!-- Feedback -->
+<!--
+<a href="https://github.com/viosey/hexo-theme-material/issues" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.feedback
+                    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>
+-->
+
+<!-- Abount Theme -->
+<!--
+<a href="https://blog.viosey.com/index.php/Material.html" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.about_theme
+        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>-->
+
+	</div>
+    
+    <!-- Sidebar Sponsor -->
+    
+
+
+</aside>
+
+				
+				
+				
+					<!-- Footer Top Button -->
+					<div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+				
+				
+				<!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+	
+	
+		<!-- Paradox Footer Left Section -->
+		<div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+    <a href="https://twitter.com/twitter" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-twitter.png);">
+        <span class="visuallyhidden">Twitter</span>
+    </button></a>
+    
+
+    <!-- Facebook -->
+    
+    <a href="https://www.facebook.com/facebook" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.png);">
+        <span class="visuallyhidden">Facebook</span>
+    </button></a>
+    
+
+    <!-- Google + -->
+    
+    <a href="https://www.google.com/" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-gplus.png);">
+        <span class="visuallyhidden">Google Plus</span>
+    </button></a>
+    
+
+    <!-- Weibo -->
+    
+    
+
+    <!-- Instagram -->
+    
+    
+
+    <!-- Tumblr -->
+    
+    
+
+    <!-- Github -->
+    
+    <a href="https://github.com/FelixZhang00" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
+        <span class="visuallyhidden">Github</span>
+    </button></a>
+    
+
+    <!-- LinkedIn -->
+    
+    
+</div>
+
+
+		<!--Copyright-->
+		<div id="copyright">Copyright&nbsp;©&nbsp;<script type="text/javascript">var fd = new Date();document.write(fd.getFullYear());</script>&nbsp;FelixZhang's Blog</div>
+
+		<!-- Paradox Footer Right Section -->
+
+		<!-- 
+		I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+		It will not impact the appearance and can give developers a lot of support :)
+
+		很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+		它不会影响美观并可以给开发者很大的支持。 :) 
+		-->
+
+		<div class="mdl-mini-footer--right-section">
+			<div>
+				<div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+				<div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+			</div>
+		</div>
+	
+    
+</footer>
+                
+				<!-- Import File -->
+<script src="/js/highlight.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+    <!-- 多说公共 js 代码 start -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"felixzhang00"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'https://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共 js 代码 end -->
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+	<script>
+	var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        str += "<li><a href='"+ data_url +"' class='search-result-title' target='_blank'>"+ data_title;
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out characters
+                            var start = first_occur - 6;
+                            var end = first_occur + 6;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 10;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            })
+                            str += "<p class=\"search-result\">" + match_content +"...</p>" +"</a>";
+                        }
+                    }
+                })
+                $resultContent.innerHTML = str;
+            })
+        }
+    })
+}
+</script>
+
+	<script>
+        var inputArea = document.querySelector("#search");
+        var getSearchFile = function(){
+            var path = "search.xml";
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        inputArea.onfocus = function(){ getSearchFile() }
+	</script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $(".post-toc-wrap").parent(".mdl-menu__container").css("position", "fixed");
+    });
+</script>
+
+<!-- MathJax Load-->
+
+            </main>
+        </div>
+		
+    </body>
+		
+	
+</html>
