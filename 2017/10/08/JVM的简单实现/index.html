@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- Title -->
+    
+    <title>
+        JVM的简单实现 | FelixZhang&#39;s Blog
+    </title>
+    
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+    
+    <!-- Meta & INfo -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Felix">
+    <meta name="description" content="null">
+    <meta name="keywords" content="null">
+    
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="FelixZhang&#39;s Blog">
+    
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://felixzhang00.github.io">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="JVM的简单实现 | FelixZhang&#39;s Blog">
+    <meta property="og:description" content="null">
+    
+     <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+        
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+    
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+	body, html{
+		font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+	}
+	
+    a{
+        color: #00838F
+    }
+    
+    .mdl-card__media,
+    #search-label,
+    #search-form-label:after,
+    #scheme-Paradox .hot_tags-count,
+    #scheme-Paradox .sidebar_archives-count,
+    #scheme-Paradox .sidebar-colored .sidebar-header,
+    #scheme-Paradox .sidebar-colored .sidebar-badge{
+        background-color: #0097A7 !important
+    }
+    
+	/* Sidebar User Drop Down Menu Text Color */
+	#scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+    #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{
+        color: #0097A7 !important
+    }
+    
+    #post_entry-right-info,
+    .sidebar-colored .sidebar-nav li:hover > a,
+    .sidebar-colored .sidebar-nav li:hover > a i,
+    .sidebar-colored .sidebar-nav li > a:hover,
+    .sidebar-colored .sidebar-nav li > a:hover i,
+    .sidebar-colored .sidebar-nav li > a:focus i,
+    .sidebar-colored .sidebar-nav > .open > a,
+    .sidebar-colored .sidebar-nav > .open > a:hover,
+    .sidebar-colored .sidebar-nav > .open > a:focus,
+    #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a{
+        color: #0097A7 !important
+    }
+    
+    .toTop{
+        background: #757575 !important
+    }
+		
+	.material-layout .material-post>.material-nav,
+	.material-layout .material-index>.material-nav,
+	.material-nav a{
+		color: #757575;
+	}
+		
+	#scheme-Paradox .MD-burger-layer {
+		background-color: #757575;
+	}
+
+	#scheme-Paradox #post-toc-trigger-btn{
+		color: #757575;
+	}
+	
+	.post-toc a:hover{
+		color: #00838F;
+		text-decoration: underline;
+	}
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+        body{
+            background-color: #F5F5F5
+        }
+		
+		/* blog_info bottom background */
+        #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+            background-color: #fff;
+        }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+        .fade {
+            transition: all 800ms linear;
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            opacity: 1;
+        }
+
+        .fade.out{
+            opacity: 0;
+        }
+    </style>
+
+	<script src="/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="/css/highlight/solarized-dark.css">
+	
+	<!-- UC Browser Compatible-->
+	<script>
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf('ucbrowser')>0) {
+			document.write('<link rel="stylesheet" href="/css/uc.css">');
+		   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+		}
+	</script>
+    
+    <!-- Custom Head -->
+    
+</head>
+	
+	
+
+    <body id="scheme-Paradox">
+
+		
+        <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+				
+			
+			
+            <!-- Main Container -->
+            <main class="material-layout__content" id="main">
+				
+                <!-- Top Anchor -->
+                <div id="top"></div>
+				
+				
+                <!-- Hamburger Button -->
+                <button class="MD-burger-icon sidebar-toggle">
+                    <span class="MD-burger-layer"></span>
+                </button>
+				
+				
+                <!-- Post TOC -->
+
+    
+	<!-- Back Button -->
+<!--
+	<div class="material-back" id="backhome-div" tabindex="0">
+		<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#" onclick="window.history.back();return false;" target="_self" role="button" data-upgraded=",MaterialButton,MaterialRipple">
+			<i class="material-icons" role="presentation">arrow_back</i>
+			<span class="mdl-button__ripple-container">
+				<span class="mdl-ripple"></span>
+			</span>
+		</a>
+	</div>			
+-->
+	<!-- Left aligned menu below button -->
+	<button id="post-toc-trigger-btn"
+			class="mdl-button mdl-js-button mdl-button--icon">
+	  <i class="material-icons">format_list_numbered</i>
+	</button>
+
+	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+		for="post-toc-trigger-btn">
+			
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#class类文件结构"><span class="post-toc-number">1.</span> <span class="post-toc-text">class类文件结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#方法表"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">方法表</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#属性表"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">属性表</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#运行时数据区"><span class="post-toc-number">2.</span> <span class="post-toc-text">运行时数据区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解释器"><span class="post-toc-number">3.</span> <span class="post-toc-text">解释器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类加载机制"><span class="post-toc-number">4.</span> <span class="post-toc-text">类加载机制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#方法调用"><span class="post-toc-number">5.</span> <span class="post-toc-text">方法调用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实例化对象"><span class="post-toc-number">6.</span> <span class="post-toc-text">实例化对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">7.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">8.</span> <span class="post-toc-text">参考</span></a></li></ol>
+		
+<!--			<li class="mdl-menu__item">Some Action</li>-->
+	</ul>
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+		
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+	<!-- Paradox Post Header -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+				<script>
+    
+    var randomNum;
+    randomNum = Math.floor(Math.random() * 5 + 1);
+    
+    $(".post_thumbnail-random").css('background-image', 'url(' + '/img/random/' + randomNum + '.png' + ')');
+    
+</script>
+
+		
+	
+        <p class="article-headline-p">
+            JVM的简单实现
+        </p>
+    </div>
+
+	
+
+				
+				
+					<!-- Paradox Post Info -->
+					<div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+    
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Felix</strong>
+        <span>10月 08, 2017</span>
+    </div>
+    
+    <div class="section-spacer"></div>
+	
+    <!-- Favorite -->
+<!--
+    <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+        <i class="material-icons" role="presentation">favorite</i>
+        <span class="visuallyhidden">favorites</span>
+    </button>
+-->
+    
+    <!-- Tags (bookmark) -->
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/java/">java</a>
+    </ul>
+    
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+
+    
+
+    
+
+    <!-- Share Twitter -->
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=JVM的简单实现&url=http://felixzhang00.github.io//2017/10/08/JVM的简单实现/index.html&via=Felix" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Twitter
+        </li>
+    </a>
+
+    <!-- Share Google+ -->
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2017/10/08/JVM的简单实现/index.html" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Google+
+        </li>
+    </a>
+
+    <!-- Share Weibo -->
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=JVM的简单实现&url=http://felixzhang00.github.io//2017/10/08/JVM的简单实现/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <li class="mdl-menu__item">
+            分享到微博
+        </li>
+    </a>
+
+    <!-- Share LinkedIn -->
+    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2017/10/08/JVM的简单实现/index.html&title=JVM的简单实现" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 LinkedIn
+        </li>
+    </a>
+</ul>
+
+</div>
+				
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+	
+		<p>本文介绍java虚拟机的一些知识，并以<a href="https://github.com/zxh0/jvmgo" target="_blank" rel="external">jvmgo</a>为例介绍一些虚拟机的简单实现。jvmgo是用Go语言实现的java虚拟机，其作者说这个项目的主要目的是学习Go和JVM，所以只是一个toy，对于破除JVM的神秘感还是很有帮助的。</p>
+<h2 id="class类文件结构"><a href="#class类文件结构" class="headerlink" title="class类文件结构"></a>class类文件结构</h2><p>使用java编译器（java程序用javac，Groovy程序用groovyc编译器）可以把java代码编译位存储字节码的class文件，虚拟机并不关心class文件的来源是何种语言。这种做法达到了语言无关性的目的。另外有各种可以运行在不同操作系统上的虚拟机，都可以载入和执行同一种平台无关的字节码，实现了平台无关性。</p>
+<p>class文件是一组以8位字节为基础单位的二进制流，占用8位字节以上空间的数据项时以大端方式存储，最高位字节在地址最低位。<br>Class文件格式采用下面伪结构来存储数据，只有两种数据类型：无符号数和表。无符号数可以作为指向表的索引，或者bitmask。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">ClassFile &#123;</div><div class="line">    u4             magic;</div><div class="line">    u2             minor_version;</div><div class="line">    u2             major_version;</div><div class="line">    u2             constant_pool_count;</div><div class="line">    cp_info        constant_pool[constant_pool_count<span class="number">-1</span>];</div><div class="line">    u2             access_flags;</div><div class="line">    u2             this_class;</div><div class="line">    u2             super_class;</div><div class="line">    u2             interfaces_count;</div><div class="line">    u2             interfaces[interfaces_count];</div><div class="line">    u2             fields_count;</div><div class="line">    field_info     fields[fields_count];</div><div class="line">    u2             methods_count;</div><div class="line">    method_info    methods[methods_count];</div><div class="line">    u2             attributes_count;</div><div class="line">    attribute_info attributes[attributes_count];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>class字节码文件可以用图形化工具<a href="https://github.com/zxh0/classpy" target="_blank" rel="external">classpy</a>查看，比命令行工具javap更加方便参看。效果如下：<br><img src="https://ws1.sinaimg.cn/large/8b331ee1gy1fk9xxqguobj20qo0fmqms.jpg" alt=""><br>在<a href="https://github.com/zxh0/jvmgo" target="_blank" rel="external">jvmgo</a>中用ClassFile结构体表示，把.class文件以字节流的方式读出，然后填到这个结构体中。</p>
+<p>calss文件格式详情可以看《Java虚拟机规范》和jvm相关文档:<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html" target="_blank" rel="external">The class File Format</a>.<br>这里简单举几个例子。</p>
+<h3 id="方法表"><a href="#方法表" class="headerlink" title="方法表"></a>方法表</h3><p>一个方法用如下数据结构表示后缀_index表示是指向常量池的索引。<br>name_index指出了方法名。<br>descriptor_index指出了方法返回值和参数列表信息，是java中方法重载的关键。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">method_info &#123;</div><div class="line">    u2             access_flags;</div><div class="line">    u2             name_index;</div><div class="line">    u2             descriptor_index;</div><div class="line">    u2             attributes_count;</div><div class="line">    attribute_info attributes[attributes_count];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如下是javac编译器为类自动生成的<code>&lt;init&gt;</code>默认构造函数，它的名称索引和描述符索引分别指向常量池中对应的位置。<br>方法表第0项：<br><img src="https://ws1.sinaimg.cn/large/8b331ee1gy1fk9yuptfkyj20d4094q3p.jpg" alt=""><br>常量池第12、13项：<br><img src="https://ws1.sinaimg.cn/large/8b331ee1gy1fk9yyrdm38j208o0b8t9b.jpg" alt=""></p>
+<h3 id="属性表"><a href="#属性表" class="headerlink" title="属性表"></a>属性表</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">attribute_info &#123;</div><div class="line">    u2 attribute_name_index;</div><div class="line">    u4 attribute_length;</div><div class="line">    u1 info[attribute_length];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在Class文件、字段表、方法表都可以携带自己的属性表结合，用于描述某些场景专有的信息。<br>属性是可以扩展的，不同的虚拟机实现可以定义自己的属性类型。由于这个原因，Java虚拟机规范没有使用tag，而是使用属性名来区别不同的属性</p>
+<p>Code属性中存放字节码等方法相关信息。<br>Code是变长属性，只存在于method_info结构中。在classpy中观察main方法的code属性如下，其中max_stack代表了操作数栈(Operand Stacks)深度的最大值。max_locaks代表了局部变量表所需的存储空间（包括方法参数），code_length和code用来存储java程序编译后生成的字节码指令。<br><img src="https://ws1.sinaimg.cn/large/8b331ee1gy1fk9z5t2wllj20j00qqn01.jpg" alt=""></p>
+<hr>
+<h2 id="运行时数据区"><a href="#运行时数据区" class="headerlink" title="运行时数据区"></a>运行时数据区</h2><p><img src="https://ws1.sinaimg.cn/large/8b331ee1gy1fk9zjn57t3j21fs0ya3zx.jpg" alt="运行时数据区"><br>在运行Java程序时，虚拟机需要使用内存来存放各种的数据，这个内存区域就是运行时数据区。<br>多线程共享的内存区域主要存放两类数据：类数据和类实例 （也就是对象Object）。对象数据存放在堆（Heap）中，类数据存放在方法区 （Method Area）中。堆由垃圾收集器GC定期清理。类数据包括字段和方法信息、方法的字节码、 运行时常量池，等等。<br>线程私有的运行时数据区用于辅助执行Java字节码。每个线程都有自己的pc寄存器（Program Counter）和Java虚拟机栈（JVM Stack）。Java虚拟机栈又由栈帧（Stack Frame）构成，帧中保存方法执行的状态，包括局部变量表（Local Variable）和操作数栈（Operand Stack）等。如果当前方法是Java方法，则 pc寄存器中存放当前正在执行的Java虚拟机指令的地址，否则，当前方法是本地方法，pc寄存器中的值没有明确定义。</p>
+<h2 id="解释器"><a href="#解释器" class="headerlink" title="解释器"></a>解释器</h2><p><a href="https://github.com/zxh0/jvmgo" target="_blank" rel="external">jvmgo</a>中虚拟机字节码执行引擎代码如下：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">interpret</span><span class="params">(method *heap.Method)</span></span> &#123;</div><div class="line">	thread := rtda.NewThread()</div><div class="line">	frame := thread.NewFrame(method)</div><div class="line">	thread.PushFrame(frame)</div><div class="line">	loop(thread)</div><div class="line">&#125;</div><div class="line">	</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">loop</span><span class="params">(thread *rtda.Thread)</span></span> &#123;</div><div class="line">	reader := &amp;base.BytecodeReader&#123;&#125;</div><div class="line">	<span class="keyword">for</span> &#123;</div><div class="line">		frame := thread.CurrentFrame()</div><div class="line">		pc := frame.NextPC()</div><div class="line">		thread.SetPC(pc)</div><div class="line">		<span class="comment">// decode</span></div><div class="line">		reader.Reset(frame.Method().Code(), pc)</div><div class="line">		opcode := reader.ReadUint8()</div><div class="line">		inst := instructions.NewInstruction(opcode)</div><div class="line">		inst.FetchOperands(reader)</div><div class="line">		frame.SetNextPC(reader.PC())</div><div class="line">		<span class="comment">// execute</span></div><div class="line">		inst.Execute(frame)</div><div class="line">		<span class="keyword">if</span> thread.IsStackEmpty() &#123;</div><div class="line">			<span class="keyword">break</span></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>interpret()法的参数是MemberInfo指针，调用MemberInfo结 构体的CodeAttribute()法可以获取它的Code属性，从class文件结构中得到bytecode、maxstack等信息后，创建一个Frame，在一个loop中不停循环解释字节码。</p>
+<p>每个指令是一个u1类型的单字节，当虚拟机读取到code中的一个字节码时，就可以对应找出这个字节码代表什么指令，并且可以知道这条指令后面是否需要跟随参数，以及参数应当如何理解。<br>如iload指令根据第一个操作数作为索引从局部变量表取出一个int值，然后push到操作数栈。<br>指令比较多，做个总结的话，无非是从操作数栈或者局部变量表取出来，算一算，把结果再放回运行时数据区，如果遇到跳转指令就改变下frame上的pc。</p>
+<h2 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h2><p>虚拟机的类加载机制：虚拟机把class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的java类型。</p>
+<p>java代码在进行javac编译的时候，并没有链接这一步骤，而是在虚拟机加载Class文件的时候进行动态链接。所以在Class文件中不会保存各个方法、字段的最终内存布局信息，当虚拟机运行时，需要从常量池获得对应的符号引用，再在类创建时或运行时解析翻译到具体的内存地址之中。<br>在jvmgo中有class_loader的parseClass方法完成类和字段符号引用解析。</p>
+<p>类的加载大致可以分为三个步骤：首先找到class文件并把数据读取到内存；然后解析class文件，生成虚拟机可以使用的类数据，并放入方法区；最后进行链接。<br>jvmgo中相关实现如下：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> ClassLoader <span class="keyword">struct</span> &#123;</div><div class="line">	cp          *classpath.Classpath</div><div class="line">	classMap    <span class="keyword">map</span>[<span class="keyword">string</span>]*Class <span class="comment">// loaded classes</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(self *ClassLoader)</span> <span class="title">loadNonArrayClass</span><span class="params">(name <span class="keyword">string</span>)</span> *<span class="title">Class</span></span> &#123;</div><div class="line">   data, entry := self.readClass(name)</div><div class="line">   class := self.defineClass(data)</div><div class="line">   link(class)</div><div class="line">   <span class="keyword">return</span> class</div><div class="line">&#125;</div><div class="line"><span class="comment">// jvms 5.3.5</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(self *ClassLoader)</span> <span class="title">defineClass</span><span class="params">(data []<span class="keyword">byte</span>)</span> *<span class="title">Class</span></span> &#123;</div><div class="line">   class := parseClass(data) <span class="comment">//把class文件数据转换成Class结构体</span></div><div class="line">   class.loader = self</div><div class="line">   resolveSuperClass(class) <span class="comment">//解析类符号引用</span></div><div class="line">   resolveInterfaces(class)</div><div class="line">   self.classMap[class.name] = class</div><div class="line">   <span class="keyword">return</span> class</div><div class="line">&#125;</div><div class="line"><span class="comment">// jvms 5.4.3.1</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">resolveSuperClass</span><span class="params">(class *Class)</span></span> &#123;</div><div class="line">   <span class="keyword">if</span> class.name != <span class="string">"java/lang/Object"</span> &#123;</div><div class="line">      class.superClass = class.loader.LoadClass(class.superClassName)</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">link</span><span class="params">(class *Class)</span></span> &#123;</div><div class="line">   verify(class)</div><div class="line">   prepare(class) <span class="comment">//准备阶段主要是给类变量分配空间并给予初始值</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">prepare</span><span class="params">(class *Class)</span></span> &#123;</div><div class="line">	calcInstanceFieldSlotIds(class) </div><div class="line">	calcStaticFieldSlotIds(class) <span class="comment">//计算并分配静态变量所需内存</span></div><div class="line">	allocAndInitStaticVars(class)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h2><p>java虚拟机提供了5条方法调用字节码指令：<br>invokestatic指令：调用静态方法。<br>invokespecial指令：调用无须动态绑定的实例方法，包括构造函数、私有方法和通过super 关键字调用的超类方法。<br>invokevirtual指令：调用所有虚方法。<br>invokeinterface指令：调用接口方法，会在运行时再确定一个实现此接口的对象。<br>invokedynamic指令：先在运行时动态解析出调用点限定符所引用的方法，然后再自行该方法，分派的逻辑是由用户所设定的引导方法决定的。</p>
+<p>方法调用参数传递如下，对于实例方法，Java编译器会在参数列表的前面添加一个参数，这个隐藏的参数就是this引用。<br>依次把这n个变量从调用者的操作数栈中弹出，放进被调用方法的局部变量表中，参数传递就完成了<br><img src="https://ws1.sinaimg.cn/large/8b331ee1gy1fkalpzj75mj21ew0r0dgz.jpg" alt=""></p>
+<p>在定位到需要调用的方法之后，Java虚拟机要给这个方法创建 一个新的帧并把它推入Java虚拟机栈顶，然后传递参数。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">InvokeMethod</span><span class="params">(invokerFrame *rtda.Frame, method *heap.Method)</span></span> &#123;</div><div class="line">   thread := invokerFrame.Thread()</div><div class="line">   newFrame := thread.NewFrame(method)</div><div class="line">   thread.PushFrame(newFrame)</div><div class="line"></div><div class="line">   argSlotCount := <span class="keyword">int</span>(method.ArgSlotCount())</div><div class="line">   <span class="keyword">if</span> argSlotCount &gt; <span class="number">0</span> &#123;</div><div class="line">      <span class="keyword">for</span> i := argSlotCount - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i-- &#123;</div><div class="line">         slot := invokerFrame.OperandStack().PopSlot()</div><div class="line">         newFrame.LocalVars().SetSlot(<span class="keyword">uint</span>(i), slot)</div><div class="line">      &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>解释器的loop下一个循环就会从New Frame的开头开始执行。</p>
+<h2 id="实例化对象"><a href="#实例化对象" class="headerlink" title="实例化对象"></a>实例化对象</h2><p>实例化对象主要通过new指令。<br>new指令的操作数是一个uint16索引，来自字节码。通过这个索引，<br>可以从当前类的运行时常量池中找到一个类符号引用。<br>解析这个类符号引用，拿到类数据，然后创建对象（根据类实例变量的个数分配空间），并把对象引用推入栈顶，new指令的工作就完成了。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Create new object</span></div><div class="line"><span class="keyword">type</span> NEW <span class="keyword">struct</span>&#123; base.Index16Instruction &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(self *NEW)</span> <span class="title">Execute</span><span class="params">(frame *rtda.Frame)</span></span> &#123;</div><div class="line">	cp := frame.Method().Class().ConstantPool()</div><div class="line">	classRef := cp.GetConstant(self.Index).(*heap.ClassRef)</div><div class="line">	class := classRef.ResolvedClass()</div><div class="line">	<span class="keyword">if</span> !class.InitStarted() &#123; <span class="comment">//类初始化</span></div><div class="line">		frame.RevertNextPC()</div><div class="line">		base.InitClass(frame.Thread(), class)</div><div class="line">		<span class="keyword">return</span></div><div class="line">	&#125;</div><div class="line">	ref := class.NewObject()</div><div class="line">	frame.OperandStack().PushRef(ref)</div><div class="line">&#125;</div><div class="line"><span class="comment">//创建对象</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">newObject</span><span class="params">(class *Class)</span> *<span class="title">Object</span></span> &#123;</div><div class="line">   <span class="keyword">return</span> &amp;Object&#123;</div><div class="line">      class:  class,</div><div class="line">      fields: newSlots(class.instanceSlotCount),</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>比如对于如下的java代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">MyObject</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>.instanceVar = a;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">MyObject</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span> </span>&#123;</div><div class="line">    a = a+b;</div><div class="line">    <span class="keyword">this</span>.instanceVar = a;</div><div class="line">&#125;</div><div class="line">MyObject myObj = <span class="keyword">new</span> MyObject(<span class="number">100</span>); <span class="comment">// new</span></div></pre></td></tr></table></figure></p>
+<p>编译后，再用javap反编译如下：<br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="number">3</span>: new           <span class="comment">#4                  // class jvmgo/book/ch06/MyObject</span></div><div class="line"><span class="number">6</span>: dup</div><div class="line"><span class="number">7</span>: bipush        <span class="number">100</span></div><div class="line"><span class="number">9</span>: invokespecial <span class="comment">#5                  // Method "&lt;init&gt;":(I)V</span></div></pre></td></tr></table></figure></p>
+<p>先调用new指令，开辟一个Object的内存空间，再调用构造函数方法，这里jvm将通过索引5找到相关的构造函数</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>jvmgo还实现了数组和字符串、本地方法调用、反射机制、自动装箱和拆箱、异常处理，感兴趣的看看。</p>
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://github.com/zxh0/jvmgo" target="_blank" rel="external">https://github.com/zxh0/jvmgo</a><br><a href="https://github.com/zxh0/classpy" target="_blank" rel="external">https://github.com/zxh0/classpy</a><br>《Java虚拟机规范》<br>《深入理解java虚拟机》<br>《自己动手写Java虚拟机》</p>
+
+	
+	
+	
+	
+</div>
+				
+				
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用多说评论 -->
+    <link rel="stylesheet" href="/css/duoshuo.min.css">
+<style>
+    #ds-thread #ds-reset .ds-post-button{
+        background-color: #0097A7 !important;
+    }
+    #ds-wrapper #ds-reset .ds-icons-32{
+        background-color: #0097A7 !important;
+    }
+    #ds-reset .ds-highlight {
+        color: #0097A7 !important;
+    }
+</style>
+<div id="comments">
+    <!-- 多说评论框 start -->
+        <div class="ds-thread" 
+            data-thread-key="2017/10/08/JVM的简单实现/" 
+            data-url="http://felixzhang00.github.io/2017/10/08/JVM的简单实现/"
+            data-title="JVM的简单实现"></div>
+    <!-- 多说评论框 end -->
+</div>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/07/20/理解对C++裸指针释放后重用的问题/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+        </div>
+    </div>
+
+				
+				
+					<!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay "></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored  sidebar-fixed-left" role="navigation">
+	<div id="sidebar-main">
+	    <!-- Sidebar Header -->
+		<div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+    <i class="material-icons">clear_all</i>
+    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.jpg" alt="Felix's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        836828946@qq.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+		<!-- Sidebar Navigation  -->
+		<ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+			
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+						<i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    <li id="sidebar-first-li">
+        <a href="/" target="_self">
+            <i class="material-icons sidebar-material-icons">home</i>
+             主页
+        </a>
+    </li>
+
+    <!-- I'm Feeling Lucky -->
+<!--
+    <li class="dropdown">
+        <a href="" target="_self">
+            <i class="material-icons sidebar-material-icons">explore</i>
+             sidebar.imlucky
+        </a>
+    </li>
+-->
+
+	
+    <!-- Archives  -->
+    <li class="dropdown">
+        <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons sidebar-material-icons">inbox</i>
+             归档
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+            <a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/05/">五月 2015<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/04/">四月 2015<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/02/">二月 2015<span class="sidebar_archives-count">1</span></a>
+        </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="divider"></li>
+
+
+    <!-- Pages  -->
+	
+
+    <!-- Article Numebr  -->
+    <li>
+        <a href="/archives">
+             文章总数
+             <span class="sidebar-badge">36</span>
+        </a>
+    </li>
+</ul>
+
+		<!-- Sidebar Divider -->
+		<div class="sidebar-divider"></div>
+
+		<!-- Sidebar Footer -->
+		<!-- 
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持。 :) 
+-->
+
+<!-- Theme Material -->
+<a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+	<div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		主题 - Material
+		<span class="sidebar-badge badge-circle">i</span>
+	</div>
+</a>
+
+<!-- Help & Support -->
+<!--
+<a href="mailto:hiviosey@gmail.com" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		sidebar.help
+		<span class="mdl-button__ripple-container">
+			<span class="mdl-ripple"></span>
+		</span>
+	</div>
+</a>
+-->
+
+<!-- Feedback -->
+<!--
+<a href="https://github.com/viosey/hexo-theme-material/issues" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.feedback
+                    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>
+-->
+
+<!-- Abount Theme -->
+<!--
+<a href="https://blog.viosey.com/index.php/Material.html" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.about_theme
+        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>-->
+
+	</div>
+    
+    <!-- Sidebar Sponsor -->
+    
+
+
+</aside>
+
+				
+				
+				
+					<!-- Footer Top Button -->
+					<div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+				
+				
+				<!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+	
+	
+		<!-- Paradox Footer Left Section -->
+		<div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+    <a href="https://twitter.com/twitter" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-twitter.png);">
+        <span class="visuallyhidden">Twitter</span>
+    </button></a>
+    
+
+    <!-- Facebook -->
+    
+    <a href="https://www.facebook.com/facebook" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.png);">
+        <span class="visuallyhidden">Facebook</span>
+    </button></a>
+    
+
+    <!-- Google + -->
+    
+    <a href="https://www.google.com/" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-gplus.png);">
+        <span class="visuallyhidden">Google Plus</span>
+    </button></a>
+    
+
+    <!-- Weibo -->
+    
+    
+
+    <!-- Instagram -->
+    
+    
+
+    <!-- Tumblr -->
+    
+    
+
+    <!-- Github -->
+    
+    <a href="https://github.com/FelixZhang00" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
+        <span class="visuallyhidden">Github</span>
+    </button></a>
+    
+
+    <!-- LinkedIn -->
+    
+    
+</div>
+
+
+		<!--Copyright-->
+		<div id="copyright">Copyright&nbsp;©&nbsp;<script type="text/javascript">var fd = new Date();document.write(fd.getFullYear());</script>&nbsp;FelixZhang's Blog</div>
+
+		<!-- Paradox Footer Right Section -->
+
+		<!-- 
+		I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+		It will not impact the appearance and can give developers a lot of support :)
+
+		很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+		它不会影响美观并可以给开发者很大的支持。 :) 
+		-->
+
+		<div class="mdl-mini-footer--right-section">
+			<div>
+				<div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+				<div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+			</div>
+		</div>
+	
+    
+</footer>
+                
+				<!-- Import File -->
+<script src="/js/highlight.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+    <!-- 多说公共 js 代码 start -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"felixzhang00"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'https://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共 js 代码 end -->
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+	<script>
+	var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        str += "<li><a href='"+ data_url +"' class='search-result-title' target='_blank'>"+ data_title;
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out characters
+                            var start = first_occur - 6;
+                            var end = first_occur + 6;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 10;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            })
+                            str += "<p class=\"search-result\">" + match_content +"...</p>" +"</a>";
+                        }
+                    }
+                })
+                $resultContent.innerHTML = str;
+            })
+        }
+    })
+}
+</script>
+
+	<script>
+        var inputArea = document.querySelector("#search");
+        var getSearchFile = function(){
+            var path = "search.xml";
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        inputArea.onfocus = function(){ getSearchFile() }
+	</script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $(".post-toc-wrap").parent(".mdl-menu__container").css("position", "fixed");
+    });
+</script>
+
+<!-- MathJax Load-->
+
+            </main>
+        </div>
+		
+    </body>
+		
+	
+</html>
