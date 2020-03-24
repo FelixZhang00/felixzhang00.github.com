@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- Title -->
+    
+    <title>
+        APK包大小优化总结 | FelixZhang&#39;s Blog
+    </title>
+    
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" sizes="192x192" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+    
+    <!-- Meta & INfo -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Felix">
+    <meta name="description" content="null">
+    <meta name="keywords" content="null">
+    
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="FelixZhang&#39;s Blog">
+    
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://felixzhang00.github.io">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="APK包大小优化总结 | FelixZhang&#39;s Blog">
+    <meta property="og:description" content="null">
+    
+     <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+        
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+    
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+	body, html{
+		font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+	}
+	
+    a{
+        color: #00838F
+    }
+    
+    .mdl-card__media,
+    #search-label,
+    #search-form-label:after,
+    #scheme-Paradox .hot_tags-count,
+    #scheme-Paradox .sidebar_archives-count,
+    #scheme-Paradox .sidebar-colored .sidebar-header,
+    #scheme-Paradox .sidebar-colored .sidebar-badge{
+        background-color: #0097A7 !important
+    }
+    
+	/* Sidebar User Drop Down Menu Text Color */
+	#scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+    #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus{
+        color: #0097A7 !important
+    }
+    
+    #post_entry-right-info,
+    .sidebar-colored .sidebar-nav li:hover > a,
+    .sidebar-colored .sidebar-nav li:hover > a i,
+    .sidebar-colored .sidebar-nav li > a:hover,
+    .sidebar-colored .sidebar-nav li > a:hover i,
+    .sidebar-colored .sidebar-nav li > a:focus i,
+    .sidebar-colored .sidebar-nav > .open > a,
+    .sidebar-colored .sidebar-nav > .open > a:hover,
+    .sidebar-colored .sidebar-nav > .open > a:focus,
+    #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a{
+        color: #0097A7 !important
+    }
+    
+    .toTop{
+        background: #757575 !important
+    }
+		
+	.material-layout .material-post>.material-nav,
+	.material-layout .material-index>.material-nav,
+	.material-nav a{
+		color: #757575;
+	}
+		
+	#scheme-Paradox .MD-burger-layer {
+		background-color: #757575;
+	}
+
+	#scheme-Paradox #post-toc-trigger-btn{
+		color: #757575;
+	}
+	
+	.post-toc a:hover{
+		color: #00838F;
+		text-decoration: underline;
+	}
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+        body{
+            background-color: #F5F5F5
+        }
+		
+		/* blog_info bottom background */
+        #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+            background-color: #fff;
+        }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+        .fade {
+            transition: all 800ms linear;
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            -o-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            opacity: 1;
+        }
+
+        .fade.out{
+            opacity: 0;
+        }
+    </style>
+
+	<script src="/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="/css/highlight/solarized-dark.css">
+	
+	<!-- UC Browser Compatible-->
+	<script>
+		var agent = navigator.userAgent.toLowerCase();
+		if(agent.indexOf('ucbrowser')>0) {
+			document.write('<link rel="stylesheet" href="/css/uc.css">');
+		   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+		}
+	</script>
+    
+    <!-- Custom Head -->
+    
+</head>
+	
+	
+
+    <body id="scheme-Paradox">
+
+		
+        <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+				
+			
+			
+            <!-- Main Container -->
+            <main class="material-layout__content" id="main">
+				
+                <!-- Top Anchor -->
+                <div id="top"></div>
+				
+				
+                <!-- Hamburger Button -->
+                <button class="MD-burger-icon sidebar-toggle">
+                    <span class="MD-burger-layer"></span>
+                </button>
+				
+				
+                <!-- Post TOC -->
+
+    
+	<!-- Back Button -->
+<!--
+	<div class="material-back" id="backhome-div" tabindex="0">
+		<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#" onclick="window.history.back();return false;" target="_self" role="button" data-upgraded=",MaterialButton,MaterialRipple">
+			<i class="material-icons" role="presentation">arrow_back</i>
+			<span class="mdl-button__ripple-container">
+				<span class="mdl-ripple"></span>
+			</span>
+		</a>
+	</div>			
+-->
+	<!-- Left aligned menu below button -->
+	<button id="post-toc-trigger-btn"
+			class="mdl-button mdl-js-button mdl-button--icon">
+	  <i class="material-icons">format_list_numbered</i>
+	</button>
+
+	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+		for="post-toc-trigger-btn">
+			
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#导言"><span class="post-toc-number">1.</span> <span class="post-toc-text">导言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优化方案"><span class="post-toc-number">2.</span> <span class="post-toc-text">优化方案</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#native优化"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">native优化</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#资源优化"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">资源优化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#删除无用资源"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">删除无用资源</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#删除重复的资源"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">删除重复的资源</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#图片格式"><span class="post-toc-number">2.2.3.</span> <span class="post-toc-text">图片格式</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#图片压缩"><span class="post-toc-number">2.2.4.</span> <span class="post-toc-text">图片压缩</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#图片网络化"><span class="post-toc-number">2.2.5.</span> <span class="post-toc-text">图片网络化</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#资源混淆压缩"><span class="post-toc-number">2.2.6.</span> <span class="post-toc-text">资源混淆压缩</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#代码优化"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">代码优化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ProGuard"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">ProGuard</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Dex方法数优化"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">Dex方法数优化</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#D8-amp-R8"><span class="post-toc-number">2.3.3.</span> <span class="post-toc-text">D8 & R8</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#删除R类"><span class="post-toc-number">2.3.4.</span> <span class="post-toc-text">删除R类</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#其它优化"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">其它优化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#渠道包"><span class="post-toc-number">2.4.1.</span> <span class="post-toc-text">渠道包</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#插件化"><span class="post-toc-number">2.4.2.</span> <span class="post-toc-text">插件化</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#自动化持续监控"><span class="post-toc-number">2.4.3.</span> <span class="post-toc-text">自动化持续监控</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number"></span> <span class="post-toc-text">总结</span></a>
+		
+<!--			<li class="mdl-menu__item">Some Action</li>-->
+	</ul>
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+		
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+	<!-- Paradox Post Header -->
+	
+		
+			<!-- Random Thumbnail -->
+			<div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+				<script>
+    
+    var randomNum;
+    randomNum = Math.floor(Math.random() * 5 + 1);
+    
+    $(".post_thumbnail-random").css('background-image', 'url(' + '/img/random/' + randomNum + '.png' + ')');
+    
+</script>
+
+		
+	
+        <p class="article-headline-p">
+            APK包大小优化总结
+        </p>
+    </div>
+
+	
+
+				
+				
+					<!-- Paradox Post Info -->
+					<div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+    
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Felix</strong>
+        <span>3月 24, 2020</span>
+    </div>
+    
+    <div class="section-spacer"></div>
+	
+    <!-- Favorite -->
+<!--
+    <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+        <i class="material-icons" role="presentation">favorite</i>
+        <span class="visuallyhidden">favorites</span>
+    </button>
+-->
+    
+    <!-- Tags (bookmark) -->
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/android/">android</a>
+    </ul>
+    
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+
+    
+
+    
+
+    <!-- Share Twitter -->
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=APK包大小优化总结&url=http://felixzhang00.github.io//2020/03/24/APK包大小优化总结/index.html&via=Felix" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Twitter
+        </li>
+    </a>
+
+    <!-- Share Google+ -->
+    <a class="post_share-link" href="https://plus.google.com/share?url=http://felixzhang00.github.io//2020/03/24/APK包大小优化总结/index.html" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 Google+
+        </li>
+    </a>
+
+    <!-- Share Weibo -->
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=APK包大小优化总结&url=http://felixzhang00.github.io//2020/03/24/APK包大小优化总结/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <li class="mdl-menu__item">
+            分享到微博
+        </li>
+    </a>
+
+    <!-- Share LinkedIn -->
+    <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://felixzhang00.github.io//2020/03/24/APK包大小优化总结/index.html&title=APK包大小优化总结" target="_blank">
+        <li class="mdl-menu__item">
+            分享到 LinkedIn
+        </li>
+    </a>
+</ul>
+
+</div>
+				
+
+                <!-- Post Content -->
+                <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+	
+		<h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><p>云视听极光app经过多年的发展，随着业务快速增长，面临apk包体积不断增长的问题，在4.2版本包体积达到了历史最高点37.16MB，远远大于各竞品。包体积过大会影响到下载转化率、升级成功率，从线上数据看，apk升级失败的错误码主要集中在下载空间不足、socket异常和md5校验失败， 主要是包体积过大直接导致的。<br>为此我们成立了包大小优化项目，经过几个迭代的优化走后，在5.0版本包体积减少到15.16MB，领先竞品，同时apk升级失败率也大幅降低。</p>
+<hr>
+<h2 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a>优化方案</h2><h3 id="native优化"><a href="#native优化" class="headerlink" title="native优化"></a>native优化</h3><p>1、使用共享C++ 运行时库<br>如果使用静态STL将会在每个 so 库中出现重复代码，增加应用大小。通过下面的配置可以改为使用共享C++运行时库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># for cmake</div><div class="line">externalNativeBuild &#123;</div><div class="line">    cmake &#123;</div><div class="line">        arguments &quot;-DANDROID_STL=c++_shared&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"># 解决ibc++_shared.so 冲突问题</div><div class="line">packagingOptions &#123;</div><div class="line">    pickFirst &apos;lib/*/libc++_shared.so&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#for ndk-build</div><div class="line">APP_STL := c++_shared</div></pre></td></tr></table></figure>
+<p>通过<a href="https://github.com/Tencent/matrix/tree/master/matrix/matrix-android/matrix-apk-canary" target="_blank" rel="external">Matrix-ApkChecker</a>可以检测出使用静态STL的so。<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1gakm9lfy8gj214e0fgdia.jpg" alt="2401578127039_.pic.jpg"></p>
+<p>2、精简cocos代码<br>项目早期是基于cocos2d-x框架开发的，现已全面完成java化，C层的业务代码大部分可以删去。精简之后，apk包大小减少了约5MB。</p>
+<p>3、开启编译优化</p>
+<p>如果使用 GCC 可以 -Os 打开优化，如果使用 Clang 可以 -Oz 打开优化。</p>
+<hr>
+<h3 id="资源优化"><a href="#资源优化" class="headerlink" title="资源优化"></a>资源优化</h3><h4 id="删除无用资源"><a href="#删除无用资源" class="headerlink" title="删除无用资源"></a>删除无用资源</h4><p><a href="http://km.oa.com/group/22548/articles/show/367122?kmref=search&amp;from_page=1&amp;no=8" target="_blank" rel="external">安卓微信的无用资源清理演进之路</a><br>随着业务快速迭代，产生了大量资源，由于初期对包大小不够重视，堆积了很多没有用到的资源，亟需检测出这部分无用资源并批量删除。</p>
+<p>Android Lint可以检测无用资源，关于lint更详细的介绍可以看这篇<a href="https://cloud.tencent.com/developer/article/1014614" target="_blank" rel="external">文章</a>。<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1g97p3x72d7j21c80rwnpd.jpg" alt="WeChat4bb3d7df2a8adac6f2bb2c3e98dd676f.png"></p>
+<p>Lint 作为一个静态扫描工具，它最大的问题在于没有考虑到 ProGuard 的代码裁剪。在 ProGuard 过程我们会 shrink 掉大量的无用代码，但是 Lint 工具并不能检查出这些无用代码所引用的无用资源。lint也不支持配置资源白名单，防止误删。<br>正好<a href="https://github.com/Tencent/matrix/tree/master/matrix/matrix-android/matrix-apk-canary" target="_blank" rel="external">Matrix-ApkChecker</a>就具备这个功能。Matrix-ApkChecker还支持检测asset目录下的无用资源。</p>
+<p>Matrix-ApkChecker搜索无用资源的<a href="http://km.oa.com/group/22548/articles/show/367122?kmref=search&amp;from_page=1&amp;no=8" target="_blank" rel="external">原理</a>:</p>
+<blockquote>
+<ol>
+<li>找出apk中声明的资源：通过R.txt 文件（资源名与资源id的映射关系）中读取apk中包含的所有资源；</li>
+<li>找出资源的引用：针对代码中对资源的引用，反编译dex成smali文件，搜索资源id常量；针对资源文件中对其他资源的引用，编译 xml 资源文件 和 AndroidManifest.xml，然后搜索 xml 文件中的每个节点，查看 attribute 和 text<br>中是否引用到其他资源</li>
+</ol>
+</blockquote>
+<p>通过<code>getIdentifier</code>去访问的资源需要配置到白名单，防止误删。<br>扫描的结果会输出到<code>apk-checker-result.json</code>文件中，执行下面的脚本可以批量删除项目中的资源文件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env bash</span></div><div class="line"><span class="comment"># 用于删除apk-checker扫描出来的unused resources</span></div><div class="line"><span class="comment"># 输入参数1:unused-resources filename</span></div><div class="line"><span class="comment"># 输入参数2:待处理资源目录路径</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> $(cat <span class="string">"<span class="variable">$1</span>"</span>)</div><div class="line"><span class="keyword">do</span></div><div class="line">    <span class="built_in">type</span>=<span class="string">''</span></div><div class="line">    value=<span class="string">''</span></div><div class="line">    <span class="built_in">eval</span> $(<span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;line&#125;</span>"</span> | awk -F <span class="string">'.'</span> <span class="string">'&#123;print "type="$2";value="$3&#125;'</span>)</div><div class="line">    name=<span class="string">"&lt;"</span><span class="string">"<span class="variable">$&#123;type&#125;</span>"</span><span class="string">" name=\""</span><span class="string">"<span class="variable">$&#123;value&#125;</span>"</span><span class="string">"\"&gt;"</span></div><div class="line">    <span class="built_in">echo</span> <span class="variable">$name</span></div><div class="line">    find <span class="string">"<span class="variable">$2</span>"</span> -type f -name <span class="string">'*.xml'</span> | xargs  grep <span class="_">-l</span> <span class="string">"<span class="variable">$&#123;name&#125;</span>"</span> | xargs sed -i <span class="string">''</span> <span class="string">"/<span class="variable">$&#123;name&#125;</span>/d"</span></div><div class="line"></div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure></p>
+<p>删除无用资源后，apk包大小减少了280K，仅无用的dimens资源就占用了137K。<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1g97om9fjjqj21dc01pdg5.jpg" alt="企业微信截图_608b1862-eb8c-4916-8ecb-277a565ed2d7.png"><br>在接入<a href="https://github.com/JessYanCoding/AndroidAutoSize" target="_blank" rel="external">AndroidAutoSize</a>屏幕适配方案后，原先手工定义的定义的dimen都可以这种删除。</p>
+<h4 id="删除重复的资源"><a href="#删除重复的资源" class="headerlink" title="删除重复的资源"></a>删除重复的资源</h4><p>随着工程的增大，开发人员的变动，有些资源文件名字不同，但是内容却完全相同。<br>可以通过扫描文件的MD5值，找出内容相同的文件。<br>在构建流水线中接入<a href="http://ipt.oa.com/" target="_blank" rel="external">ipt腾讯云安装包检查</a>工具后，可以检测出重复文件资源<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1g97qygqgvfj20gw04wjrv.jpg" alt="企业微信截图_11e4c25c-1262-41d1-84b8-9ac5f4c9f336.png"><br>重复资源涉及到代码修改，需要手工删除。</p>
+<p>Android在适配图片资源的时候，如果只有一套资源，低密度设备会缩放图片，高密度设备会拉伸图片。我们利用这个特性，存放一套资源图就可以供所有密度的设备使用。<br>综合考虑图片清晰度，包大小和内存占用情况，一般采用xhdpi下的资源图片。</p>
+<h4 id="图片格式"><a href="#图片格式" class="headerlink" title="图片格式"></a>图片格式</h4><p>在Google I/O 2016中提到了针对图片格式的选择,<br>其建议是:如果能用VectorDrawable来表示的话优先使用VectorDrawable，如果支持WebP则优先用WebP，如果有透明度要求则使用PNG，其它场景可以使用JPG格式。<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1g96x375bmhj20zk0jyabg.jpg" alt="图片格式选择"><br>目前4.2及以上的Android版本已经支持WebP，4.0,4.1的Android版本只支持不含透明度的有损压缩，<br>因为我们项目支持的最低版本是4.0，项目中的不含透明度的图片较少，考虑到兼容性问题，因此项目apk中的图片还是采用了PNG和JPG格式。</p>
+<h4 id="图片压缩"><a href="#图片压缩" class="headerlink" title="图片压缩"></a>图片压缩</h4><p>Android项目构建过程中默认会使用<a href="https://developer.android.com/guide/topics/graphics/drawables#drawables-from-images" target="_blank" rel="external">pngcrush压缩res/drawable/下的图片资源</a>,<br>但是PNG cruncher的压缩率并不高，有必要选择更合适的压缩工具。</p>
+<p><a href="https://cloud.tencent.com/developer/article/1034208" target="_blank" rel="external">png图片压缩工具对比</a>一文中，对比了主流的图片压缩工具。</p>
+<blockquote>
+<p>tinypng、pngquant、ImageAlpha、pngnq都是有损压缩，基本采用的都是quantization算法，将24位的PNG图片转换为8位的PNG图片，减少图片的颜色数；<br>pngcrush、optipng、pngout、advpng都是无损压缩，采用的都是基于LZ/Huffman的DEFLATE算法，减少图片IDAT chunk区域的数据。一般有损压缩的压缩率会大大高于无损压缩。</p>
+</blockquote>
+<p>我们项目选择了公司内开源的组件<a href="https://git.oa.com/chunyujin/auto_compress_pic" target="_blank" rel="external">pnghelper</a>，<br>它集成了pngquant、pngcrush、optipng，支持自动扫描，省去的人为压缩工作量的问题。<br>在保证图片质量的前提下，极大缩减了图片的大小。<br>同时需要关闭cruncherEnabled来禁止默认的优化算法，避免图片增大。<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    aaptOptions &#123;</div><div class="line">        cruncherEnabled <span class="keyword">false</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="图片网络化"><a href="#图片网络化" class="headerlink" title="图片网络化"></a>图片网络化</h4><p>为了进一步减少应用内图片资源，我们采用图片网络化的方案，根据产品功能有选择得将应用内比较大的图片配置到CDN上，客户端使用纯色或者小尺寸图片的兜底图，并会对图片做预下载，保证在使用到图片的场景中，可以尽快的展示出来。图片网络化的另一个好处是可以很方便支持动态更换图片，可以在线上配置，不用跟客户端版本。<br>对于图片预下载，Glide提供了downloadOnly的模式，支持仅下载图片文件，防止使用bytes解码出现内存的瞬间增长。<br>对于新增超过10k的图片我们要求尽量做到网络化。</p>
+<p>经过大图网络化方案的改造后，apk包大小减少了2.3M。</p>
+<h4 id="资源混淆压缩"><a href="#资源混淆压缩" class="headerlink" title="资源混淆压缩"></a>资源混淆压缩</h4><p>我们项目中使用<a href="https://github.com/shwenzhang/AndResGuard" target="_blank" rel="external">AndResGuard</a>实现资源混淆和极限压缩处理。<br>通过将资源文件名混淆替换成短路径:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">res/drawable/icon -&gt; res/s/a</div></pre></td></tr></table></figure></p>
+<p>达到减少 resources.arsc、签名文件以及 ZIP 文件大小的目的。<br>AndResGuard利用了 7-Zip 的大字典优化，提升APK整体压缩率，可以强制压缩PNG、JPG 以及 GIF 等Android默认不会打包压缩的文件，进一步减少包大小。</p>
+<p>因为资源名字会做混淆处理，项目中通过<code>getIdentifier</code>去访问的资源，需要配置到白名单。<br>经过AndResGuard处理后，apk包大小减少了约800K。<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1g97rvke7bwj22dq034q3n.jpg" alt="屏幕快照 2019-10-08 上午11.14.15.png"></p>
+<hr>
+<h3 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h3><h4 id="ProGuard"><a href="#ProGuard" class="headerlink" title="ProGuard"></a>ProGuard</h4><p>由于项目初期对于包大小不够重视，对于项目中的ProGuard配置文件关注不够，导致存在了很多过度keep的问题。</p>
+<p>通过在<code>proguard.cfg</code>配置下面的规则，可以输出 ProGuard 的最终配置。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-printconfiguration build/final_proguard_config.txt</div></pre></td></tr></table></figure></p>
+<p>查看最终配置文件是否有过度keep的问题，比如：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-keep class org.apache.** &#123; *; &#125;</div><div class="line">-keep class android.support.** &#123; *; &#125;</div></pre></td></tr></table></figure></p>
+<p>很多情况下，我们只需要keep其中的某个包、某个方法，或者是类名就可以了。</p>
+<p>通过Android Studio的APK Analyzer可以很方便得查看apk中不同库代码占比情况<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1g97trsd67hj20lg07ugml.jpg" alt="APK Analyzer"><br>support包里的类名都没有混淆，是被过度keep了。</p>
+<p>ProGuard 在每次运行时都会在工程 <code>build/outputs/mapping/release</code>目录输出结果文件：</p>
+<ol>
+<li>seeds.txt : 列出未混淆的类和成员</li>
+<li>usage.txt : 列出从 .apk 删除的代码</li>
+<li>mapping.txt ：列出原始与混淆后的类、方法和字段名称之间的对应关系</li>
+<li>dump.txt ：描述 .apk 文件中所有类文件的内部结构</li>
+</ol>
+<p>我们可以根据 seeds.txt 文件检查未被混淆的类和成员中是否已包含所有期望保留的，再根据 usage.txt 文件查看是否有被误移除的代码。</p>
+<p>需要注意的是，宿主提供给插件使用(compileonly)的代码需要keep住，否则会报找不到类方法的错误<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">type:java.lang.NoSuchMethodError</div><div class="line">message:<span class="function">No virtual method <span class="title">toJsonTree</span><span class="params">(Ljava/lang/Object;)</span>Lcom/google/gson/JsonElement</span>; in <span class="class"><span class="keyword">class</span> <span class="title">Lcom</span>/<span class="title">google</span>/<span class="title">gson</span>/<span class="title">Gson</span></span>; <span class="function">or its <span class="keyword">super</span> <span class="title">classes</span> <span class="params">(declaration of <span class="string">'com.google.gson.Gson'</span> appears in /data/app/com.ktcp.video==/base.apk)</span></span></div><div class="line">stack:</div><div class="line">com.ktcp.tvagent.stat.StatProperties.<span class="title">fromKVObject</span><span class="params">(StatProperties.java:xx)</span></div></pre></td></tr></table></figure></p>
+<p>修改项目中不合理的配置规则后，apk包大小减少了约600k。</p>
+<h4 id="Dex方法数优化"><a href="#Dex方法数优化" class="headerlink" title="Dex方法数优化"></a>Dex方法数优化</h4><p>jce协议自动生成的java代码可以选择精简模式，去掉set、get、display等方法。<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1g97ukq91thj21ea0cqwi4.jpg" alt="jce精简模式"><br>去除jce大部分多余方法后，apk包大小减少了约40K，dex方法数减少了6千多个。</p>
+<p>优化前：<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1g97urkys3pj20k70ig793.jpg" alt="jce优化前"></p>
+<p>优化后：<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1g97us0yx6pj20l70lm0xo.jpg" alt="jce优化后"></p>
+<h4 id="D8-amp-R8"><a href="#D8-amp-R8" class="headerlink" title="D8 &amp; R8"></a>D8 &amp; R8</h4><p>D8 作为下一代 dex 编译器，与之前的DX编译器相比，D8 运行速度更快，生成的 .dex 文件更小且具有同等或更好的运行时性能。<br>R8是一种用于执行代码压缩和混淆的新工具，可以兼容Proguard配置。</p>
+<p><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1g97vkangu7j216l0g5wfm.jpg" alt="之前的编译流程"><br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1g97vl213aqj215s0j5dgr.jpg" alt="新一代的编译流程"></p>
+<p>有关D8 &amp; R8更多内容可以看这几篇文章：<br><a href="https://proandroiddev.com/android-cpu-compilers-d8-r8-a3aa2bfbc109" target="_blank" rel="external">Android CPU, Compilers, D8 &amp; R8</a><br><a href="https://jakewharton.com/d8-optimizations/" target="_blank" rel="external">D8 Optimizations</a><br><a href="https://jakewharton.com/r8-optimization-staticization/" target="_blank" rel="external">R8 Optimization: Staticization</a></p>
+<p>为了使用R8，需要将项目AGP版本升级到3.4.1以上。<br>升级过程中遇到以下：<br>1、gradle api变动的问题，需要修改gradle plugin兼容性的api。<br><a href="https://github.com/getsentry/sentry-java/pull/724/files" target="_blank" rel="external">GRADLE Support AGP 3.4.0</a><br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123; <span class="comment">// Android Gradle Plugin &gt;= 3.3.0</span></div><div class="line">    <span class="keyword">return</span> variantOutput.processManifestProvider.get().manifestOutputDirectory.get().asFile</div><div class="line">&#125; <span class="keyword">catch</span> (Exception ignored) &#123;&#125;</div><div class="line"><span class="keyword">try</span> &#123; <span class="comment">// Android Gradle Plugin &lt; 3.0.0</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> File(variantOutput.processManifest.manifestOutputFile).parentFile</div><div class="line">&#125; <span class="keyword">catch</span> (Exception ignored) &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>2、3.4.2版本的data binding需要把包名改成小写，大写的包名会被databinding-compiler误当做类名，编译报错。</p>
+<p>配置打开D8 &amp; R8<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">android.enableD8=<span class="keyword">true</span></div><div class="line">android.enableR8=<span class="keyword">true</span></div></pre></td></tr></table></figure></p>
+<p>开启D8 &amp; R8后，apk包大小减少了约1.3M，减少了1w多个方法。<br>但是在测试tinker升级的过程中发现，开启R8会造成mapping冲突问题，暂时只能先关闭R8。</p>
+<h4 id="删除R类"><a href="#删除R类" class="headerlink" title="删除R类"></a>删除R类</h4><p>经过删除R类优化后，apk包大小减少245K。<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1g97vql8v2gj21ty01ndfy.jpg" alt="R文件剔除效果"></p>
+<p>可以通过下面命令检测R类是否删除成功。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find . -name <span class="string">'*.dex'</span> | xargs dexdump | grep <span class="string">'Class descriptor'</span>|grep <span class="_">-e</span> <span class="string">'R\$'</span></div></pre></td></tr></table></figure></p>
+<p>使用ProGuard混淆处理后，是可以删除R类的，但如果需要有反射来获取资源的场景，就要求R类不能混淆处理，这时可以通过Gralde Plugin，在项目构建阶段删除所有R文件里的冗余字段。<br>这样的有Gralde Plugin有<a href="https://github.com/yrom/shrinker" target="_blank" rel="external">shrinker</a>、<a href="https://github.com/yanbober/app-tiny-R-gradle-plugin" target="_blank" rel="external">app-tiny-R-gradle-plugin</a>,<br>基本原理是注册Gradle Transform，在由class到dex转换阶段，通过ASM技术操作修改class文件，读取所有的R类，将字段名和值记录起来，然后替换有对R类字段引用的地方。<br>由于存在反射R类的情况，需要额外支持一下白名单配置。</p>
+<h3 id="其它优化"><a href="#其它优化" class="headerlink" title="其它优化"></a>其它优化</h3><h4 id="渠道包"><a href="#渠道包" class="headerlink" title="渠道包"></a>渠道包</h4><p>有些代码资源只会在某些渠道apk中用到,没有必要打包到基线中，可以通过<code>flavors</code>配置。</p>
+<h4 id="插件化"><a href="#插件化" class="headerlink" title="插件化"></a>插件化</h4><p>通过将功能较独立的业务做成插件，独立下发的方式，从而达到减少包体积的效果。<br>在插件化框架选型方面，我们采用的是腾讯视频开源的<a href="https://git.code.oa.com/qqlive-opensource-modules/ave-fork" target="_blank" rel="external">ave-fork</a></p>
+<p>项目中由于语音模块相对较独立，风险点较小，我们首先对它进行了插件化改造试点。语音模块插件化之后，apk包大小减少了约2.7MB。</p>
+<p>经过一个版本的线上数据观察（crash率无明显异常、插件安装成功率在99%以上），验证了插件化方案的可行性，于是我们开始着手Hippy模块的插件化<br>Hippy模块插件化之后，apk包大小减少了约4.2MB。</p>
+<h4 id="自动化持续监控"><a href="#自动化持续监控" class="headerlink" title="自动化持续监控"></a>自动化持续监控</h4><p>包大小的持续监控方面，我们通过在蓝盾上构建一个用于监控apk大小的流水线，配置Git事件触发，每次代码push触发apk构建，通过配置IPT可检查每个版本跟上一个版本包大小的差值，超过阈值会导致构建失败，并通知开发者。这时可以通过查看具体的代码变更记录找出造成包体积增大的具体原因。<br><img src="http://ww1.sinaimg.cn/large/8b331ee1gy1gajjze1e2ij20ia0jcjth.jpg" alt="apk_monitor pipeline"><br>结合<a href="http://ipt.oa.com/" target="_blank" rel="external">IPT</a>和<a href="https://github.com/Tencent/matrix/wiki/Matrix-Android-ApkChecker" target="_blank" rel="external">Matrix-ApkChecker</a>可以帮助我们快速分析包体积增大的原因，如无用资源、大文件、重复文件、R 文件等。</p>
+<hr>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>经过了几个迭代版本，通过native优化、删除无用重复资源、图片压缩、图片网络化、资源压缩、proguard配置、Dex方法数优化、删除R类、插件化等优化手段，<br>将apk从37.16MB减少到15.16MB。<br>通过自动化持续监控apk包大小，缩短问题发现路径，提升优化效率。</p>
+
+	
+	
+	
+	
+</div>
+				
+				
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用多说评论 -->
+    <link rel="stylesheet" href="/css/duoshuo.min.css">
+<style>
+    #ds-thread #ds-reset .ds-post-button{
+        background-color: #0097A7 !important;
+    }
+    #ds-wrapper #ds-reset .ds-icons-32{
+        background-color: #0097A7 !important;
+    }
+    #ds-reset .ds-highlight {
+        color: #0097A7 !important;
+    }
+</style>
+<div id="comments">
+    <!-- 多说评论框 start -->
+        <div class="ds-thread" 
+            data-thread-key="2020/03/24/APK包大小优化总结/" 
+            data-url="http://felixzhang00.github.io/2020/03/24/APK包大小优化总结/"
+            data-title="APK包大小优化总结"></div>
+    <!-- 多说评论框 end -->
+</div>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/10/19/webview接入HttpDNS实践/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+        </div>
+    </div>
+
+				
+				
+					<!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay "></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored  sidebar-fixed-left" role="navigation">
+	<div id="sidebar-main">
+	    <!-- Sidebar Header -->
+		<div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+    <i class="material-icons">clear_all</i>
+    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.jpg" alt="Felix's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        836828946@qq.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+		<!-- Sidebar Navigation  -->
+		<ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+			
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+						<i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    <li id="sidebar-first-li">
+        <a href="/" target="_self">
+            <i class="material-icons sidebar-material-icons">home</i>
+             主页
+        </a>
+    </li>
+
+    <!-- I'm Feeling Lucky -->
+<!--
+    <li class="dropdown">
+        <a href="" target="_self">
+            <i class="material-icons sidebar-material-icons">explore</i>
+             sidebar.imlucky
+        </a>
+    </li>
+-->
+
+	
+    <!-- Archives  -->
+    <li class="dropdown">
+        <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+            <i class="material-icons sidebar-material-icons">inbox</i>
+             归档
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+            <a class="sidebar_archives-link" href="/archives/2020/03/">三月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/05/">五月 2015<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/04/">四月 2015<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2015/02/">二月 2015<span class="sidebar_archives-count">1</span></a>
+        </ul>
+    </li>
+
+    <!-- Divider -->
+    <li class="divider"></li>
+
+
+    <!-- Pages  -->
+	
+
+    <!-- Article Numebr  -->
+    <li>
+        <a href="/archives">
+             文章总数
+             <span class="sidebar-badge">39</span>
+        </a>
+    </li>
+</ul>
+
+		<!-- Sidebar Divider -->
+		<div class="sidebar-divider"></div>
+
+		<!-- Sidebar Footer -->
+		<!-- 
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持。 :) 
+-->
+
+<!-- Theme Material -->
+<a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+	<div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		主题 - Material
+		<span class="sidebar-badge badge-circle">i</span>
+	</div>
+</a>
+
+<!-- Help & Support -->
+<!--
+<a href="mailto:hiviosey@gmail.com" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+		sidebar.help
+		<span class="mdl-button__ripple-container">
+			<span class="mdl-ripple"></span>
+		</span>
+	</div>
+</a>
+-->
+
+<!-- Feedback -->
+<!--
+<a href="https://github.com/viosey/hexo-theme-material/issues" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.feedback
+                    <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>
+-->
+
+<!-- Abount Theme -->
+<!--
+<a href="https://blog.viosey.com/index.php/Material.html" target="_blank" class="sidebar-footer-text-a">
+    <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+         sidebar.about_theme
+        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></div>
+</a>-->
+
+	</div>
+    
+    <!-- Sidebar Sponsor -->
+    
+
+
+</aside>
+
+				
+				
+				
+					<!-- Footer Top Button -->
+					<div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+				
+				
+				<!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+	
+	
+		<!-- Paradox Footer Left Section -->
+		<div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+    <a href="https://twitter.com/twitter" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-twitter.png);">
+        <span class="visuallyhidden">Twitter</span>
+    </button></a>
+    
+
+    <!-- Facebook -->
+    
+    <a href="https://www.facebook.com/facebook" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.png);">
+        <span class="visuallyhidden">Facebook</span>
+    </button></a>
+    
+
+    <!-- Google + -->
+    
+    <a href="https://www.google.com/" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-gplus.png);">
+        <span class="visuallyhidden">Google Plus</span>
+    </button></a>
+    
+
+    <!-- Weibo -->
+    
+    
+
+    <!-- Instagram -->
+    
+    
+
+    <!-- Tumblr -->
+    
+    
+
+    <!-- Github -->
+    
+    <a href="https://github.com/FelixZhang00" target="view_window"><button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
+        <span class="visuallyhidden">Github</span>
+    </button></a>
+    
+
+    <!-- LinkedIn -->
+    
+    
+</div>
+
+
+		<!--Copyright-->
+		<div id="copyright">Copyright&nbsp;©&nbsp;<script type="text/javascript">var fd = new Date();document.write(fd.getFullYear());</script>&nbsp;FelixZhang's Blog</div>
+
+		<!-- Paradox Footer Right Section -->
+
+		<!-- 
+		I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+		It will not impact the appearance and can give developers a lot of support :)
+
+		很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+		它不会影响美观并可以给开发者很大的支持。 :) 
+		-->
+
+		<div class="mdl-mini-footer--right-section">
+			<div>
+				<div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+				<div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+			</div>
+		</div>
+	
+    
+</footer>
+                
+				<!-- Import File -->
+<script src="/js/highlight.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+    <!-- 多说公共 js 代码 start -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"felixzhang00"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'https://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共 js 代码 end -->
+
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+	<script>
+	var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        str += "<li><a href='"+ data_url +"' class='search-result-title' target='_blank'>"+ data_title;
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out characters
+                            var start = first_occur - 6;
+                            var end = first_occur + 6;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 10;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            })
+                            str += "<p class=\"search-result\">" + match_content +"...</p>" +"</a>";
+                        }
+                    }
+                })
+                $resultContent.innerHTML = str;
+            })
+        }
+    })
+}
+</script>
+
+	<script>
+        var inputArea = document.querySelector("#search");
+        var getSearchFile = function(){
+            var path = "search.xml";
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        inputArea.onfocus = function(){ getSearchFile() }
+	</script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $(".post-toc-wrap").parent(".mdl-menu__container").css("position", "fixed");
+    });
+</script>
+
+<!-- MathJax Load-->
+
+            </main>
+        </div>
+		
+    </body>
+		
+	
+</html>
