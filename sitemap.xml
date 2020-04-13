@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://felixzhang00.github.io/2017/01/23/%E7%94%A8Android%20Studio%E8%B0%83%E8%AF%95Framework%E5%B1%82%E4%BB%A3%E7%A0%81/</loc>
+    
+    <lastmod>2020-04-13T06:52:27.295Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://felixzhang00.github.io/2020/03/24/APK%E5%8C%85%E5%A4%A7%E5%B0%8F%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/</loc>
     
     <lastmod>2020-03-24T07:16:33.057Z</lastmod>
@@ -61,13 +68,6 @@
     <loc>http://felixzhang00.github.io/2017/02/25/%E7%90%86%E8%A7%A3mmap/</loc>
     
     <lastmod>2017-02-25T12:06:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://felixzhang00.github.io/2017/01/23/%E7%94%A8Android%20Studio%E8%B0%83%E8%AF%95Framework%E5%B1%82%E4%BB%A3%E7%A0%81/</loc>
-    
-    <lastmod>2017-01-23T01:29:41.000Z</lastmod>
     
   </url>
   
